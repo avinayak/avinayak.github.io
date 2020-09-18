@@ -1,27 +1,30 @@
-name: Publish Site
+name: github pages
 
 on:
   push:
     branches:
-      - master
+      - main  # Set a branch to deploy
 
 jobs:
-  build-deploy:
-    runs-on: ubuntu-latest
-
+  deploy:
+    runs-on: ubuntu-18.04
     steps:
-      - name: Publish Site
-        uses: chabad360/hugo-gh-pages@master
+      - uses: actions/checkout@v2
         with:
-          githubToken: ${{ secrets.PERSONAL_TOKEN }}
-          args: --gc --minify --cleanDestinationDir 
-      - name: Checkout Repo
-        uses: actions/checkout@master
-        with:
-          submodules: true
-      - name: Install Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: '^1.13.1' # The Go version to download (if necessary) and use.
-      - run: go version
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.75.1'
+          # extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./docs
