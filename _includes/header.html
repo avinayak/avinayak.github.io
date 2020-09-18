@@ -1,0 +1,32 @@
+<header class="header">
+    <div class="navigation">
+        <a href="/" class="logo">{{ site.title }}</a>
+    </div>
+ 
+
+    <ul class="social-links">
+
+        <a href="/about" class="social-links__entry">
+            <i class="fa fa-user"></i>
+        </a>
+
+        {% if site.author.github %}
+            <a href="https://github.com/{{ site.author.github }}" class="social-links__entry" target="_blank">
+                <i class="fa fa-github"></i>
+            </a>
+        {% endif %}
+
+        {% if site.author.twitter %}
+            <a href="https://twitter.com/{{ site.author.twitter }}" class="social-links__entry" target="_blank">
+                <i class="fa fa-twitter"></i>
+            </a>
+        {% endif %}
+
+        {% if site.author.unsplash %}
+            <a href="https://unsplash.com/@{{ site.author.unsplash }}" class="social-links__entry" target="_blank">
+                <i class="fa fa-camera"></i>
+            </a>
+        {% endif %}
+    </ul>
+</header>
+<hr/>

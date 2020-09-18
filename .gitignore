@@ -1,3 +1,2 @@
-public
-resources/_gen
-.DS_Store
+_site
+.sass-cache
