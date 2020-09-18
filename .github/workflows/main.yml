@@ -7,13 +7,18 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: golang:1.14
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
         with:
           submodules: true
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.13.1' # The Go version to download (if necessary) and use.
+      - run: go version
       - name: Publish Site
         uses: chabad360/hugo-gh-pages@master
         with:
