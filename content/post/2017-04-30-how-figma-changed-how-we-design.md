@@ -1,12 +1,12 @@
 ---
 title: How Figma changed the way we design at Narative
-date: 2017-04-30
-hero: /images/hero-5.jpg
-excerpt: To understand why Figma is the best design tool for our company, you have to understand what we do. As a designer.
+date: 2017-04-30 00:00:00 Z
+hero: "/images/hero-5.jpg"
+excerpt: To understand why Figma is the best design tool for our company, you have
+  to understand what we do. As a designer.
 timeToRead: 8
 authors:
-  - Thiago Costa
-
+- Thiago Costa
 ---
 
 To understand why Figma is the best design tool for our company, you have to understand what we do. As a designer, I’ve been crafting digital experiences for the past ten years, having contributed to the growth of companies such as Hopper, Lightspeed, and Breather, among others. Throughout this journey, I’ve had the opportunity to meet the most talented designers, engineers, growth marketers, and build a world-class team to develop startups worldwide. We call this team Narative.

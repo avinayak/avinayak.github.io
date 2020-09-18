@@ -1,12 +1,11 @@
 ---
 title: Why we built a company before building a product
-date: 2019-04-30
-hero: /images/hero-6.jpg
+date: 2019-04-30 00:00:00 Z
+hero: "/images/hero-6.jpg"
 excerpt: this is my excerpt
 timeToRead: 3
 authors:
-  - Thiago Costa
-
+- Thiago Costa
 ---
 
 Hello, world! This is a demo post for `hugo-theme-novela`. Novela is built by the team at [Narative](https://narative.co), and built for everyone that loves the web.

@@ -1,12 +1,12 @@
 ---
 title: Building the new Hopper.com
-date: 2019-04-29
-hero: /images/hero-11.jpg
-excerpt: Creating a new website for Hopper, one of the top 4 most downloaded travel apps in the U.S, along with Uber, Lyft.
+date: 2019-04-29 00:00:00 Z
+hero: "/images/hero-11.jpg"
+excerpt: Creating a new website for Hopper, one of the top 4 most downloaded travel
+  apps in the U.S, along with Uber, Lyft.
 timeToRead: 4
 authors:
-  - Dennis Brotzky
-
+- Dennis Brotzky
 ---
 
 Hello, world! This is a demo post for `hugo-theme-novela`. Novela is built by the team at [Narative](https://narative.co), and built for everyone that loves the web.
