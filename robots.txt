@@ -1,8 +1,9 @@
 ---
-layout: null
+layout: 
 sitemap:
   exclude: 'yes'
 ---
+
 User-agent: *
 Disallow:
 

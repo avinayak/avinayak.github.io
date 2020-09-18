@@ -1,8 +1,9 @@
 ---
+title: Particle Collision Experiments
+date: 2013-12-19 00:00:00 Z
+categories:
+- programming
 layout: post
-title:  "Particle Collision Experiments"
-date:   2013-12-19 00:00:00
-categories: [programming]
 ---
 
 OK, So I saw this in [reddit](https://www.reddit.com/r/gaming/comments/bdar7/colourful_5min_breakout_style_game_seriously_play).

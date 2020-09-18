@@ -1,12 +1,12 @@
 ---
-layout: post
 title: Simulated Annealing for Beautiful Graphs
-subtitle: What is the best way to draw a graph?
-date: 2014-10-01T00:00:00.000+00:00
+date: 2014-10-01 00:00:00 Z
 categories:
 - algorithm
-
+layout: post
+subtitle: What is the best way to draw a graph?
 ---
+
 Humans have an intuitive sense of symmetry and aesthetics. We try our best to make it easy to understand the concept we’re trying to explain.
 
 ![](/uploads/unnamed-1.png)

@@ -1,8 +1,8 @@
 ---
-layout: page
 title: Atul Vinayak
+permalink: "/about/"
+layout: page
 subtitle: Programmer
-permalink: /about/
 ---
 
 Email su.atul.vi [at] gmail.com
