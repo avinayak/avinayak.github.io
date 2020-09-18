@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title> Procedurally Generated Mazes —  &raquo;  ¬ journal</title>
+<meta name="description" content="Atul's Programming Journals. A blog where I explore programming & Design
+">
+<meta name="keywords" content="">
+<link rel="canonical" href="http://localhost:7766/programming/design/2013/04/11/maze.html">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+  <script async type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js"></script>
+   
+   <script async type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+
+   
+        
+
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Procedurally Generated Mazes" />
+<meta name="twitter:description" content="Atul's Programming Journals. A blog where I explore programming & Design
+" />
+<meta name="twitter:image" content="http://localhost:7766" />
+
+<!-- Google plus -->
+<meta name="author" content="">
+<link rel="author" href="">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Procedurally Generated Mazes">
+<meta property="og:description" content="Atul's Programming Journals. A blog where I explore programming & Design
+">
+<meta property="og:url" content="http://localhost:7766/programming/design/2013/04/11/maze.html">
+<meta property="og:site_name" content="¬ journal">
+
+        <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/vendor/normalize-css/normalize.css">
+<link rel="stylesheet" href="/css/main.css">
+
+  <link rel="stylesheet" href="/assets/vendor/highlight/styles/agate.css">
+
+<link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.css">
+
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <header class="header">
+    <div class="navigation">
+        <a href="/" class="logo">¬ journal</a>
+    </div>
+ 
+
+    <ul class="social-links">
+
+        <a href="/about" class="social-links__entry">
+            <i class="fa fa-user"></i>
+        </a>
+
+        
+            <a href="https://github.com/avinayak" class="social-links__entry" target="_blank">
+                <i class="fa fa-github"></i>
+            </a>
+        
+
+        
+            <a href="https://twitter.com/atulvinayak" class="social-links__entry" target="_blank">
+                <i class="fa fa-twitter"></i>
+            </a>
+        
+
+        
+            <a href="https://unsplash.com/@atulvi" class="social-links__entry" target="_blank">
+                <i class="fa fa-camera"></i>
+            </a>
+        
+    </ul>
+</header>
+<hr/>
+
+            <h1 class="page-title post-title">
+    <div class="page-title__text post-title__text">Procedurally Generated Mazes</div>
+    <div class="page-title__subtitle post-title__subtitle"></div>
+</h1>
+
+<div class="content">
+    <p>Maze Generation started out as an experiment.</p>
+
+<p>I was fascinated by maze generation algorithms. I used a randomized version of <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_Kruskal's_algorithm">Kruskal’s algorithm</a>.</p>
+
+<figure class="highlight"><pre><code class="language-txt" data-lang="txt">Create a list of all walls, and create a set for each cell, 
+each containing just that one cell.
+
+For each wall, in some random order:
+    If the cells divided by this wall belong to distinct sets:
+        Remove the current wall.
+        Join the sets of the formerly divided cells.</code></pre></figure>
+
+<p>I tried to do it in python in the begining, and later in C (for practice). The algorithm scaled really well, and I used it to generate huuge mazes of ~5GB with a single path between points.</p>
+
+<p>The project took about a week to complete. Later on, the algorithm was used to design a real physical maze game in college.</p>
+
+<p><img src="/assets/images/maze1.png" alt="My helpful screenshot" /></p>
+
+<p>The UI was witten in C using the excellent GTK Libraries, and Clutter for Vector graphics.</p>
+
+<p>A few days later, I explored the Dead end filling algorithm to solve any randomly generated maze.</p>
+
+<p><img src="/assets/images/maze2.png" alt="My helpful screenshot" /></p>
+
+<p>Now, at this point, I thought it’d be cool if i could turn it into a game :). so…</p>
+
+<p><img src="/assets/images/maze3.png" alt="My helpful screenshot" /></p>
+
+<p>The human player is blue and a Computer player is red. The aim of the game is to get to the ohter diagonal end first. I had to adjust the velocity of the computer palyer so that it’s nearly impossible to beat the machine, unless you time your keystrokes accurately and not make <strong>any</strong> mistakes.</p>
+
+<p>Here is a youtube video (mute to avoid the horrible background music) of the path the Machine takes to solve. <em>This is not how dead end filling works</em> . The maze is already solved. I’m just animating the solution path.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AkNWvK6vhzk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+</div>
+
+<div class="about">
+    <hr/><br/>
+    <div class="about__text">
+        Written by <strong>  Atul Vinayak </strong>
+        on <strong>11 April 2013</strong>
+    </div>
+</div>
+
+
+        </div>
+
+        <script src="/assets/vendor/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+        
+    </body>
+</html>

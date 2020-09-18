@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title> Simulated Annealing for Beautiful Graphs — What is the best way to draw a graph? &raquo;  ¬ journal</title>
+<meta name="description" content="Atul's Programming Journals. A blog where I explore programming & Design
+">
+<meta name="keywords" content="">
+<link rel="canonical" href="http://localhost:7766/algorithm/2014/10/01/simulated-annealing.html">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+  <script async type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js"></script>
+   
+   <script async type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+
+   
+        
+
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Simulated Annealing for Beautiful Graphs" />
+<meta name="twitter:description" content="Atul's Programming Journals. A blog where I explore programming & Design
+" />
+<meta name="twitter:image" content="http://localhost:7766" />
+
+<!-- Google plus -->
+<meta name="author" content="">
+<link rel="author" href="">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Simulated Annealing for Beautiful Graphs">
+<meta property="og:description" content="Atul's Programming Journals. A blog where I explore programming & Design
+">
+<meta property="og:url" content="http://localhost:7766/algorithm/2014/10/01/simulated-annealing.html">
+<meta property="og:site_name" content="¬ journal">
+
+        <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/vendor/normalize-css/normalize.css">
+<link rel="stylesheet" href="/css/main.css">
+
+  <link rel="stylesheet" href="/assets/vendor/highlight/styles/agate.css">
+
+<link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.css">
+
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <header class="header">
+    <div class="navigation">
+        <a href="/" class="logo">¬ journal</a>
+    </div>
+ 
+
+    <ul class="social-links">
+
+        <a href="/about" class="social-links__entry">
+            <i class="fa fa-user"></i>
+        </a>
+
+        
+            <a href="https://github.com/avinayak" class="social-links__entry" target="_blank">
+                <i class="fa fa-github"></i>
+            </a>
+        
+
+        
+            <a href="https://twitter.com/atulvinayak" class="social-links__entry" target="_blank">
+                <i class="fa fa-twitter"></i>
+            </a>
+        
+
+        
+            <a href="https://unsplash.com/@atulvi" class="social-links__entry" target="_blank">
+                <i class="fa fa-camera"></i>
+            </a>
+        
+    </ul>
+</header>
+<hr/>
+
+            <h1 class="page-title post-title">
+    <div class="page-title__text post-title__text">Simulated Annealing for Beautiful Graphs</div>
+    <div class="page-title__subtitle post-title__subtitle">What is the best way to draw a graph?</div>
+</h1>
+
+<div class="content">
+    <p>Humans have an intuitive sense of symmetry and aesthetics. We try our best to make it easy to understand the concept we’re trying to explain.</p>
+
+<p>In textbooks, we see images like the one above, and not like this one..</p>
+
+<p><img src="/assets/images/polbooks_fr.png" alt="-" /></p>
+
+<p>I’m having labs in college where I have to implement various algorithms on graphs. The first step, however, was to draw one. The Random approach was the easiest. Randomly plot N Nodes anywhere in the screen, and connect them. If you’re lucky, your graph might look good. Mostly they didn’t.</p>
+
+<p>There were people who tried this interesting approach: Given, N Nodes, arrange them in a Circle: with ‘360/N’ angular separation. Given the center, angle &amp; radius can be easily converted to X, Y using basic trigonometry.</p>
+
+<p><img src="/assets/images/circular.jpg" alt="-" /></p>
+
+<p>This was good. But we could do better. I searched for the best way to do this, and ended up reading <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.20.5663">this</a> paper</p>
+
+<p>I think this is a pirated version of this paper because this is a Bad Scan and doesn’t look official at all. Also, I see another version <a href="https://dl.acm.org/citation.cfm?id=234538">here</a> in ACM’s Library behind a paywall.</p>
+
+<p>Anyway, The paper promised to take graphs from (a) to (b) using a method called (Simulated Annealing)[https://en.wikipedia.org/wiki/Simulated_annealing].</p>
+
+<p><img src="/assets/images/sample.png" alt="-" /></p>
+
+<p>The paper defines the characteristics of a good drawing such as Evenly distributed nodes, edges having approximately the same lengths, minimal edge crossing, and Symmetry. Oh, and fitting snugly inside the window you’re drawing.</p>
+
+<p>SA is derived from a Metallurgical process called Annealing, used to turn liquids to their crystalline form. Probability with which a system changes from one energy state to the next is</p>
+
+<p>$\Huge e^{-\frac{E_2 - E_1}{kT}}$</p>
+
+<p>This rule implied that whenever the energy $ E_2 $ of the candidate state is smaller than the current energy $ E_1 $, the system will take the move, else the state change is probabilistic.</p>
+
+<p>A rough algorithm for SA is as follows:</p>
+
+<p>Choose an initial configuration $ \sigma $ and an initial temperature $ T $</p>
+
+<p>Repeat the following (usually some fixed number of times):</p>
+
+<ol>
+  <li>Choose an initial configuration $ \sigma $ and an initial temperature $ T $</li>
+  <li>
+    <dl>
+      <dt>Repeat the following (usually some fixed number of times):</dt>
+      <dd>2.1 Choose new configuration $ \sigma’ $ from the neighborhood of $ \sigma $</dd>
+      <dd>2.2 Let $ E $ and $ E’ $ be the value of the cost function at $ \sigma $ and $ \sigma’ $ respectively</dd>
+      <dd>2.3 If $ E’ $ &lt; $ E $ or $ random(0,1) &lt; e^{(E - E’)/T)} $ the set $ \sigma $ to $ \sigma’ $</dd>
+      <dd>2.4 Decrease Temperature $ T $</dd>
+    </dl>
+  </li>
+  <li>If Termination rule is satisfied, stop. else go back to step 2</li>
+</ol>
+
+<p>The algorithm takes in an adjacency list representation of our graph, and should hopefully return coordinates of our graph nodes that look good. We chose an initial set of random coordinates for every node. Our energy function should be designed in such a way that a ‘nicer’ configuration should have a lower energy state. We talked about the characteristics of a good graph, but here are them again in detail.</p>
+
+<h2 id="node-distribution">Node distribution</h2>
+
+<p>Our nodes should be evenly spread across the window. Two components of the energy function
+take care of this. One to prevent nodes from getting too close. Second deals with window borders.</p>
+
+<p>We add $ a_{ij} $ Energy function. if $ d_{ij} $ is the distance of node i to j</p>
+
+<p>$a_{ij} = \frac{\lambda_1}{d_{ij}^2}$</p>
+
+<p>This looks similar to the Electric Potential function. Lambda is a normalizing factor to define the importance of this particular criteria.</p>
+
+<h2 id="window-edges">Window Edges</h2>
+
+<p>The energy function for Window Edges bases itself of the distance between node and Window Edges</p>
+
+<p>$m_i = \lambda_2 ( \frac{1}{r^2_i} + \frac{1}{l^2_i} + \frac{1}{t^2_i} + \frac{1}{b^2_i})$</p>
+
+<p>Where $ r_i $,$ l_i $,$ t_i $ &amp; $ b_i $ are the distances of node i to right, left, top and bottom window edges. 
+This ensures that nodes are prevented from getting too close to window border.</p>
+
+<h2 id="edge-lengths">Edge lengths</h2>
+
+<p>we try to shorten edge lengths but not make the graph too crowded. For each edge $ k $ we add the term</p>
+
+<p>$ c_k = \lambda_3d_{k}^2 $</p>
+
+<p>These 3 criteria are enough for most graphs, but they won’t look good on all graphs.
+So we’ll take a look at edge crossings and node to edge distances</p>
+
+<h2 id="edge-crossing">Edge crossing</h2>
+
+<p>We prevent edge crossing simply by adding an extra $ \lambda_4 $ for every edge that crosses</p>
+
+<h2 id="node-to-edge-sides">Node to edge sides</h2>
+
+<p>Edges may get too close to a node. Mostly this is taken care by rest of the function, but adding this extra energy covers more cases</p>
+
+<p>$ h_{kl} = \frac{\lambda_5}{g_{kl}^2} $</p>
+
+<p>There is an additional minimum distance rule in the paper, which I ignored for my code as it
+was working neatly without it. After every step of energy change, The temperature should be reduced. We follow this rule:</p>
+
+<p>$ T’ = \lambda T $</p>
+
+<p>with $ \lambda $ between 0.6 and 0.95.</p>
+
+<p>Here is an 8x speedup video of my implementation on Turbo C++.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BHHFM5IoAT4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>I did this mostly in a small laptop which didn’t belong to me at the time, and I hence lost most of the code. 
+I’m looking forward to re implementing it here in Javascript so that anyone can play around with it :)</p>
+
+</div>
+
+<div class="about">
+    <hr/><br/>
+    <div class="about__text">
+        Written by <strong>  Atul Vinayak </strong>
+        on <strong>01 October 2014</strong>
+    </div>
+</div>
+
+
+        </div>
+
+        <script src="/assets/vendor/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+        
+    </body>
+</html>

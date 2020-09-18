@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>¬ journal</title>
+    <description>Atul's Programming Journals. A blog where I explore programming &amp; Design
+</description>
+    <link>http://localhost:7766/</link>
+    <atom:link href="http://localhost:7766/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 01 Feb 2020 22:15:46 +0900</pubDate>
+    <lastBuildDate>Sat, 01 Feb 2020 22:15:46 +0900</lastBuildDate>
+    <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Project Kasparov Part 2 - react-chess</title>
+        <description>&lt;p&gt;&lt;img src=&quot;/assets/images/chessreact.png&quot; alt=&quot;-&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you haven’t read Project Kasparov Part 1, I suggest you follow this &lt;a href=&quot;https://avinayak.github.io/Project-Kasparov-chess.html&quot;&gt;link&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;All my web projects were written in jQuery till now (except the timer, which was Angular 1.0). I was hearing a lot of praise for react in Hacker News and Reddit. I wanted to learn react so badly, but I couldn’t think of any fun project that needed it. I could upgrade some of the older ones, but I wanted to try something new.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://reactjs.org/tutorial/tutorial.html&quot;&gt;Facebook’s React tutorial&lt;/a&gt; is a basic Tic-Tac-Toe game with some over the top features like time-travel, mainly intended to teach best practices for state management. I did the tutorial, but couldn’t get the hang of it.&lt;/p&gt;
+
+&lt;p&gt;So it decided to make a chess web app in React. I thought it’d be easier because I just did an App with a Game Pattern.&lt;/p&gt;
+
+&lt;p&gt;I have to thank &lt;a href=&quot;https://github.com/jhlywa&quot;&gt;jhlywa&lt;/a&gt; for the Amazing &lt;a href=&quot;https://github.com/jhlywa/chess.js/&quot;&gt;chess.js&lt;/a&gt; without which this app wouldn’t exist. Chess.js cover everything from move generation/validation, piece placement/movement, and check/checkmate/draw detection.&lt;/p&gt;
+
+&lt;p&gt;The AI at this point was just A random move generator, which selects a move at random from Chess.js’s list of valid next moves.&lt;/p&gt;
+
+&lt;p&gt;I followed a similar design pattern to the Tic-Tac-Toe app. Everything, including the ability to time-travel to an older move, was implemented. I reused some of chssbot’s code: the rendering and FEN to CHEQ_TT.TTF mapping.&lt;/p&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;Finally, I wanted to do AI. The best Chess AI in javascript was &lt;a href=&quot;https://github.com/exoticorn/stockfish-js&quot;&gt;stockfish&lt;/a&gt;.&lt;/dt&gt;
+  &lt;dd&gt;
+    &lt;p&gt;Stockfish-js is an emscripten port of the stockfish chess engine. (Emscripten being a c[++] to javascript compiler.) This enables one to run one of the strongest chess engines available without downloads or plugins in a web browser&lt;/p&gt;
+  &lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;p&gt;Unfortunately, Stockfish.js caused my NPM dev setup to crash every time I imported it, or &amp;lt;script&amp;gt; tagged it. The file was 1.12 MB in size due to the rulebook which came embedded in the JS file.&lt;/p&gt;
+
+&lt;p&gt;Stockfish-js is designed to run in a web-worker, which can be created like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;stockfish&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Worker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;stockfish.js&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Input the current Board state (FEN):&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;sf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;postMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`position fen &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;historicalStates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;boardIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Input (standard UCI commands) to the engine is posted as a message to the worker:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;postMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;go depth 15&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 15 is from 0-20 difficuilty levels? &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The output of the engine is again posted as a message, to receive it you need to install an event handler:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onmessage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;//display the move from event.data
+&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The UI was done with the help of React &lt;a href=&quot;https://material-ui.com/&quot;&gt;Material-UI&lt;/a&gt;, which I used in many of my projects from then.&lt;/p&gt;
+
+&lt;p&gt;Try &lt;a href=&quot;https://avinayak.github.io/chess/&quot;&gt;React-Chess&lt;/a&gt; now&lt;/p&gt;
+</description>
+        <pubDate>Fri, 28 Jul 2017 09:00:00 +0900</pubDate>
+        <link>http://localhost:7766/web/2017/07/28/chess2.html</link>
+        <guid isPermaLink="true">http://localhost:7766/web/2017/07/28/chess2.html</guid>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>Project Kasparov Part 1 - chssbot</title>
+        <description>&lt;p&gt;&lt;a class=&quot;twitter-timeline&quot; data-tweet-limit=&quot;1&quot; data-width=&quot;500&quot; href=&quot;https://twitter.com/chssbot?ref_src=twsrc%5Etfw&quot;&gt;&lt;/a&gt; &lt;script async=&quot;&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Project Kasparov started out as a long-running desire to work on a chess related application.&lt;/p&gt;
+
+&lt;p&gt;I found the Algorithms, Typography and Literature surrounding Chess fascinating. I am not very good at playing chess though. I was stuck with the failure of deploying canvasbot, My Genetic Algorithm Art bot at this time.&lt;/p&gt;
+
+&lt;p&gt;I decided to create a PGN to MP4 converter. PGN or &lt;a href=&quot;https://en.wikipedia.org/wiki/Portable_Game_Notation&quot;&gt;Portable Game Notation&lt;/a&gt; is the standard file format for recording chess matches/games. A sample looks like so:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Event&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;F/S Return Match&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Site&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Belgrade, Serbia JUG&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Date&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;1992.11.04&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Round&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;29&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;White&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fischer, Robert J.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Black&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Spassky, Boris V.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Result&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;1/2-1/2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nf3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nc6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bb5&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a6&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;opening&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;called&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ruy&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Lopez&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.}&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ba4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nf6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;O&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Be7&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Re1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bb3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;O&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nb8&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nbd7&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cxb5&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axb5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nc3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bb7&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bg5&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b4&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nb1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bh4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;17&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dxe5&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Nxe4&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bxe7&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Qxe7&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;19&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exd6&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Qf6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nbd2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nxd6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;21&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nc4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nxc4&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bxc4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nb6&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;23&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ne5&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rae8&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bxf7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rxf7&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nxf7&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rxe1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;26&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Qxe1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kxf7&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;27&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Qe3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Qg5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;28&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Qxg5&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hxg5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;29&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ke6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kd6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axb4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cxb4&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ra5&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nd5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;33&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bc8&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;34&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kf2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bf5&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;35&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ra7&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;36&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ra6&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kc5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;37&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ke1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nf4&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;38&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nxh3&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;39&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kd2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kb5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rd6&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kc5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ra6&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Nf2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bd3&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;43&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Re6&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;I needed a way to parse these PGN files to something I can work with. Fortunately, I found &lt;a href=&quot;https://github.com/renatopp/pgnparser&quot;&gt;this&lt;/a&gt; excellent PGN parser by &lt;a href=&quot;https://github.com/renatopp&quot;&gt;Renato de Pontes Pereira&lt;/a&gt;. Also, I didn’t need to use Images/Vectors for rendering Chess board and pieces. Instead, I used &lt;a href=&quot;https://fonts2u.com/cheq.font&quot;&gt;CHEQ_TT.TTF&lt;/a&gt;, the Awesome Chess font. I could create cool Images like this!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/chess.jpg&quot; alt=&quot;-&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The PGN Parser output a series of roughly something like this&lt;/p&gt;
+
+&lt;p&gt;&lt;tt&gt;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/R1BQKBNR&lt;/tt&gt;&lt;/p&gt;
+
+&lt;p&gt;This is called a FEN or &lt;a href=&quot;https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation&quot;&gt;Forsyth–Edwards Notation&lt;/a&gt;. The purpose of FEN is to provide all the necessary information to restart a game from a particular position.&lt;/p&gt;
+
+&lt;p&gt;A FEN is easily parsable. I Just needed to convert FEN to whatever glyph CHEQ_TT.TTF used. By trial and error, I created a mapping. An image of the current board position was rendered using &lt;a href=&quot;https://pillow.readthedocs.io/en/5.1.x/&quot;&gt;PIL&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Using some &lt;a href=&quot;https://en.wikipedia.org/wiki/FFmpeg&quot;&gt;FFMPEG&lt;/a&gt; magic, I was able to create an MP4 file.&lt;/p&gt;
+
+&lt;video controls=&quot;&quot; muted=&quot;&quot; width=&quot;500&quot; src=&quot;https://video.twimg.com/ext_tw_video/801408417852067840/pu/vid/364x360/-6qnZvik3BBaP49v.mp4&quot;&gt;
+&lt;/video&gt;
+
+&lt;p&gt;I still found these videos illegible, as it’s hard to keep track of the last move. So, As seen in the final version of &lt;a href=&quot;https://twitter.com/chssbot&quot;&gt;@chssbot&lt;/a&gt; each move is actually 3 frames (look carefully).&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Highlight the “from” cell and “to” cell of the next move in color.&lt;/li&gt;
+  &lt;li&gt;The actual move + Highlights.&lt;/li&gt;
+  &lt;li&gt;No Highlights.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;these three frames were played back at 3 X framerate. I found that the legibility of moves increased so much.&lt;/p&gt;
+
+&lt;p&gt;The highlighted color is randomly generated to avoid boredom 😊&lt;a href=&quot;https://twitter.com/chssbot&quot;&gt;@chssbot&lt;/a&gt; has been publishing a new game every 4h from Nov 2016.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;EDIT:&lt;/strong&gt; As of 2018 June 27, &lt;a href=&quot;https://twitter.com/chssbot&quot;&gt;@chssbot&lt;/a&gt; has 76 followers, and enjoys regular retweets and discussions :)&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;
+  &lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Kasparov◻ vs Gueye◼&lt;br /&gt;Cannes Simultaneous Exhibition(1988)&lt;br /&gt;1-0 &lt;a href=&quot;https://t.co/D3a2aPrJum&quot;&gt;pic.twitter.com/D3a2aPrJum&lt;/a&gt;&lt;/p&gt;
+  &lt;p&gt;— Chess Bot (@chssbot) &lt;a href=&quot;https://twitter.com/chssbot/status/1011909791843840011?ref_src=twsrc%5Etfw&quot;&gt;June 27, 2018&lt;/a&gt;&amp;lt;/blockquote&amp;gt;
+&lt;script async=&quot;&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Mon, 28 Nov 2016 09:00:00 +0900</pubDate>
+        <link>http://localhost:7766/programming/2016/11/28/chess.html</link>
+        <guid isPermaLink="true">http://localhost:7766/programming/2016/11/28/chess.html</guid>
+        
+        
+        <category>programming</category>
+        
+      </item>
+    
+      <item>
+        <title>Genetic Art</title>
+        <description>&lt;p&gt;I was experimenting with a lot of Genetic/Hill Climbing algorithms to generate Art. I started out by trying to approximate a Grayscale image with just lines of varying width and color intensity.&lt;/p&gt;
+
+&lt;p&gt;The genetic algorithm is roughly like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;nl&quot;&gt;Algorithm:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;χ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;µ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Initialise generation 0:
+&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Pk&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;population&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;randomly&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generated&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;individuals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Evaluate Pk:
+&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Compute&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fitness&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∈&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
+        &lt;span class=&quot;c1&quot;&gt;// Create generation k + 1:
+&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 1. Copy:
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;−&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;χ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;×&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pk&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;insert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;into&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 2. Crossover:
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Select&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;χ&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;×&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pair&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;them&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;up&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;produce&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offspring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+        &lt;span class=&quot;n&quot;&gt;insert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offspring&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;into&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 3. Mutate:
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Select&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;µ&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;×&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;members&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;invert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;randomly&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;selected&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;each&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Evaluate Pk+1:
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Compute&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fitness&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∈&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Increment:
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fitness&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fittest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;individual&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pk&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;high&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enough&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fittest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;individual&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The first image after several geneartions..&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/GA1.png&quot; alt=&quot;ga&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I lost the original image I was trying to approximate.. but doesn’t that look like a deer? 🙄 I modified the algorithm several times to approximate my face. This is the original image..&lt;/p&gt;
+
+&lt;p&gt;FYI this is what I look like&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/face.jpg&quot; alt=&quot;ga&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;First Attempt&lt;/strong&gt;: Program too slow. Had to stop after 10 Hours.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/GA.png&quot; alt=&quot;ga&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Second Attempt&lt;/strong&gt;: Rewrote the program to use Numpy arrays and Bezier Curves instead on just Lines. Also now in Technicolor!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/error1.png&quot; alt=&quot;ga&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Bugfixes &amp;amp; Third Attempt&lt;/strong&gt;: Atleast it’s converging to something&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/out.png&quot; alt=&quot;ga&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;But I didn’t look like this at all :/ . The problem here was that the fitness function was&lt;/p&gt;
+
+&lt;p&gt;$ \sum_{pixel=1}^{NPIXELS} abs(original[pixel] - Generated[pixel]) $&lt;/p&gt;
+
+&lt;p&gt;I tried squaring. squaring increases error distance. So fitter drawings would have a higher chance of being selected.&lt;/p&gt;
+
+&lt;p&gt;$ \sum_{pixel=1}^{NPIXELS} (original[pixel] - Generated[pixel])^2 $&lt;/p&gt;
+
+&lt;p&gt;and it worked (sort of. from an artistic point of view)!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/me.jpg&quot; alt=&quot;ga&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I used this code to generate a lot of images, of different shapes.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/star.jpg&quot; alt=&quot;ga&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;My eventual plans were to create a bot which tweets these images. I even wrote a small program that gets a random Picassa image and bezierifies it. Unfortunately, &lt;a href=&quot;https://twitter.com/primitivepic&quot;&gt;someone else&lt;/a&gt; has already done it. And it’s much better than mine. But I learned a lot doing this project.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 01 Oct 2016 09:00:00 +0900</pubDate>
+        <link>http://localhost:7766/algorithm/2016/10/01/genetic.html</link>
+        <guid isPermaLink="true">http://localhost:7766/algorithm/2016/10/01/genetic.html</guid>
+        
+        
+        <category>algorithm</category>
+        
+      </item>
+    
+      <item>
+        <title>Simulated Annealing for Beautiful Graphs</title>
+        <description>&lt;p&gt;Humans have an intuitive sense of symmetry and aesthetics. We try our best to make it easy to understand the concept we’re trying to explain.&lt;/p&gt;
+
+&lt;p&gt;In textbooks, we see images like the one above, and not like this one..&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/polbooks_fr.png&quot; alt=&quot;-&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I’m having labs in college where I have to implement various algorithms on graphs. The first step, however, was to draw one. The Random approach was the easiest. Randomly plot N Nodes anywhere in the screen, and connect them. If you’re lucky, your graph might look good. Mostly they didn’t.&lt;/p&gt;
+
+&lt;p&gt;There were people who tried this interesting approach: Given, N Nodes, arrange them in a Circle: with ‘360/N’ angular separation. Given the center, angle &amp;amp; radius can be easily converted to X, Y using basic trigonometry.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/circular.jpg&quot; alt=&quot;-&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This was good. But we could do better. I searched for the best way to do this, and ended up reading &lt;a href=&quot;http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.20.5663&quot;&gt;this&lt;/a&gt; paper&lt;/p&gt;
+
+&lt;p&gt;I think this is a pirated version of this paper because this is a Bad Scan and doesn’t look official at all. Also, I see another version &lt;a href=&quot;https://dl.acm.org/citation.cfm?id=234538&quot;&gt;here&lt;/a&gt; in ACM’s Library behind a paywall.&lt;/p&gt;
+
+&lt;p&gt;Anyway, The paper promised to take graphs from (a) to (b) using a method called (Simulated Annealing)[https://en.wikipedia.org/wiki/Simulated_annealing].&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/sample.png&quot; alt=&quot;-&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The paper defines the characteristics of a good drawing such as Evenly distributed nodes, edges having approximately the same lengths, minimal edge crossing, and Symmetry. Oh, and fitting snugly inside the window you’re drawing.&lt;/p&gt;
+
+&lt;p&gt;SA is derived from a Metallurgical process called Annealing, used to turn liquids to their crystalline form. Probability with which a system changes from one energy state to the next is&lt;/p&gt;
+
+&lt;p&gt;$\Huge e^{-\frac{E_2 - E_1}{kT}}$&lt;/p&gt;
+
+&lt;p&gt;This rule implied that whenever the energy $ E_2 $ of the candidate state is smaller than the current energy $ E_1 $, the system will take the move, else the state change is probabilistic.&lt;/p&gt;
+
+&lt;p&gt;A rough algorithm for SA is as follows:&lt;/p&gt;
+
+&lt;p&gt;Choose an initial configuration $ \sigma $ and an initial temperature $ T $&lt;/p&gt;
+
+&lt;p&gt;Repeat the following (usually some fixed number of times):&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Choose an initial configuration $ \sigma $ and an initial temperature $ T $&lt;/li&gt;
+  &lt;li&gt;
+    &lt;dl&gt;
+      &lt;dt&gt;Repeat the following (usually some fixed number of times):&lt;/dt&gt;
+      &lt;dd&gt;2.1 Choose new configuration $ \sigma’ $ from the neighborhood of $ \sigma $&lt;/dd&gt;
+      &lt;dd&gt;2.2 Let $ E $ and $ E’ $ be the value of the cost function at $ \sigma $ and $ \sigma’ $ respectively&lt;/dd&gt;
+      &lt;dd&gt;2.3 If $ E’ $ &amp;lt; $ E $ or $ random(0,1) &amp;lt; e^{(E - E’)/T)} $ the set $ \sigma $ to $ \sigma’ $&lt;/dd&gt;
+      &lt;dd&gt;2.4 Decrease Temperature $ T $&lt;/dd&gt;
+    &lt;/dl&gt;
+  &lt;/li&gt;
+  &lt;li&gt;If Termination rule is satisfied, stop. else go back to step 2&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The algorithm takes in an adjacency list representation of our graph, and should hopefully return coordinates of our graph nodes that look good. We chose an initial set of random coordinates for every node. Our energy function should be designed in such a way that a ‘nicer’ configuration should have a lower energy state. We talked about the characteristics of a good graph, but here are them again in detail.&lt;/p&gt;
+
+&lt;h2 id=&quot;node-distribution&quot;&gt;Node distribution&lt;/h2&gt;
+
+&lt;p&gt;Our nodes should be evenly spread across the window. Two components of the energy function
+take care of this. One to prevent nodes from getting too close. Second deals with window borders.&lt;/p&gt;
+
+&lt;p&gt;We add $ a_{ij} $ Energy function. if $ d_{ij} $ is the distance of node i to j&lt;/p&gt;
+
+&lt;p&gt;$a_{ij} = \frac{\lambda_1}{d_{ij}^2}$&lt;/p&gt;
+
+&lt;p&gt;This looks similar to the Electric Potential function. Lambda is a normalizing factor to define the importance of this particular criteria.&lt;/p&gt;
+
+&lt;h2 id=&quot;window-edges&quot;&gt;Window Edges&lt;/h2&gt;
+
+&lt;p&gt;The energy function for Window Edges bases itself of the distance between node and Window Edges&lt;/p&gt;
+
+&lt;p&gt;$m_i = \lambda_2 ( \frac{1}{r^2_i} + \frac{1}{l^2_i} + \frac{1}{t^2_i} + \frac{1}{b^2_i})$&lt;/p&gt;
+
+&lt;p&gt;Where $ r_i $,$ l_i $,$ t_i $ &amp;amp; $ b_i $ are the distances of node i to right, left, top and bottom window edges. 
+This ensures that nodes are prevented from getting too close to window border.&lt;/p&gt;
+
+&lt;h2 id=&quot;edge-lengths&quot;&gt;Edge lengths&lt;/h2&gt;
+
+&lt;p&gt;we try to shorten edge lengths but not make the graph too crowded. For each edge $ k $ we add the term&lt;/p&gt;
+
+&lt;p&gt;$ c_k = \lambda_3d_{k}^2 $&lt;/p&gt;
+
+&lt;p&gt;These 3 criteria are enough for most graphs, but they won’t look good on all graphs.
+So we’ll take a look at edge crossings and node to edge distances&lt;/p&gt;
+
+&lt;h2 id=&quot;edge-crossing&quot;&gt;Edge crossing&lt;/h2&gt;
+
+&lt;p&gt;We prevent edge crossing simply by adding an extra $ \lambda_4 $ for every edge that crosses&lt;/p&gt;
+
+&lt;h2 id=&quot;node-to-edge-sides&quot;&gt;Node to edge sides&lt;/h2&gt;
+
+&lt;p&gt;Edges may get too close to a node. Mostly this is taken care by rest of the function, but adding this extra energy covers more cases&lt;/p&gt;
+
+&lt;p&gt;$ h_{kl} = \frac{\lambda_5}{g_{kl}^2} $&lt;/p&gt;
+
+&lt;p&gt;There is an additional minimum distance rule in the paper, which I ignored for my code as it
+was working neatly without it. After every step of energy change, The temperature should be reduced. We follow this rule:&lt;/p&gt;
+
+&lt;p&gt;$ T’ = \lambda T $&lt;/p&gt;
+
+&lt;p&gt;with $ \lambda $ between 0.6 and 0.95.&lt;/p&gt;
+
+&lt;p&gt;Here is an 8x speedup video of my implementation on Turbo C++.&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/BHHFM5IoAT4&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;I did this mostly in a small laptop which didn’t belong to me at the time, and I hence lost most of the code. 
+I’m looking forward to re implementing it here in Javascript so that anyone can play around with it :)&lt;/p&gt;
+</description>
+        <pubDate>Wed, 01 Oct 2014 09:00:00 +0900</pubDate>
+        <link>http://localhost:7766/algorithm/2014/10/01/simulated-annealing.html</link>
+        <guid isPermaLink="true">http://localhost:7766/algorithm/2014/10/01/simulated-annealing.html</guid>
+        
+        
+        <category>algorithm</category>
+        
+      </item>
+    
+      <item>
+        <title>Blender Renders</title>
+        <description>&lt;p&gt;The Particle Collision project got me interested in Blender. Over the course of many years, I did several Renders.&lt;/p&gt;
+
+&lt;blockquote class=&quot;instagram-media&quot; data-instgrm-captioned=&quot;&quot; data-instgrm-permalink=&quot;https://www.instagram.com/p/5THLj4QYwc/?utm_source=ig_embed&amp;amp;utm_campaign=loading&quot; data-instgrm-version=&quot;12&quot; style=&quot; background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);&quot;&gt;&lt;div style=&quot;padding:16px;&quot;&gt; &lt;a href=&quot;https://www.instagram.com/p/5THLj4QYwc/?utm_source=ig_embed&amp;amp;utm_campaign=loading&quot; style=&quot; background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;&quot; target=&quot;_blank&quot;&gt; &lt;div style=&quot; display: flex; flex-direction: row; align-items: center;&quot;&gt; &lt;div style=&quot;background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;&quot;&gt;&lt;/div&gt; &lt;div style=&quot;display: flex; flex-direction: column; flex-grow: 1; justify-content: center;&quot;&gt; &lt;div style=&quot; background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;&quot;&gt;&lt;/div&gt; &lt;div style=&quot; background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;padding: 19% 0;&quot;&gt;&lt;/div&gt; &lt;div style=&quot;display:block; height:50px; margin:0 auto 12px; width:50px;&quot;&gt;&lt;svg width=&quot;50px&quot; height=&quot;50px&quot; viewBox=&quot;0 0 60 60&quot; version=&quot;1.1&quot; xmlns=&quot;https://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;https://www.w3.org/1999/xlink&quot;&gt;&lt;g stroke=&quot;none&quot; stroke-width=&quot;1&quot; fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;&gt;&lt;g transform=&quot;translate(-511.000000, -20.000000)&quot; fill=&quot;#000000&quot;&gt;&lt;g&gt;&lt;path d=&quot;M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631&quot;&gt;&lt;/path&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div style=&quot;padding-top: 8px;&quot;&gt; &lt;div style=&quot; color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;&quot;&gt; View this post on Instagram&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;padding: 12.5% 0;&quot;&gt;&lt;/div&gt; &lt;div style=&quot;display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;&quot;&gt;&lt;div&gt; &lt;div style=&quot;background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);&quot;&gt;&lt;/div&gt; &lt;div style=&quot;background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;&quot;&gt;&lt;/div&gt; &lt;div style=&quot;background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;margin-left: 8px;&quot;&gt; &lt;div style=&quot; background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;&quot;&gt;&lt;/div&gt; &lt;div style=&quot; width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;margin-left: auto;&quot;&gt; &lt;div style=&quot; width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);&quot;&gt;&lt;/div&gt; &lt;div style=&quot; background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);&quot;&gt;&lt;/div&gt; &lt;div style=&quot; width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt; &lt;p style=&quot; margin:8px 0 0 0; padding:0 4px;&quot;&gt; &lt;a href=&quot;https://www.instagram.com/p/5THLj4QYwc/?utm_source=ig_embed&amp;amp;utm_campaign=loading&quot; style=&quot; color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;&quot; target=&quot;_blank&quot;&gt;Found new hobby. 3D modeling. This is a model I&amp;#39;ve been working on from my college days. Decided to complete it, now that I&amp;#39;ve graduated. This model is seriously inaccurate, given that I drew it mostly from memory and photographs. Worth a shot. College of Engineering Trivandrum. #cet #blender #architecture #design&lt;/a&gt;&lt;/p&gt; &lt;p style=&quot; color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;&quot;&gt;A post shared by &lt;a href=&quot;https://www.instagram.com/at.vk/?utm_source=ig_embed&amp;amp;utm_campaign=loading&quot; style=&quot; color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px;&quot; target=&quot;_blank&quot;&gt; Atul Vinayak&lt;/a&gt; (@at.vk) on &lt;time style=&quot; font-family:Arial,sans-serif; font-size:14px; line-height:17px;&quot; datetime=&quot;2015-07-19T01:04:48+00:00&quot;&gt;Jul 18, 2015 at 6:04pm PDT&lt;/time&gt;&lt;/p&gt;&lt;/div&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//www.instagram.com/embed.js&quot;&gt;&lt;/script&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;A Solar Sailer to Mars.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/b9.jpg&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;A Portable TV. I did’nt model this. Just did the shading and reflections.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/b8.jpg&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;The Three images below are wierd. I know. Polyhedra, The Penrose Triangle and a Hypercube.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/b7.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/b6.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/b5.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=b75EpoF1W88&quot;&gt;2001: ASO&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/b4.jpg&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=TSaO9VGjLXc&quot;&gt;The Machine&lt;/a&gt; from Contact I got appreciation for this in reddit from a student of the Professor who worked on the VFX for the movie 😊. This image shows up in google images now when you search “Contact Machine”&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/b3.jpg&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;This one is based on a Dream I once had. Had to learn Volumetric lighting to render this.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/b2.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Just a Fog &amp;amp; Sunshine experiment.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/b1.jpg&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Same image, but with volumetric lighting. but a bit too noisy.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/b0.jpg&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 20 Dec 2013 09:00:00 +0900</pubDate>
+        <link>http://localhost:7766/design/2013/12/20/blender.html</link>
+        <guid isPermaLink="true">http://localhost:7766/design/2013/12/20/blender.html</guid>
+        
+        
+        <category>design</category>
+        
+      </item>
+    
+      <item>
+        <title>Particle Collision Experiments</title>
+        <description>&lt;p&gt;OK, So I saw this in &lt;a href=&quot;https://www.reddit.com/r/gaming/comments/bdar7/colourful_5min_breakout_style_game_seriously_play&quot;&gt;reddit&lt;/a&gt;.&lt;/p&gt;
+
+&lt;video controls=&quot;&quot; muted=&quot;&quot; src=&quot;https://i.imgur.com/T0EaN6u.mp4&quot;&gt;
+&lt;/video&gt;
+
+&lt;p&gt;And I wanted to do something like that. I had plans to mess around with Box2D for a long time but didn’t get the opportunity. After a day’s worth of research,
+I found out that Blender does a much better job in Physics simulation, and it has a Python interpreter. I couldn’t ask for more. and I made this!&lt;/p&gt;
+
+&lt;video controls=&quot;&quot; muted=&quot;&quot; loop=&quot;&quot; src=&quot;http://i.imgur.com/RQXqIPT.mp4&quot;&gt;
+&lt;/video&gt;
+
+&lt;p&gt;As you can see, the particles are not really particles here. They’re more like blocks. This is actually a 3D simulation.
+The camera faces the Z-axis orthogonally in isometric view. In the beginning, there were no colors and the blocks were arranged into a huge rectangle. 
+But I knew it looks much more satisfying if I did something similar to this (I was waiting for a real life application for this Programing 101 snippet) 😉&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;* &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/* Outputs 
+
+* 
+* * 
+* * * 
+* * * * 
+
+*/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Also, I(Me being the idiot that I am), didn’t know the existence of the HSV/HSL functions, which would’ve made my life much easier. Instead, I had to implement this.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/hsv.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;With HSV(), I smoothly mapped the X locations of blocks with an H value, keeping S and V fixed.&lt;/p&gt;
+
+&lt;p&gt;In the end, I wanted to reduce the block size so that they’re more like particles, but my potato computer took ~ 30 Hrs to render this 😕.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 19 Dec 2013 09:00:00 +0900</pubDate>
+        <link>http://localhost:7766/programming/2013/12/19/collision.html</link>
+        <guid isPermaLink="true">http://localhost:7766/programming/2013/12/19/collision.html</guid>
+        
+        
+        <category>programming</category>
+        
+      </item>
+    
+      <item>
+        <title>A Music player that can uplift your mood</title>
+        <description>&lt;p&gt;This is the beginning of a big project I’m undertaking as a part of my Blackberry 10 Internship. It is a music player, which can analyze mood of a given track, and also guess our mood from the songs played. It uses support vector machine based regression to locate a song’s mood.&lt;/p&gt;
+
+&lt;p&gt;It had lots of cool (&lt;em&gt;planned&lt;/em&gt;) features like an ‘Uplift Me’, which plays a sad song at first, but slowly plays happy songs!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/mood.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The screenshot below is my webapp for training the algorithm. Kind of like a &lt;em&gt;crowdsourcing&lt;/em&gt; platform.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/ut.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Anyone can go to the page, and click the play button and play a song(randomly) and guess the song’s mood. The Webapp written in flask, saved all this information to an sqlite table in my laptop. I placed this in our college’s network for everyone to consume, and at the end of the day I had ~15% of my music collection of 4400 songs “moodated”. Hopefully, I’ll train the algorithm completely in a few weeks time.&lt;/p&gt;
+
+&lt;h2 id=&quot;edit&quot;&gt;Edit&lt;/h2&gt;
+
+&lt;p&gt;This project failed miserably :(&lt;/p&gt;
+
+&lt;p&gt;I underestimated the kind of effort &amp;amp; feature extraction involved in music. Most songs won’t have a single mood throughout. The next step after getting the songs tagged with mood information is to extract ~ 60 parameters for individual tracks, such as pitch, frequency, timber etc. and train the SVM with this.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, the model never converged well, and I got sidetracked by other projects.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 20 Oct 2013 09:00:00 +0900</pubDate>
+        <link>http://localhost:7766/programming/2013/10/20/music-mood.html</link>
+        <guid isPermaLink="true">http://localhost:7766/programming/2013/10/20/music-mood.html</guid>
+        
+        
+        <category>programming</category>
+        
+      </item>
+    
+      <item>
+        <title>Moviebot</title>
+        <description>&lt;p&gt;Found something useful to do with my enormous collection of movie subtitle files(.srt). Its a bot (like ELIZA or the emacs psychiatrist, not too bright) which is a huge movie fan. Ask him anything, he’ll reply with the closest known movie dialogue I’m attaching a sample conversation here (Try to Identify the movies and also, a well known TV Series from the sample).&lt;/p&gt;
+
+&lt;p&gt;With help from python inbuilt difflib, the resulting code was shorter than expected. To start I had to filter out the .srt files from timestamps and dialogue numbers and combine everything to a huge file and with a little approximate string matching .. voila!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: hello&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: its me only&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: then why do you say that?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: because l wanted to hurt you.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: oh really?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: yes, but… this is a copy.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: a copy of what?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: they’re watching you, neo.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: who is watching?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: come on, go!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: go where?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: to the machine city.&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: this lily or that lily?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: you dont make much sense now&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: “much” sense?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: cant you learn anything?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: l don’t know.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: what do you know?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: you married a lesbian!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: I did not marry a lesbian!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: to make you look good!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: you are an idiot!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: yep, that’s me.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: finally we agreed on something&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: you don’t have to become yakuza&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: who said anything about them?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: anyone hear from phoebe yet?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: nope&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: excuse me.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: are you leaving?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: i have a small job to do&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: what job?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: you wanted him to invite you&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: invite me where?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: . who, pops?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: yeah.. invite?&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;em&gt;you: ok.. general questions&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: shoot.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: the first rule of fight club&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: i’m not supposed to talk about it.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: what does indiana jones wear?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: so does joy behar.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: what are you wearing?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: nothing.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: why bats sir?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: Bats frighten me. It’s time my enemies share my dread.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: how did you get these scars?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: i just saw you in salem.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;you: tell a joke&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;MBot: just shut up. i’ll try not to&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;I lost the code used to generate this. But it was surprisingly ~ 30 lines!&lt;/p&gt;
+</description>
+        <pubDate>Wed, 21 Aug 2013 09:00:00 +0900</pubDate>
+        <link>http://localhost:7766/programming/2013/08/21/moviebot.html</link>
+        <guid isPermaLink="true">http://localhost:7766/programming/2013/08/21/moviebot.html</guid>
+        
+        
+        <category>programming</category>
+        
+      </item>
+    
+      <item>
+        <title>O(n log(n))</title>
+        <description>&lt;p&gt;Just quicksort, mergesort and heapsort in a single image. I was obsessed with shrinking my code to fit in a single image :)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/sorts1.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For Reference, The best, average and worst complexities&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Algorithm&lt;/th&gt;
+      &lt;th&gt;Best&lt;/th&gt;
+      &lt;th&gt;Average&lt;/th&gt;
+      &lt;th&gt;Worst&lt;/th&gt;
+      &lt;th&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Quicksort&lt;/td&gt;
+      &lt;td&gt;$\Omega(n\log{}n)$&lt;/td&gt;
+      &lt;td&gt;$\Theta(n\log{}n)$&lt;/td&gt;
+      &lt;td&gt;$O(n^2)$&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Mergesort&lt;/td&gt;
+      &lt;td&gt;$\Omega(n\log{}n)$&lt;/td&gt;
+      &lt;td&gt;$\Theta(n\log{}n)$&lt;/td&gt;
+      &lt;td&gt;$O(n\log{}n)$&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heapsort&lt;/td&gt;
+      &lt;td&gt;$\Omega(n\log{}n)$&lt;/td&gt;
+      &lt;td&gt;$\Theta(n\log{}n)$&lt;/td&gt;
+      &lt;td&gt;$O(n\log{}n)$&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;I went on to make this video right about that time in &lt;a href=&quot;https://processing.org/&quot;&gt;Processing&lt;/a&gt; which used the 3 $O(n^2)$ algorithms (selection,bubble,insertion) to sort 
+randomly shuffled colours. Take a look!&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/EDcp2t1qDGk&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+</description>
+        <pubDate>Thu, 11 Apr 2013 09:00:00 +0900</pubDate>
+        <link>http://localhost:7766/programming/algorithm/2013/04/11/sorting.html</link>
+        <guid isPermaLink="true">http://localhost:7766/programming/algorithm/2013/04/11/sorting.html</guid>
+        
+        
+        <category>programming</category>
+        
+        <category>algorithm</category>
+        
+      </item>
+    
+      <item>
+        <title>Procedurally Generated Mazes</title>
+        <description>&lt;p&gt;Maze Generation started out as an experiment.&lt;/p&gt;
+
+&lt;p&gt;I was fascinated by maze generation algorithms. I used a randomized version of &lt;a href=&quot;https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_Kruskal's_algorithm&quot;&gt;Kruskal’s algorithm&lt;/a&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;Create a list of all walls, and create a set for each cell, 
+each containing just that one cell.
+
+For each wall, in some random order:
+    If the cells divided by this wall belong to distinct sets:
+        Remove the current wall.
+        Join the sets of the formerly divided cells.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;I tried to do it in python in the begining, and later in C (for practice). The algorithm scaled really well, and I used it to generate huuge mazes of ~5GB with a single path between points.&lt;/p&gt;
+
+&lt;p&gt;The project took about a week to complete. Later on, the algorithm was used to design a real physical maze game in college.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/maze1.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The UI was witten in C using the excellent GTK Libraries, and Clutter for Vector graphics.&lt;/p&gt;
+
+&lt;p&gt;A few days later, I explored the Dead end filling algorithm to solve any randomly generated maze.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/maze2.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, at this point, I thought it’d be cool if i could turn it into a game :). so…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/maze3.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The human player is blue and a Computer player is red. The aim of the game is to get to the ohter diagonal end first. I had to adjust the velocity of the computer palyer so that it’s nearly impossible to beat the machine, unless you time your keystrokes accurately and not make &lt;strong&gt;any&lt;/strong&gt; mistakes.&lt;/p&gt;
+
+&lt;p&gt;Here is a youtube video (mute to avoid the horrible background music) of the path the Machine takes to solve. &lt;em&gt;This is not how dead end filling works&lt;/em&gt; . The maze is already solved. I’m just animating the solution path.&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/AkNWvK6vhzk&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+</description>
+        <pubDate>Thu, 11 Apr 2013 09:00:00 +0900</pubDate>
+        <link>http://localhost:7766/programming/design/2013/04/11/maze.html</link>
+        <guid isPermaLink="true">http://localhost:7766/programming/design/2013/04/11/maze.html</guid>
+        
+        
+        <category>programming</category>
+        
+        <category>design</category>
+        
+      </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title> Particle Collision Experiments —  &raquo;  ¬ journal</title>
+<meta name="description" content="Atul's Programming Journals. A blog where I explore programming & Design
+">
+<meta name="keywords" content="">
+<link rel="canonical" href="http://localhost:7766/programming/2013/12/19/collision.html">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+  <script async type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js"></script>
+   
+   <script async type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+
+   
+        
+
+
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Particle Collision Experiments" />
+<meta name="twitter:description" content="Atul's Programming Journals. A blog where I explore programming & Design
+" />
+<meta name="twitter:image" content="http://localhost:7766" />
+
+<!-- Google plus -->
+<meta name="author" content="">
+<link rel="author" href="">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Particle Collision Experiments">
+<meta property="og:description" content="Atul's Programming Journals. A blog where I explore programming & Design
+">
+<meta property="og:url" content="http://localhost:7766/programming/2013/12/19/collision.html">
+<meta property="og:site_name" content="¬ journal">
+
+        <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/vendor/normalize-css/normalize.css">
+<link rel="stylesheet" href="/css/main.css">
+
+  <link rel="stylesheet" href="/assets/vendor/highlight/styles/agate.css">
+
+<link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.css">
+
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <header class="header">
+    <div class="navigation">
+        <a href="/" class="logo">¬ journal</a>
+    </div>
+ 
+
+    <ul class="social-links">
+
+        <a href="/about" class="social-links__entry">
+            <i class="fa fa-user"></i>
+        </a>
+
+        
+            <a href="https://github.com/avinayak" class="social-links__entry" target="_blank">
+                <i class="fa fa-github"></i>
+            </a>
+        
+
+        
+            <a href="https://twitter.com/atulvinayak" class="social-links__entry" target="_blank">
+                <i class="fa fa-twitter"></i>
+            </a>
+        
+
+        
+            <a href="https://unsplash.com/@atulvi" class="social-links__entry" target="_blank">
+                <i class="fa fa-camera"></i>
+            </a>
+        
+    </ul>
+</header>
+<hr/>
+
+            <h1 class="page-title post-title">
+    <div class="page-title__text post-title__text">Particle Collision Experiments</div>
+    <div class="page-title__subtitle post-title__subtitle"></div>
+</h1>
+
+<div class="content">
+    <p>OK, So I saw this in <a href="https://www.reddit.com/r/gaming/comments/bdar7/colourful_5min_breakout_style_game_seriously_play">reddit</a>.</p>
+
+<video controls="" muted="" src="https://i.imgur.com/T0EaN6u.mp4">
+</video>
+
+<p>And I wanted to do something like that. I had plans to mess around with Box2D for a long time but didn’t get the opportunity. After a day’s worth of research,
+I found out that Blender does a much better job in Physics simulation, and it has a Python interpreter. I couldn’t ask for more. and I made this!</p>
+
+<video controls="" muted="" loop="" src="http://i.imgur.com/RQXqIPT.mp4">
+</video>
+
+<p>As you can see, the particles are not really particles here. They’re more like blocks. This is actually a 3D simulation.
+The camera faces the Z-axis orthogonally in isometric view. In the beginning, there were no colors and the blocks were arranged into a huge rectangle. 
+But I knew it looks much more satisfying if I did something similar to this (I was waiting for a real life application for this Programing 101 snippet) 😉</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">i</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"* "</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* Outputs 
+
+* 
+* * 
+* * * 
+* * * * 
+
+*/</span></code></pre></figure>
+
+<p>Also, I(Me being the idiot that I am), didn’t know the existence of the HSV/HSL functions, which would’ve made my life much easier. Instead, I had to implement this.</p>
+
+<p><img src="/assets/images/hsv.png" alt="My helpful screenshot" /></p>
+
+<p>With HSV(), I smoothly mapped the X locations of blocks with an H value, keeping S and V fixed.</p>
+
+<p>In the end, I wanted to reduce the block size so that they’re more like particles, but my potato computer took ~ 30 Hrs to render this 😕.</p>
+
+</div>
+
+<div class="about">
+    <hr/><br/>
+    <div class="about__text">
+        Written by <strong>  Atul Vinayak </strong>
+        on <strong>19 December 2013</strong>
+    </div>
+</div>
+
+
+        </div>
+
+        <script src="/assets/vendor/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+        
+    </body>
+</html>
