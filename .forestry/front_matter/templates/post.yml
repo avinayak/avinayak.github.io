@@ -1,7 +1,4 @@
 ---
----
-
----
 label: post
 hide_body: false
 fields:
@@ -17,5 +14,3 @@ fields:
 - type: text
   name: layout
   label: layout
-pages:
-- _posts/2020-09-09-test.md
