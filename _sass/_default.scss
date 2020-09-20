@@ -1,6 +1,6 @@
 /* =Base */
 body {
-    font-family: 'Inconsolata', ;
+    font-family: 'Cantarell', sans-serif;
     color: $iron;
     background-color: $dorian;
 }
@@ -16,21 +16,20 @@ a {
 }
 
 p {
-    font-size: 20px;
+    font-size: 17px;
     line-height: 32px;
 }
 
-img {
+img,video, .twitter-tweet, .instagram-media {
     margin: 40px auto;
     display: block;
     max-width: 100%;
 }
 
 blockquote {
-    letter-spacing: 3px;
     margin:0px;
     margin-top: 40px;
-    margin-bottom: 70px;
+    margin-bottom: 40px;
     padding: 0px;
     text-align: center;
     position: relative;
@@ -77,9 +76,10 @@ strong {
 }
 
 .logo {
-    font-size: 50px;
-    font-weight: 700;
-    color: $iron;
+    margin: 22px 0px;
+    font-size: 26px;
+    font-weight: 200;
+    color: #333333;
     display: block;
 }
 
@@ -125,7 +125,7 @@ strong {
 }
 
 .page-title__text {
-    font-weight: 700;
+    font-weight: 200;
     font-size: 70px;
 }
 
@@ -155,17 +155,17 @@ strong {
 }
 
 .post-teaser {
-    margin-bottom: 45px;
-    font-weight: 700;
+    margin-bottom: 12px;
+    font-weight: 200;
 }
 
 .post-teaser__title {
-    font-size: 22px;
+    font-size: 16px;
     color: $iron;
 }
 
 .post-teaser__date {
-    font-size: 16px;
+    font-size: 14px;
     float: right;
     vertical-align: middle;
     color: $cloudy;
@@ -173,7 +173,7 @@ strong {
 
 .empty-post-list {
     font-size: 22px;
-    font-weight: 700;
+    font-weight: 200;
     color: $iron;
     text-align: center;
 }
@@ -182,7 +182,6 @@ strong {
 .explore {
     text-align: center;
     color: $cloudy;
-    margin-top: 140px;
 }
 
 .explore__devider {
@@ -191,6 +190,7 @@ strong {
 }
 
 .explore__label {
+    display: none;
     font-size: 14px;
     margin-top: 15px;
 }
@@ -203,8 +203,8 @@ strong {
 
 .categories__item {
     display: inline-block;
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 200;
+    font-size: 12px;
 }
 
 .categories__item a {
@@ -238,7 +238,7 @@ strong {
 }
 
 .about__text {
-    font-size: 18px;
+    font-size: 15px;
 }
 
 #disqus_thread {

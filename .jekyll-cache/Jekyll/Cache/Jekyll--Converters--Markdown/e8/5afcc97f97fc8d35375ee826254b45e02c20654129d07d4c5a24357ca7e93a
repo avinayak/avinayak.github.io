@@ -1,0 +1,49 @@
+I"~<p><img src="/assets/images/chessreact.png" alt="-" /></p>
+
+<p>If you haven’t read Project Kasparov Part 1, I suggest you follow this <a href="https://avinayak.github.io/Project-Kasparov-chess.html">link</a>.</p>
+
+<p>All my web projects were written in jQuery till now (except the timer, which was Angular 1.0). I was hearing a lot of praise for react in Hacker News and Reddit. I wanted to learn react so badly, but I couldn’t think of any fun project that needed it. I could upgrade some of the older ones, but I wanted to try something new.</p>
+
+<p><a href="https://reactjs.org/tutorial/tutorial.html">Facebook’s React tutorial</a> is a basic Tic-Tac-Toe game with some over the top features like time-travel, mainly intended to teach best practices for state management. I did the tutorial, but couldn’t get the hang of it.</p>
+
+<p>So it decided to make a chess web app in React. I thought it’d be easier because I just did an App with a Game Pattern.</p>
+
+<p>I have to thank <a href="https://github.com/jhlywa">jhlywa</a> for the Amazing <a href="https://github.com/jhlywa/chess.js/">chess.js</a> without which this app wouldn’t exist. Chess.js cover everything from move generation/validation, piece placement/movement, and check/checkmate/draw detection.</p>
+
+<p>The AI at this point was just A random move generator, which selects a move at random from Chess.js’s list of valid next moves.</p>
+
+<p>I followed a similar design pattern to the Tic-Tac-Toe app. Everything, including the ability to time-travel to an older move, was implemented. I reused some of chssbot’s code: the rendering and FEN to CHEQ_TT.TTF mapping.</p>
+
+<dl>
+  <dt>Finally, I wanted to do AI. The best Chess AI in javascript was <a href="https://github.com/exoticorn/stockfish-js">stockfish</a>.</dt>
+  <dd>
+    <p>Stockfish-js is an emscripten port of the stockfish chess engine. (Emscripten being a c[++] to javascript compiler.) This enables one to run one of the strongest chess engines available without downloads or plugins in a web browser</p>
+  </dd>
+</dl>
+
+<p>Unfortunately, Stockfish.js caused my NPM dev setup to crash every time I imported it, or &lt;script&gt; tagged it. The file was 1.12 MB in size due to the rulebook which came embedded in the JS file.</p>
+
+<p>Stockfish-js is designed to run in a web-worker, which can be created like this:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">stockfish</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="dl">'</span><span class="s1">stockfish.js</span><span class="dl">'</span><span class="p">);</span> </code></pre></figure>
+
+<p>Input the current Board state (FEN):</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">sf</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s2">`position fen </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">historicalStates</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">boardIndex</span><span class="p">]}</span><span class="s2">`</span><span class="p">)</span></code></pre></figure>
+
+<p>Input (standard UCI commands) to the engine is posted as a message to the worker:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">engine</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="dl">'</span><span class="s1">go depth 15</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 15 is from 0-20 difficuilty levels? </span></code></pre></figure>
+
+<p>The output of the engine is again posted as a message, to receive it you need to install an event handler:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">engine</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">//display the move from event.data
+</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>The UI was done with the help of React <a href="https://material-ui.com/">Material-UI</a>, which I used in many of my projects from then.</p>
+
+<p>Try <a href="https://avinayak.github.io/chess/">React-Chess</a> now</p>
+:ET
