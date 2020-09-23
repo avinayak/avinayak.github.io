@@ -14,3 +14,5 @@ fields:
 - type: text
   name: layout
   label: layout
+pages:
+- _posts/another-test.md
