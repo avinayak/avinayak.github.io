@@ -10,4 +10,6 @@ layout: post
 <iframe width=500 height=570 frameBorder="0" src="https://www.dwitter.net/e/3078" allowFullScreen="true"></iframe>
 
 Hello!  
-I've decided to review/analyze some really cool dweets in this new series of posts. For those who do not know, a dweet is a short js program of 140 characters or less designed to run in [dwitter](https://www.dwitter.net/). 
+I've decided to review/analyze some really cool dweets in this new series of posts. For those who do not know, a dweet is a short js program of 140 characters or less designed to run in [dwitter](https://www.dwitter.net/). For the first dweet study, I've picked procedural pixel spaceship generation.
+
+First up, u/FireFly's 1-bit spaceships
