@@ -9,4 +9,5 @@ layout: post
 ---
 <iframe width=500 height=570 frameBorder="0" src="https://www.dwitter.net/e/3078" allowFullScreen="true"></iframe>
 
-So, I'm back writing this blog. This time I decided to review/analyze some really cool dweets. For those who do not know, a dweet is a js script 140 characters or less designed to run for https://www.dwitter.net/. 
+Hello!  
+I've decided to review/analyze some really cool dweets in this new series of posts. For those who do not know, a dweet is a short js program of 140 characters or less designed to run in [dwitter](https://www.dwitter.net/). 
