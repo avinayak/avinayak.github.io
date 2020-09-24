@@ -12,4 +12,9 @@ layout: post
 Hello!  
 I've decided to review/analyze some really cool dweets in this new series of posts. For those who do not know, a dweet is a short js program of 140 characters or less designed to run in [dwitter](https://www.dwitter.net/). For the first dweet study, I've picked procedural pixel spaceship generation.
 
-First up, u/FireFly's 1-bit spaceships
+First up, u/FireFly's 1-bit spaceships.
+
+    for(i=2e3;!t&&i--;Math.random()>(X**2+(Y-4)**2)**.5/6&&f(7)+f(-7))X=i&
+    3,Y=i>>2&7,f=m=>x.fillRect(240*(i>>5&7)+120-X*m,180*(i>>8)+50+Y*7,7,7)
+
+Prettifying this js script gives us
