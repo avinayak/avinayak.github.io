@@ -14,6 +14,8 @@ I've decided to review/analyze some really cool dweets in this new series of pos
 
 First up, u/FireFly's 1-bit spaceships.
 
+![](/uploads/screenshot-from-2020-09-24-12-53-31.png)
+
     for(i=2e3;!t&&i--;Math.random()>(X**2+(Y-4)**2)**.5/6&&f(7)+f(-7))X=i&
     3,Y=i>>2&7,f=m=>x.fillRect(240*(i>>5&7)+120-X*m,180*(i>>8)+50+Y*7,7,7)
 
