@@ -200,19 +200,27 @@ setting a breakpoint at line 6 and running this with gdb shows you what happened
 
 Line 6, starts with a loop condition `(A -= Z = !Z) || (printf("\n|"), A = W-1, H--)` . The printf in this condition also does, from what it looks like, draws the left side wall.
 
-Also, quick refresher at conditional execution using || and &&
+Quick refresher at conditional execution using `||` and `&&`
 
     #include <stdio.h>
     
     int main()
     {
         0 || printf("test 1\n");
-        1 || printf("test 2\n");
+        1 || printf("test 2\n"); // any nonzero
         0 && printf("test 3\n");
-        1 && printf("test 4\n");
+        1 && printf("test 4\n"); // any nonzero
         return 0;
     }
     /* prints:
     test 1                                                                                                                                                                             
     test 4
     */
+
+So, the loop test expression executes nothing when `A -= Z = !Z` evaluates to non-zero and `(printf("\n|"), A = W-1, H--)` when `A -= Z = !Z` evaluates to zero. We can also guess that `(printf("\n|"), A = W-1, H--)` is executed once per row, since it has the left wall printf. 
+
+In the whole program, Z, with initial value 0 is assigned a value only in this loop condition and it's simply !Z. This means, it can only take either 0 or 1 as a value. 
+
+The update statement is just `Z || printf(M)`. Seeing as this is the only other printf, we can be sure that this is the point where the maze gets rendered.
+
+The body of the loop is `M[Z] = Z[..stuff..]`. This is bizarre. Z is used both as an array and an index. 
