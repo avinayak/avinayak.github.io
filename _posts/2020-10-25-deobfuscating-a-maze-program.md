@@ -273,3 +273,11 @@ much cleaner! one step further to clear up the condition.
 It's starting to be readable now.
 
 lets look at condition s1. the inner `A[J - Z]` is equivalent to `J[A - Z]`. why? it's just pointer math. think about it..
+
+for condition s2, I added more paranthesis
+
+    (!H & (A == T[A])) | (6 << 27) < rand()
+
+and 6 << 27 is just 805306368 so
+
+    (!H & (A == T[A])) | (805306368) < rand()
