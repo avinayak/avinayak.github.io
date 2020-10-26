@@ -269,3 +269,5 @@ much cleaner! one step further to clear up the condition.
     	}
 
 It's starting to be readable now.
+
+lets look at condition s1. the inner `A[J - Z]` is equivalent to `J[A - Z]`. why? it's just pointer math. think about it..
