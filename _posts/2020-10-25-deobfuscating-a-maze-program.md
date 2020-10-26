@@ -16,7 +16,7 @@ I was wandering in Wikipedia when I came across this interesting page [https://e
     &    A   ==             T[                                  A]
     |6<<27<rand()||!C&!Z?J[T[E]=T[A]]=E,J[T[A]=A-Z]=A,"_.":" |"];}
 
-According to the article, this was a non winning entry for the 1988 [International Obfuscated C Code Contest](https://en.wikipedia.org/wiki/International_Obfuscated_C_Code_Contest). I really have no idea how anyone could've topped this. I serached around [http://www.de.ioccc.org/years.html#1988](http://www.de.ioccc.org/years.html#1988 "http://www.de.ioccc.org/years.html#1988"), but it looks like this entry is missing in this page. Wikipedia citation points me to a book, which I might check out later.
+According to the article, this was a non winning entry for the 1988 [International Obfuscated C Code Contest](https://en.wikipedia.org/wiki/International_Obfuscated_C_Code_Contest). I really have no idea how anyone could've topped this. I searched around [http://www.de.ioccc.org/years.html#1988](http://www.de.ioccc.org/years.html#1988 "http://www.de.ioccc.org/years.html#1988"), but it looks like this entry is missing in this page. Wikipedia citation points me to a book, which I might check out later.
 
 What's interesting about this piece of code is that
 
@@ -144,3 +144,4 @@ running this yields a 60x20 maze as expected
     | | ._._| ._. |_._| | | . . ._._. . | . ._._|_._._._| | ._|
     |_._._._._._| ._. | |_._| | ._| |_| | |_| ._. ._|_. |_._. |
     |_._._._._._._._|_._._._._|_._._._|_|_._._|_._._._._._._._|
+    
