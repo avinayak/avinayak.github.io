@@ -3,7 +3,7 @@ title: Deobfuscating a Maze Program
 date: 2020-10-25 15:00:00 +0000
 categories:
 - programming
-layout: ''
+layout: post
 
 ---
     char*M,A,Z,E=40,J[40],T[40];main(C){for(*J=A=scanf(M="%d",&C);
