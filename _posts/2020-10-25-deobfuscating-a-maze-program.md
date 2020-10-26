@@ -200,7 +200,7 @@ setting a breakpoint at line 6 and running this with gdb shows you what happened
 
 Line 6, starts with a loop condition `(A -= Z = !Z) || (printf("\n|"), A = W-1, H--)` . The printf in this condition also does, from what it looks like, draws the left side wall.
 
-Quick refresher at conditional execution using `||` and `&&`
+Quick refresher on conditional execution using `||` and `&&`
 
     #include <stdio.h>
     
@@ -223,4 +223,6 @@ In the whole program, Z, with initial value 0 is assigned a value only in this l
 
 The update statement is just `Z || printf(M)`. Seeing as this is the only other printf, we can be sure that this is the point where the maze gets rendered.
 
-The body of the loop is `M[Z] = Z[..stuff..]`. This is bizarre. Z is used both as an array and an index. 
+The body of the loop is something like `M[Z] = Z[..stuff..];`. This is bizarre. Z is used both as an array and an index. 
+
+Since Z=0 or 1, we can guess the structure of M from the rest of the code. it'll always be of the form `< X, Y, '\0' >`, where X or Y can be one of the characters used to render the maze ('.' , '|' , ' ' or '_'). 
