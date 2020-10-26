@@ -227,8 +227,26 @@ The body of the loop is something like `M[Z] = Z[..stuff..];`. This is bizarre. 
 
 Since Z=0 or 1, we can guess the structure of M from the rest of the code. it'll always be of the form `< X, Y, '\0' >`, where X or Y can be one of the characters used to render the maze ('.' , '|' , ' ' or '_'). 
 
-Let's looks at the "stuff" inside Z\[\] now. I added parenthesis for clarity on precedence, but I don't think it's much help for a line as long as this 
+Let's looks at the "stuff" inside Z\[\] now. I added parenthesis for clarity on operator precedence, but I don't think it's much help for a line as long as this 
 
     ((A - (E = A[J - Z])) && ((!H & A == T[A] | 6 << 27 < rand()) || (!H & !Z))) ? (J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_.") : (" |")
 
-This is roughly in the form of `(s1 && (s2 || s3)) ? (s4, s5, "-."): " |"`. It's just a terenary operator that returns " |" or "-.".
+This is roughly in the form of `(s1 && (s2 || s3)) ? (s4, s5, "-."): " |"`. It's just a ternary operator that returns " |" or "-.".
+
+we can replace the ternary operator with and if-else and the loop now looks like 
+
+    for (; (A -= Z = !Z) || (printf("\n|"), A = W - 1, H--); Z || printf(M))
+    	{
+    		if (((A - (E = A[J - Z])) && ((!H & A == T[A] | 6 << 27 < rand()) || (!H & !Z))))
+    		{
+    			J[T[E] = T[A]] = E;
+    			J[T[A] = A - Z] = A;
+    			M[Z] = Z["_."];
+    		}
+    		else
+    		{
+    			M[Z] = Z[" |"];
+    		}
+    	}
+
+much cleaner!
