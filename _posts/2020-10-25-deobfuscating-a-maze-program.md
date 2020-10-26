@@ -6,7 +6,7 @@ categories:
 layout: post
 
 ---
-I was randomly wandering inside Wikipedia when I came across this interesting page [https://en.wikipedia.org/wiki/Obfuscation_](https://en.wikipedia.org/wiki/Obfuscation_ "https://en.wikipedia.org/wiki/Obfuscation_")(software), and this interesting piece of code. 
+I was wandering in Wikipedia when I came across this interesting page [https://en.wikipedia.org/wiki/Obfuscation_](https://en.wikipedia.org/wiki/Obfuscation_ "https://en.wikipedia.org/wiki/Obfuscation_")(software), and this interesting piece of code. 
 
     char*M,A,Z,E=40,J[40],T[40];main(C){for(*J=A=scanf(M="%d",&C);
     --            E;             J[              E]             =T
