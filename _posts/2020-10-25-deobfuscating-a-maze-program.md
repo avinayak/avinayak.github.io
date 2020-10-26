@@ -221,6 +221,8 @@ So, the loop test expression executes nothing when `A -= Z = !Z` evaluates to no
 
 In the whole program, Z, with initial value 0 is assigned a value only in this loop condition and it's simply !Z. This means, it can only take either 0 or 1 as a value. 
 
+Also, this give us a clue about A. A is set to W-1 in as soon as the loop starts and is decremented in every alternate loop when Z == 1. A is not modified anywhere in the loop. So, A's value should go like 29,29,28,28,...1. when the final A-=Z happens, the condition evaluates to 0, triggering the side-wall expression which resets value of A to W-1.
+
 The update statement is just `Z || printf(M)`. Seeing as this is the only other printf, we can be sure that this is the point where the maze gets rendered.
 
 The body of the loop is something like `M[Z] = Z[..stuff..];`. This is bizarre. Z is used both as an array and an index. 
