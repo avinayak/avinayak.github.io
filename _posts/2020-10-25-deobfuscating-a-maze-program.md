@@ -26,9 +26,36 @@ What's interesting about this piece of code is that
 
   ![](/uploads/screenshot-from-2020-10-26-21-26-24.png)
 
-Also, as the wiki points out, ANSI-compliant C compilers don't allow constant strings to be overwritten, which can be avoided by changing "*M" to "M\[3\]" and omitting "M=". I did this and tried to run it, and sure enough,
+Also, as the wiki points out, ANSI-compliant C compilers don't allow constant strings to be overwritten, which can be avoided by changing "*M" to "M\[3\]" and omitting "M=". I did this and tried to compile + run it, and sure enough,
 
-    $ ./a.out
+    ~ $ gcc m.c && ./a.out 
+    m.c:14:32: warning: return type defaults to ‘int’ [-Wimplicit-int]
+       14 | char M[3],A,Z,E=40,J[40],T[40];main(C){for(*J=A=scanf("%d",&C);
+          |                                ^~~~
+    m.c: In function ‘main’:
+    m.c:14:32: warning: type of ‘C’ defaults to ‘int’ [-Wimplicit-int]
+    m.c:14:49: warning: implicit declaration of function ‘scanf’ [-Wimplicit-function-declaration]
+       14 | char M[3],A,Z,E=40,J[40],T[40];main(C){for(*J=A=scanf("%d",&C);
+          |                                                 ^~~~~
+    m.c:14:49: warning: incompatible implicit declaration of built-in function ‘scanf’
+    m.c:1:1: note: include ‘<stdio.h>’ or provide a declaration of ‘scanf’
+      +++ |+#include <stdio.h>
+        1 | // #define W 40
+    m.c:16:15: warning: implicit declaration of function ‘printf’ [-Wimplicit-function-declaration]
+       16 | [E   ]=  E)   printf("._");  for(;(A-=Z=!Z)  ||  (printf("\n|"
+          |               ^~~~~~
+    m.c:16:15: warning: incompatible implicit declaration of built-in function ‘printf’
+    m.c:16:15: note: include ‘<stdio.h>’ or provide a declaration of ‘printf’
+    m.c:16:51: warning: incompatible implicit declaration of built-in function ‘printf’
+       16 | [E   ]=  E)   printf("._");  for(;(A-=Z=!Z)  ||  (printf("\n|"
+          |                                                   ^~~~~~
+    m.c:16:51: note: include ‘<stdio.h>’ or provide a declaration of ‘printf’
+    m.c:18:31: warning: format not a string literal and no format arguments [-Wformat-security]
+       18 | )    ;   Z    ||    printf   (M   ))M[Z]=Z[A-(E   =A[J-Z])&&!C
+          |                               ^
+    m.c:20:8: warning: implicit declaration of function ‘rand’ [-Wimplicit-function-declaration]
+       20 | |6<<27<rand()||!C&!Z?J[T[E]=T[A]]=E,J[T[A]=A-Z]=A,"_.":" |"];}
+          |        ^~~~
     24
     ._._._._._._._._._._._._._._._._._._._._._._._._._._._._._._._._._._._._._._._
     |_._. ._| |_. ._._. . . | . ._| |_. ._._._|_._. | |_. |_. | |_. | | | ._|_. | |
@@ -55,11 +82,11 @@ Also, as the wiki points out, ANSI-compliant C compilers don't allow constant st
     |_._._|_| ._|_| ._._| |_. | . ._._._|_._|_| |_._|_| | ._|_._._. ._. |_| | |_. |
     |_._._. |_| |_._._._| . | | |_|_._. | . . ._| | ._| . ._._|_._. | |_. . ._| ._|
     |_._._._._._._._._._._|_|_._._._._._._|_|_._._._._._|_._._._._._|_._._|_._._._|
-    | $
+    | ~ $
     
 
 It works! 
 
-This code tries to scanf the value for height (which I entered as 24). The width is locked to 80 characters, probably because that was the default number of characters per line in 1988?? 
+This code tries to read the value for height (which I entered as 24). The width is locked to 80 characters, probably because that was the default number of characters per line in 1988?? 
 
-I'll attempt to de-obfuscate this code as much as I can and try to explain how it works, and maybe even re-implement this in a different language.
+I'll attempt to de-obfuscate this code as much as I can and try to explain how it works, and maybe even re-implement it's logic in a different language.
