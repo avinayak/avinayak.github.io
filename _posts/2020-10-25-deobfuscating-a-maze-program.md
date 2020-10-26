@@ -231,4 +231,4 @@ Let's looks at the "stuff" inside Z\[\] now. I added parenthesis for clarity on 
 
     ((A - (E = A[J - Z])) && ((!H & A == T[A] | 6 << 27 < rand()) || (!H & !Z))) ? (J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_.") : (" |")
 
-This is roughly in the form of `(s1 && (s2 || s3)) ? (s4, s5, "_."): " |"`_._ 
+This is roughly in the form of `(s1 && (s2 || s3)) ? (s4, s5, "-."): " |"`. It's just a terenary operator that returns " |" or "-.".
