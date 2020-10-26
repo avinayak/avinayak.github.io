@@ -97,11 +97,26 @@ I started out by removing unwanted white-spaces and line breaks, which gave me
 
     char M[3],A,Z,E=40,J[40],T[40];main(C){for(*J=A=scanf("%d",&C);--E;J[E]=T[E]=E)printf("._");for(;(A-=Z=!Z)||(printf("\n|"),A=39,C--);Z||printf(M))M[Z]=Z[A-(E=A[J-Z])&&!C&A==T[A]|6<<27<rand()||!C&!Z?J[T[E]=T[A]]=E,J[T[A]=A-Z]=A,"_.":" |"];}
 
-the whole program is only 239 characters. less than a tweet!. Running it through code beautify gave me:
+the whole program is only 239 bytes!. Running it through code beautify gave me:
 
     char M[3], A, Z, E = 40, J[40], T[40];
     main(C) {
       for ( * J = A = scanf("%d", & C); --E; J[E] = T[E] = E) printf("._");
-      for (;
-        (A -= Z = !Z) || (printf("\n|"), A = 39, C--); Z || printf(M)) M[Z] = Z[A - (E = A[J - Z]) && !C & A == T[A] | 6 << 27 < rand() || !C & !Z ? J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_." : " |"];
+      for (;(A -= Z = !Z) || (printf("\n|"), A = 39, C--); Z || printf(M)) 
+        M[Z] = Z[A - (E = A[J - Z]) 
+          && !C & A == T[A] | 6 << 27 < rand() 
+          || !C & !Z ? J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_." : " |"];
+    }
+
+Lets try removing the scanf call and replacing 40 (I'm guessing the width of the maze divided by 2) so we can experiment with arbitrary widths and heights.
+
+    #define W 30
+    char M[3], A, Z, E = W, J[W], T[W];
+    main() {
+      int H=20;	
+      for ( * J = A = 1; --E; J[E] = T[E] = E)printf("._");
+      for (;(A -= Z = !Z) || (printf("\n|"), A = W-1, H--); Z || printf(M)) 
+      	M[Z] = Z[A - (E = A[J - Z]) 
+    	  && !H & A == T[A] | 6 << 27 < rand() 
+    	  || !H & !Z ? J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_." : " |"];
     }
