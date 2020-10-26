@@ -90,3 +90,18 @@ It works!
 This code tries to read the value for height (which I entered as 24). The width is locked to 80 characters, probably because that was the default number of characters per line in 1988?? 
 
 I'll attempt to de-obfuscate this code as much as I can and try to explain how it works, and maybe even re-implement it's logic in a different language.
+
+## Cleanup
+
+I started out by removing unwanted white-spaces and line breaks, which gave me
+
+    char M[3],A,Z,E=40,J[40],T[40];main(C){for(*J=A=scanf("%d",&C);--E;J[E]=T[E]=E)printf("._");for(;(A-=Z=!Z)||(printf("\n|"),A=39,C--);Z||printf(M))M[Z]=Z[A-(E=A[J-Z])&&!C&A==T[A]|6<<27<rand()||!C&!Z?J[T[E]=T[A]]=E,J[T[A]=A-Z]=A,"_.":" |"];}
+
+the whole program is only 239 characters. less than a tweet!. Running it through code beautify gave me:
+
+    char M[3], A, Z, E = 40, J[40], T[40];
+    main(C) {
+      for ( * J = A = scanf("%d", & C); --E; J[E] = T[E] = E) printf("._");
+      for (;
+        (A -= Z = !Z) || (printf("\n|"), A = 39, C--); Z || printf(M)) M[Z] = Z[A - (E = A[J - Z]) && !C & A == T[A] | 6 << 27 < rand() || !C & !Z ? J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_." : " |"];
+    }
