@@ -121,7 +121,7 @@ Lets try removing the scanf call and replacing 40 (I'm guessing the width of the
     	  || !H & !Z ? J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_." : " |"];
     }
 
-running this yeilds a 30x20 maze as expected
+running this yields a 30x20 maze as expected
 
     ._._._._._._._._._._._._._._._._._._._._._._._._._._._._._
     |_._. ._| |_. ._._. . . | . ._| |_. ._._._|_._. | |_. |_. |
