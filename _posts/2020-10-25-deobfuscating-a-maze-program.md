@@ -18,10 +18,10 @@ I was wandering in Wikipedia when I came across this interesting page [https://e
 
 According to the article, this was a non winning entry for the 1988 [International Obfuscated C Code Contest](https://en.wikipedia.org/wiki/International_Obfuscated_C_Code_Contest). I really have no idea how anyone could've topped this. I searched around [http://www.de.ioccc.org/years.html#1988](http://www.de.ioccc.org/years.html#1988 "http://www.de.ioccc.org/years.html#1988"), but it looks like this entry is missing in this page. Wikipedia citation points me to a book, which I might check out later.
 
-What's interesting about this piece of code is that
+The interesting part is..
 
 * It looks like a maze.
-* It can generate mazes of any height (and width if you can tweak it a bit).
+* It can generate mazes of any height.
 * The word MAZE is spelled with white-spaces if you look carefully. Here's it highlighted 
 
   ![](/uploads/screenshot-from-2020-10-26-21-26-24.png)
@@ -146,6 +146,56 @@ running this yields a 60x20 maze as expected
     |_._._._._._._._|_._._._._|_._._._|_|_._._|_._._._._._._._|
     
 
-let's look at line 5: `for ( * J = A = 1; --E; J[E] = T[E] = E)printf("._");`
+## Analysis
 
-`printf("._")` is responsible for the first line of wall. but the loop it's part of is doing something else. OK time to break out gdb.
+let's start by looking at line 5: `for ( * J = A = 1; --E; J[E] = T[E] = E)printf("._");`
+
+`printf("._")` is responsible for the first line of wall. but the loop it's part of is doing something else.
+
+* It initializes first value of array J and char A as 1. 
+* evaluates `--E`, so runs 29 times
+* does `J[E] = T[E] = E` and `printf("._")`.
+
+So, It looks like at the end of the loop
+
+* E will be zero
+* Array J will have values 1,1,2,3,..29 (1 at zeroth position set in the loop init)
+* Array T will have values 0,1,2,3,..29
+
+setting a breakpoint at line 6 and running this with gdb shows you what happened:
+
+    (gdb) x/100b J
+    0x555555558040 <J>: 	1	1	2	3	4	5	6	7
+    0x555555558048 <J+8>:	8	9	10	11	12	13	14	15
+    0x555555558050 <J+16>:	16	17	18	19	20	21	22	23
+    0x555555558058 <J+24>:	24	25	26	27	28	29	0	0
+    0x555555558060 <J+32>:	0	0	0	0	0	0	0	0
+    0x555555558068 <J+40>:	0	0	0	0	0	0	0	0
+    0x555555558070 <J+48>:	0	0	0	0	0	0	0	0
+    0x555555558078 <J+56>:	0	0	0	0	0	0	0	0
+    0x555555558080 <J+64>:	0	0	0	0	0	0	0	0
+    0x555555558088 <J+72>:	0	0	0	0	0	0	0	0
+    0x555555558090 <J+80>:	0	0	0	0	0	0	0	0
+    0x555555558098 <J+88>:	0	0	0	0	0	0	0	0
+    0x5555555580a0 <J+96>:	0	0	0	0
+    (gdb) x/100b T
+    0x5555555580c0 <T>: 	0	1	2	3	4	5	6	7
+    0x5555555580c8 <T+8>:	8	9	10	11	12	13	14	15
+    0x5555555580d0 <T+16>:	16	17	18	19	20	21	22	23
+    0x5555555580d8 <T+24>:	24	25	26	27	28	29	0	0
+    0x5555555580e0 <T+32>:	0	0	0	0	0	0	0	0
+    0x5555555580e8 <T+40>:	0	0	0	0	0	0	0	0
+    0x5555555580f0 <T+48>:	0	0	0	0	0	0	0	0
+    0x5555555580f8 <T+56>:	0	0	0	0	0	0	0	0
+    0x555555558100 <T+64>:	0	0	0	0	0	0	0	0
+    0x555555558108 <T+72>:	0	0	0	0	0	0	0	0
+    0x555555558110 <T+80>:	0	0	0	0	0	0	0	0
+    0x555555558118 <T+88>:	0	0	0	0	0	0	0	0
+    0x555555558120 <T+96>:	0	0	0	0
+    (gdb) print E
+    $9 = 0 '\000'
+    (gdb) print A
+    $11 = 1 '\001'
+    
+
+Line 6, aka the whole maze logic starts with `(A -= Z = !Z) || (printf("\n|"), A = W-1, H--)` 
