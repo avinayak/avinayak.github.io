@@ -145,3 +145,7 @@ running this yields a 60x20 maze as expected
     |_._._._._._| ._. | |_._| | ._| |_| | |_| ._. ._|_. |_._. |
     |_._._._._._._._|_._._._._|_._._._|_|_._._|_._._._._._._._|
     
+
+let's look at line 5: `for ( * J = A = 1; --E; J[E] = T[E] = E)printf("._");`
+
+`printf("._")` is responsible for the first line of wall. but the loop it's part of is doing something else. OK time to break out gdb.
