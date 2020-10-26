@@ -281,3 +281,5 @@ for condition s2, I added more paranthesis
 and 6 << 27 is just 805306368 so
 
     (!H & (A == T[A])) | (805306368) < rand()
+
+why this number? I think the whole point was to get a random boolean.
