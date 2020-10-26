@@ -249,4 +249,23 @@ we can replace the ternary operator with and if-else and the loop now looks like
     		}
     	}
 
-much cleaner!
+much cleaner! one step further to clear up the condition.
+
+    	for (; (A -= Z = !Z) || (printf("\n|"), A = W - 1, H--); Z || printf(M))
+    	{
+    		char s1 = A - (E = A[J - Z]);
+    		char s2 = !H & A == T[A] | 6 << 27 < rand();
+    		char s3 = !H & !Z;
+    		if (s1 && (s2 || s3))
+    		{
+    			J[T[E] = T[A]] = E;
+    			J[T[A] = A - Z] = A;
+    			M[Z] = Z["_."];
+    		}
+    		else
+    		{
+    			M[Z] = Z[" |"];
+    		}
+    	}
+
+It's starting to be readable now.
