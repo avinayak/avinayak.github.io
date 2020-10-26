@@ -198,4 +198,4 @@ setting a breakpoint at line 6 and running this with gdb shows you what happened
     $11 = 1 '\001'
     
 
-Line 6, aka the whole maze logic starts with `(A -= Z = !Z) || (printf("\n|"), A = W-1, H--)` 
+Line 6, aka the whole maze logic starts with a loop condition `(A -= Z = !Z) || (printf("\n|"), A = W-1, H--)` . The printf in this condition also does,from what it looks like, drawing the side wall.
