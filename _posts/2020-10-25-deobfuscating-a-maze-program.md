@@ -284,4 +284,4 @@ and 6 << 27 is just 805306368 so
 
 why this number? I think the whole point was to get a random boolean. We could try just replacing this with rand()%2. 
 
-as for condition s3, it's very clear what this does. This is just a way to draw the right wall.
+as for condition s3, it's very clear what this does. This is just a way to draw the bottom wall. we can confirm this by removing this condition.
