@@ -36,4 +36,4 @@ It's super easy to generate flow field patterns using perlin noise.
 2. Plot <x,y>
 3. Calculate n = noise(x,y)
 4. Do x+=cos(n * 2 * PI) and y+=sin(n * 2 * PI)
-5. Repeat 2
+5. Repeat 2.
