@@ -166,6 +166,8 @@ The fringing at the sides can be avoided by moving 50% of the points in the reve
 
 <video loop autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_05-28-03.mp4" type="video/mp4" /> </video>
 
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_08-43-25.mp4" type="video/mp4" /> </video>
+
 More color variations
 
 ![](/uploads/untitled.png)
