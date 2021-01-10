@@ -54,3 +54,5 @@ In this situation, we're going to plot flow fields inside the circle. Let's try 
     }
 
 ![](/uploads/download-28.png)
+
+OK, not very good. The noise at this level is pretty rough. we're going to zoom in to the nose function (by dividing the x,y inputs) and probably use circle(x ,y ,0.3) to plot points instead if point function, because I feel it looks way smoother. Also, I'm adding a random() > 0.01 condition in the loop so that we get short lines that are not trimmed away by the edge of the circle.
