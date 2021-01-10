@@ -1,6 +1,6 @@
 ---
 title: Noise Planets
-date: 2021-01-09 03:00:00 +0000
+date: 2021-01-09T03:00:00.000+00:00
 categories:
 - art
 layout: post
@@ -8,7 +8,7 @@ layout: post
 ---
 ![](/uploads/erporydxmaarwcd.png)
 
-I recently found this work of art by [Tyler Hobbs](https://twitter.com/tylerxhobbs). This picture kinda looked very hand drawn, but it's completely generative. Something about this drawing and it's texture kind of resonated with me, so I wanted to try to study and replicate (or make something inspired by this work) using p5.
+I recently found this piece of art created by [Tyler Hobbs](https://twitter.com/tylerxhobbs). This picture kinda looked very hand drawn, but it's completely generative. Something about this drawing and it's texture kind of resonated with me, so I wanted to try to study and replicate (or make something inspired by this work) using p5.
 
 I started out by plotting a bunch of random points within a circle like so.
 
