@@ -116,7 +116,7 @@ Let's try that first.
 
 ![](/uploads/screenshot-from-2021-01-10-04-51-20.png)
 
-and now we use use the flow fields and try to move these points. 
+and now we use use the flow fields and try to move these points.
 
     function random_point() {
       r = random(w / 4)
@@ -152,7 +152,14 @@ and now we use use the flow fields and try to move these points.
 <source src="/uploads/simplescreenrecorder-2021-01-10_04-56-11.mp4" type="video/mp4" />
 </video>
 
-And a golfed version ofcourse 
+And a golfed version ofcourse
 
-<blockquote class="twitter-tweet"><p lang="cy" dir="ltr">t=0,p=i=&gt;[k+(r=random(w/4))*cos(t+=.1),k+r*sin(t)],setup=i=&gt;{createCanvas(w=1e3,w),m=Array(k=w/2).fill(0).map(p)},draw=r=&gt;{for(i=k;--i;)[x,y]=m[i],x+=sin(n=noise(x/k,y/k)*TAU),y+=cos(n),stroke(i%4*85),point(x,y),k*w+x*x+y*y-w*(x+y)&lt;7e4?m[i]=[x,y]:m[i]=p()};//<a href="https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&amp;ref_src=twsrc%5Etfw">#つぶやきProcessing</a> <a href="https://t.co/xVhCBNUltL">pic.twitter.com/xVhCBNUltL</a></p>&mdash; yakinavault (@yakinavault) <a href="https://twitter.com/yakinavault/status/1347930637227855874?ref_src=twsrc%5Etfw">January 9, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet"><p lang="cy" dir="ltr">t=0,p=i=>\[k+(r=random(w/4))_cos(t+=.1),k+r_sin(t)\],setup=i=>{createCanvas(w=1e3,w),m=Array(k=w/2).fill(0).map(p)},draw=r=>{for(i=k;--i;)\[x,y\]=m\[i\],x+=sin(n=noise(x/k,y/k)_TAU),y+=cos(n),stroke(i%4_85),point(x,y),k_w+x_x+y_y-w_(x+y)<7e4?m\[i\]=\[x,y\]:m\[i\]=p()};//<a href="https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&ref_src=twsrc%5Etfw">#つぶやきProcessing</a> <a href="https://t.co/xVhCBNUltL">pic.twitter.com/xVhCBNUltL</a></p>— yakinavault (@yakinavault) <a href="https://twitter.com/yakinavault/status/1347930637227855874?ref_src=twsrc%5Etfw">January 9, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+### Adding Colors
+
+There are many strategies to colorizing this sketch. One is by just giving each particle a random initial color.
+
+![](/uploads/download-21.png)
+
+However, I found that maintaining the initial x or y position in the particle array and using that to derive the hue information gives us some nice gaseous planet vibes.
