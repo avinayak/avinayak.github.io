@@ -83,7 +83,9 @@ I went ahead and made a golfed version of this.
 
 The code we wrote right now technically is animated. The animation however is not very smooth.
 
-<video controls="" muted="" src="[https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4](https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4 "https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4")"> </video>
+<video controls="" autoplay="autoplay">
+  <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4" type="video/mp4" />
+</video>
 
 The problem, is that we need to generate new points in the circle, keep track of these points outside the draw() function. We need to have a function that generates random points within a circle. I found this [technique](https://stackoverflow.com/a/50746409), where a random r and \\theta are chosen and the x,y points are obtained as x = centerX + r * cos(theta) and y = centerY + r * sin(theta).
 
