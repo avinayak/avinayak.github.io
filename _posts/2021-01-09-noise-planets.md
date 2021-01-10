@@ -147,3 +147,5 @@ and now we use use the flow fields and try to move these points.
         else points[i] = random_point() // replace with new point if not
       }
     }
+
+[simplescreenrecorder-2021-01-10_04-56-11.mp4](/uploads/simplescreenrecorder-2021-01-10_04-56-11.mp4 "simplescreenrecorder-2021-01-10_04-56-11.mp4")
