@@ -6,7 +6,7 @@ categories:
 layout: post
 
 ---
-![](/uploads/erporydxmaarwcd.png)
+[simplescreenrecorder-2021-01-10_05-28-03.mp4](/uploads/simplescreenrecorder-2021-01-10_05-28-03.mp4 "simplescreenrecorder-2021-01-10_05-28-03.mp4")![](/uploads/erporydxmaarwcd.png)
 
 This piece called LINES 2A (2017) by [Tyler Hobbs](https://twitter.com/tylerxhobbs) kinda looked very hand drawn, but it's completely generative. Something about this drawing kind of resonated with me, so I wanted to try to study and replicate (or make something inspired by this work) using p5.
 
@@ -83,9 +83,7 @@ I went ahead and made a golfed version of this.
 
 The code we wrote right now technically is animated. The animation however is not very smooth.
 
-<video controls="false" autoplay muted>
-<source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4" type="video/mp4" />
-</video>
+<video controls="false" autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4" type="video/mp4" /> </video>
 
 To make smooth animations, we need to generate new points in the circle, keep track of these points outside the draw() function. I found this neat [technique](https://stackoverflow.com/a/50746409), to find random points in a circle where a random r and \\theta are chosen and the x,y points are obtained as x = centerX + r * cos(theta) and y = centerY + r * sin(theta).
 
@@ -148,9 +146,7 @@ and now we use use the flow fields and try to move these points.
       }
     }
 
-<video controls="false" autoplay muted>
-<source src="/uploads/simplescreenrecorder-2021-01-10_04-56-11.mp4" type="video/mp4" />
-</video>
+<video controls="false" autoplay muted> <source src="/uploads/simplescreenrecorder-2021-01-10_04-56-11.mp4" type="video/mp4" /> </video>
 
 And a golfed version ofcourse
 
@@ -164,10 +160,6 @@ There are many strategies to colorizing this sketch. One is by just giving each 
 
 However, I found that maintaining the initial x or y position in the particle array and using that to derive the hue information gives us some nice gaseous planet vibes.
 
-<video controls="false" autoplay muted>
-<source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_05-18-19.mp4" type="video/mp4" />
-</video>
+<video controls="false" autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_05-18-19.mp4" type="video/mp4" /> </video>
 
-<video controls="false" autoplay muted>
-<source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_05-18-19.mp4" type="video/mp4" />
-</video>
+<video controls="false" autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_05-28-03.mp4" type="video/mp4" /> </video>
