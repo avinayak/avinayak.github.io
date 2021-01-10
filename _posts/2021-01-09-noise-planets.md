@@ -127,7 +127,7 @@ and now we use use the flow fields and try to move these points.
       ]
     }
     
-    w = 1000
+    const w = 1000
     function setup() {
       createCanvas(w, w);
       background('#F9F8F4')
