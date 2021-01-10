@@ -69,7 +69,7 @@ OK, not very good. The noise at this level is pretty rough. we're going to zoom 
 
 ![](/uploads/download-27.png)
 
-Actually.. not bad. I think we did it. The inverted version also looks pretty good. 
+Actually.. not bad. I think we did it. The inverted version also looks pretty good.
 
 ![](/uploads/download-19.png)
 
@@ -83,4 +83,4 @@ I went ahead and made a golfed version of this.
 
 The code we wrote right now technically is animated. The animation however is not very smooth.
 
-[simplescreenrecorder-2021-01-10_03-52-31.mp4](/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4 "simplescreenrecorder-2021-01-10_03-52-31.mp4")
+<video controls="" muted="" src="[https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4](https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4 "https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4")"> </video>
