@@ -6,7 +6,7 @@ categories:
 layout: post
 
 ---
-[simplescreenrecorder-2021-01-10_05-28-03.mp4](/uploads/simplescreenrecorder-2021-01-10_05-28-03.mp4 "simplescreenrecorder-2021-01-10_05-28-03.mp4")![](/uploads/erporydxmaarwcd.png)
+![](/uploads/erporydxmaarwcd.png)
 
 This piece called LINES 2A (2017) by [Tyler Hobbs](https://twitter.com/tylerxhobbs) kinda looked very hand drawn, but it's completely generative. Something about this drawing kind of resonated with me, so I wanted to try to study and replicate (or make something inspired by this work) using p5.
 
