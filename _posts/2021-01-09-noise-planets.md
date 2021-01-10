@@ -49,7 +49,7 @@ In this situation, we're going to plot flow fields inside the circle. Let's try 
           n = noise(x, y)
           x += sin(n * TAU)
           y += cos(n * TAU)
-          circle(x, y, .3)
+          point(x, y)
         }
     }
 
