@@ -163,3 +163,7 @@ There are many strategies to colorizing this sketch. One is by just giving each 
 ![](/uploads/download-21.png)
 
 However, I found that maintaining the initial x or y position in the particle array and using that to derive the hue information gives us some nice gaseous planet vibes.
+
+<video controls="false" autoplay muted>
+<source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_05-18-19.mp4" type="video/mp4" />
+</video>
