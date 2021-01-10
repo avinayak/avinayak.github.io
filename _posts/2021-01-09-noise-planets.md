@@ -55,7 +55,7 @@ We're going to plot flow fields inside the circle. Let's try this.
 
 ![](/uploads/download-28.png)
 
-OK, not very good. The noise at this level is pretty rough. we're going to zoom in to the nose function (by dividing the x,y inputs) and probably use `circle(x ,y ,0.3)` to plot points instead if point function, because I feel it looks way smoother. Also, I'm adding a `random() > 0.01` condition in the loop so that we get short lines that are not trimmed away by the edge of the circle.
+OK, not very good. The noise at this level is pretty rough. we're going to zoom in to the nose function (by dividing the `x,y` inputs by some constant value) and probably use `circle(x ,y ,0.3)` to plot points instead if point function, because I feel it looks way smoother. Also, I'm adding a `random() > 0.01` condition in the loop so that we get short lines that are not trimmed away by the edge of the circle.
 
     function draw() {
       if (is_in_circle(x = random(w), y = random(w)))
@@ -148,7 +148,7 @@ and now we use use the flow fields and try to move these points.
 
 <video controls="false" autoplay muted> <source src="/uploads/simplescreenrecorder-2021-01-10_04-56-11.mp4" type="video/mp4" /> </video>
 
-And a golfed version ofcourse
+And a つぶやきProcessing version of course..
 
 <blockquote class="twitter-tweet"><p lang="cy" dir="ltr">t=0,p=i=>\[k+(r=random(w/4))_cos(t+=.1),k+r_sin(t)\],setup=i=>{createCanvas(w=1e3,w),m=Array(k=w/2).fill(0).map(p)},draw=r=>{for(i=k;--i;)\[x,y\]=m\[i\],x+=sin(n=noise(x/k,y/k)_TAU),y+=cos(n),stroke(i%4_85),point(x,y),k_w+x_x+y_y-w_(x+y)<7e4?m\[i\]=\[x,y\]:m\[i\]=p()};//<a href="https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&ref_src=twsrc%5Etfw">#つぶやきProcessing</a> <a href="https://t.co/xVhCBNUltL">pic.twitter.com/xVhCBNUltL</a></p>— yakinavault (@yakinavault) <a href="https://twitter.com/yakinavault/status/1347930637227855874?ref_src=twsrc%5Etfw">January 9, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -158,7 +158,7 @@ There are many strategies to colorizing this sketch. One is by just giving each 
 
 ![](/uploads/download-21.png)
 
-However, I found that maintaining the initial x or y position in the particle array and using that to derive the hue information gives us some nice gaseous planet vibes.
+However, I found that maintaining the initial x or y position in the particle array and using that to derive the hue information gives us some nice jupiter/gaseous planet vibes.
 
 <video controls="false" autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_05-18-19.mp4" type="video/mp4" /> </video>
 
