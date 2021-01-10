@@ -8,7 +8,7 @@ layout: post
 ---
 ![](/uploads/erporydxmaarwcd.png)
 
-This piece called LINES 2A (2017) by [Tyler Hobbs](https://twitter.com/tylerxhobbs) kinda looked very hand drawn, but it's completely generative. Something about this drawing kind of resonated with me, so I wanted to try to study and replicate (or make something inspired by this work) using p5.
+I recently found this work of art by [Tyler Hobbs](https://twitter.com/tylerxhobbs). This picture kinda looked very hand drawn, but it's completely generative. Something about this drawing and it's texture kind of resonated with me, so I wanted to try to study and replicate (or make something inspired by this work) using p5.
 
 I started out by plotting a bunch of random points within a circle like so.
 
@@ -32,10 +32,10 @@ This is a painfully slow process to generate random points in a circle. I found 
 
 It's super easy to generate flow field patterns using perlin noise.
 
-1. Choose a random point <x,y>
-2. Plot <x,y>
-3. Calculate n = noise(x,y)
-4. Do x+=cos(n * 2 * PI) and y+=sin(n * 2 * PI)
+1. Choose a random point `<x,y>`
+2. Plot `<x,y>`
+3. Calculate `n = noise(x,y)`
+4. Do `x+=cos(n * 2 * PI)` and `y+=sin(n * 2 * PI)`
 5. Repeat 2.
 
 In this situation, we're going to plot flow fields inside the circle. Let's try this.
