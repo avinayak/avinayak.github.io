@@ -169,3 +169,5 @@ The fringing at the sides can be avoided by moving 50% of the points in the reve
 More color variations
 
 ![](/uploads/untitled.png)
+
+And that's it. Hope this was educational!
