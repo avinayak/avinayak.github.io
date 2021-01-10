@@ -152,3 +152,7 @@ and now we use use the flow fields and try to move these points.
 <source src="/uploads/simplescreenrecorder-2021-01-10_04-56-11.mp4" type="video/mp4" />
 </video>
 
+And a golfed version ofcourse 
+
+<blockquote class="twitter-tweet"><p lang="cy" dir="ltr">t=0,p=i=&gt;[k+(r=random(w/4))*cos(t+=.1),k+r*sin(t)],setup=i=&gt;{createCanvas(w=1e3,w),m=Array(k=w/2).fill(0).map(p)},draw=r=&gt;{for(i=k;--i;)[x,y]=m[i],x+=sin(n=noise(x/k,y/k)*TAU),y+=cos(n),stroke(i%4*85),point(x,y),k*w+x*x+y*y-w*(x+y)&lt;7e4?m[i]=[x,y]:m[i]=p()};//<a href="https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&amp;ref_src=twsrc%5Etfw">#つぶやきProcessing</a> <a href="https://t.co/xVhCBNUltL">pic.twitter.com/xVhCBNUltL</a></p>&mdash; yakinavault (@yakinavault) <a href="https://twitter.com/yakinavault/status/1347930637227855874?ref_src=twsrc%5Etfw">January 9, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
