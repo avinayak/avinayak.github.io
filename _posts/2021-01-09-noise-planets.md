@@ -83,7 +83,7 @@ I went ahead and made a golfed version of this.
 
 The code we wrote right now technically is animated. The animation however is not very smooth.
 
-<video controls="" autoplay="autoplay">
+<video controls="false" autoplay muted>
   <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4" type="video/mp4" />
 </video>
 
