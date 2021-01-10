@@ -85,4 +85,4 @@ The code we wrote right now technically is animated. The animation however is no
 
 <video controls="" muted="" src="[https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4](https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4 "https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_03-52-31.mp4")"> </video>
 
-The problem, is that we need to generate new points in the circle, keep track of these points outside the draw() function.
+The problem, is that we need to generate new points in the circle, keep track of these points outside the draw() function. We need to have a function that generates 
