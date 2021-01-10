@@ -114,7 +114,7 @@ Let's try that first.
 
 ![](/uploads/screenshot-from-2021-01-10-04-51-20.png)
 
-and now we use use the flow fields and try to move these points.
+and now we apply flow fields and try to move these points.
 
     function random_point() {
       r = random(w / 4)
