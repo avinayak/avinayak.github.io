@@ -27,3 +27,5 @@ I started out by plotting a bunch of random points within a circle like so.
     }
 
 ![](/uploads/download-25.png)
+
+This is a painfully slow process to generate random points in a circle. I found a better way to do this later. What I wanted to do next was to generate flow fields, but restricted to the circular region. 
