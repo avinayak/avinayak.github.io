@@ -113,3 +113,37 @@ Let's try that first.
         circle(x, y, .3);
       }
     }
+
+![](/uploads/screenshot-from-2021-01-10-04-51-20.png)
+
+and now we use use the flow fields and try to move these points. 
+
+    function random_point() {
+      r = random(w / 4)
+      t = random(TAU)
+      return [
+        w/2 + cos(t) * r, 
+        w/2 + sin(t) * r
+      ]
+    }
+    
+    w = 1000
+    function setup() {
+      createCanvas(w, w);
+      background('#F9F8F4')
+      k = w / 2
+      points = (Array(k).fill(0)).map(random_point)
+    }
+    
+    function draw() {
+      for (i = k; --i;) {
+        [x, y] = m[i]
+        x += sin(n = noise(x / 400, y / 400) * TAU) * h
+        y += cos(n) * h
+        stroke(i%255)
+        circle(x, y,.3)
+        if (pow(k - x, 2) + pow(k - y, 2) < 7e4)  // if point is in circle
+          points[i] = [x, y, t]
+        else points[i] = random_point() // replace with new point if not
+      }
+    }
