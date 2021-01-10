@@ -79,7 +79,7 @@ I went ahead and made a つぶやきProcessing version of this.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">function setup(){createCanvas(w=1e3,w),background("<a href="https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&ref_src=twsrc%5Etfw">#つぶやきProcessing</a>")}function draw(){if(g(x=random(w),y=random(w)))for(;g(x,y)&&random()>.01;)n=noise(x/500,y/500),x+=sin(n_TAU),y+=cos(n_TAU),circle(x,y,.3)}g=((n,o)=>pow(w/2-n,2)+pow(w/2-o,2)<w*w/16); <a href="https://t.co/iVZTMtCn3i">pic.twitter.com/iVZTMtCn3i</a></p>— yakinavault (@yakinavault) <a href="https://twitter.com/yakinavault/status/1347903013042622467?ref_src=twsrc%5Etfw">January 9, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-## Going Further
+## Going Further: Animations
 
 The code we wrote right now technically is animated. The animation however is not very smooth.
 
@@ -152,7 +152,7 @@ And a つぶやきProcessing version of course..
 
 <blockquote class="twitter-tweet"><p lang="cy" dir="ltr">t=0,p=i=>\[k+(r=random(w/4))_cos(t+=.1),k+r_sin(t)\],setup=i=>{createCanvas(w=1e3,w),m=Array(k=w/2).fill(0).map(p)},draw=r=>{for(i=k;--i;)\[x,y\]=m\[i\],x+=sin(n=noise(x/k,y/k)_TAU),y+=cos(n),stroke(i%4_85),point(x,y),k_w+x_x+y_y-w_(x+y)<7e4?m\[i\]=\[x,y\]:m\[i\]=p()};//<a href="https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&ref_src=twsrc%5Etfw">#つぶやきProcessing</a> <a href="https://t.co/xVhCBNUltL">pic.twitter.com/xVhCBNUltL</a></p>— yakinavault (@yakinavault) <a href="https://twitter.com/yakinavault/status/1347930637227855874?ref_src=twsrc%5Etfw">January 9, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-### Adding Colors
+## Adding Colors
 
 There are many strategies to colorizing this sketch. One is by just giving each particle a random initial color.
 
