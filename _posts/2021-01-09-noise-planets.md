@@ -162,4 +162,6 @@ However, I found that maintaining the initial x or y position in the particle ar
 
 <video controls="false" autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_05-18-19.mp4" type="video/mp4" /> </video>
 
+The fringing at the sides can be avoided by moving 50% of the points in the reverse direction.
+
 <video controls="false" autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-01-10_05-28-03.mp4" type="video/mp4" /> </video>
