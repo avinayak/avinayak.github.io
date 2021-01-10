@@ -69,7 +69,13 @@ OK, not very good. The noise at this level is pretty rough. we're going to zoom 
 
 ![](/uploads/download-27.png)
 
-Actually.. not bad. I think we did it. I went ahead and made a golfed version of this.
+Actually.. not bad. I think we did it. The inverted version also looks pretty good. 
+
+![](/uploads/download-19.png)
+
+More tests
+
+I went ahead and made a golfed version of this.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">function setup(){createCanvas(w=1e3,w),background("<a href="[https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&ref_src=twsrc%5Etfw](https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&ref_src=twsrc%5Etfw "https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&ref_src=twsrc%5Etfw")">#つぶやきProcessing</a>")}function draw(){if(g(x=random(w),y=random(w)))for(;g(x,y)&&random()>.01;)n=noise(x/500,y/500),x+=sin(n_TAU),y+=cos(n_TAU),circle(x,y,.3)}g=((n,o)=>pow(w/2-n,2)+pow(w/2-o,2)<w*w/16); <a href="https://t.co/iVZTMtCn3i">pic.twitter.com/iVZTMtCn3i</a></p>— yakinavault (@yakinavault) <a href="[https://twitter.com/yakinavault/status/1347903013042622467?ref_src=twsrc%5Etfw](https://twitter.com/yakinavault/status/1347903013042622467?ref_src=twsrc%5Etfw "https://twitter.com/yakinavault/status/1347903013042622467?ref_src=twsrc%5Etfw")">January 9, 2021</a></blockquote> <script async src="[https://platform.twitter.com/widgets.js](https://platform.twitter.com/widgets.js "https://platform.twitter.com/widgets.js")" charset="utf-8"></script>
 
