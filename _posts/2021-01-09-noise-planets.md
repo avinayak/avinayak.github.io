@@ -46,7 +46,7 @@ OK let's try this.
     function draw() {
       if (is_in_circle(x = random(w), y = random(w)))
         while (is_in_circle(x, y) && random() > 0.01) {
-          n = noise(x / 400, y / 400)
+          n = noise(x, y)
           x += sin(n * TAU)
           y += cos(n * TAU)
           circle(x, y, .3)
