@@ -69,4 +69,4 @@ OK, not very good. The noise at this level is pretty rough. we're going to zoom 
 
 ![](/uploads/download-27.png)
 
-Actually.. not bad. I think we did it.
+Actually.. not bad. I think we did it. I went ahead and made a golfed version of this soon.
