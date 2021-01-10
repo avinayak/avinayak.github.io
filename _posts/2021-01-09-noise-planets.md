@@ -73,8 +73,6 @@ Actually.. not bad. I think we did it. The inverted version also looks pretty go
 
 ![](/uploads/download-19.png)
 
-More tests
-
 ![](/uploads/ppanets.png)
 
 I went ahead and made a golfed version of this.
