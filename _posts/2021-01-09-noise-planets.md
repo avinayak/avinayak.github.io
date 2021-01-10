@@ -57,6 +57,16 @@ In this situation, we're going to plot flow fields inside the circle. Let's try 
 
 OK, not very good. The noise at this level is pretty rough. we're going to zoom in to the nose function (by dividing the x,y inputs) and probably use circle(x ,y ,0.3) to plot points instead if point function, because I feel it looks way smoother. Also, I'm adding a random() > 0.01 condition in the loop so that we get short lines that are not trimmed away by the edge of the circle.
 
+    function draw() {
+      if (is_in_circle(x = random(w), y = random(w)))
+        while (is_in_circle(x, y) && random() > 0.01) {
+          n = noise(x / 500, y / 500)
+          x += sin(n * TAU)
+          y += cos(n * TAU)
+          circle(x, y, .3)
+        }
+    }
+
 ![](/uploads/download-27.png)
 
 Actually.. not bad. I think we did it.
