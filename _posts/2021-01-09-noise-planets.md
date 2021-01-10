@@ -38,14 +38,14 @@ It's super easy to generate flow field patterns using perlin noise.
 4. Do x+=cos(n * 2 * PI) and y+=sin(n * 2 * PI)
 5. Repeat 2.
 
-OK let's try this.
+In this situation, ee're going to plot flow fields inside the circle. Let's try this.
 
     const is_in_circle = (x, y) => 
       (pow(w / 2 - x, 2) + pow(w / 2 - y, 2) < 7e4)
     
     function draw() {
       if (is_in_circle(x = random(w), y = random(w)))
-        while (is_in_circle(x, y) && random() > 0.01) {
+        while (is_in_circle(x, y)) {
           n = noise(x, y)
           x += sin(n * TAU)
           y += cos(n * TAU)
