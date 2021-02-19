@@ -18,9 +18,11 @@ I began working on a proof of concept version using the hill climbing technique.
 1. Initialize variable best-score = infinity and an empty matrix as best-result
 2. Start with a random matrix of 1s and 0s representing live and dead cells in Life.
 3. Invert a single cell at a random location. 
-   1. Compute a score of how close the matrix is with the target.
-   2. If the score is less than best_score
-      1. set it as best score and set the current matrix as best-result
-   3.  else
-      1. copy best result to current matrix
-4. Repeat 3
+4. Create a copy of this matrix.
+5. Run N generations of Game of Life on the matrix
+6. Compute a score of how close the matrix is with the target.
+   1. If the score is less than best_score
+      1. Set it as best score and set the copy from step 4 as best-result.
+   2.  else
+      1. Sopy best result to current matrix
+7. Repeat 3
