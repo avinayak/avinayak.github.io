@@ -24,5 +24,5 @@ I began working on a proof of concept version using the hill climbing technique.
    1. If the score is less than best_score
       1. Set it as best score and set the copy from step 4 as best-result.
    2.  else
-      1. Sopy best result to current matrix
-7. Repeat 3
+      1. Copy best result to current matrix.
+7. Repeat 3.
