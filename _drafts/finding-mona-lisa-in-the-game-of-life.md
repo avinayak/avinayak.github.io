@@ -13,4 +13,12 @@ There was this rough idea I've been thinking about in [Conway's Game of Life](ht
 
 I came across [an article](https://kevingal.com/blog/mona-lisa-gol.html) of the same title by Kevin Galligan recently and I thought I could do something similar using a different approach. What if instead of using SAT Solvers, I use some kind of heuristic algorithm that could somehow "program" a large world of Game of Life to display an image after a few generations?
 
-I began working on a proof of concept version using the hill climbing technique. 
+I began working on a proof of concept version using the hill climbing technique. The idea was very simple.
+
+1. Initialze variable best_score = infinity
+2. Start with a random matrix of 1s and 0s representing live and dead cells in Life.
+3. Invert a single cell at a random location.
+   1. Compare matrix with a monochrome version of monalisa and 
+   2. Compute a score of how close the matrix is with the target.
+   3. If the score is less than best_score, set it as best score
+4.  
