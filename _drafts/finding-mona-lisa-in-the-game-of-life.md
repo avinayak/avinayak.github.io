@@ -25,4 +25,21 @@ I began working on a proof of concept version using the hill climbing technique.
       1. Set it as best score and set the copy from step 4 as best-result.
    2.  else
       1. Copy best result to current matrix.
-7. Repeat 3.
+7. Repeat 3
+
+Here's the important bits of code I used. Complete version of this POC is available here.
+
+    while best_score>0.23:
+        states = np.tile(np.copy(best_seed), (batch_size, 1, 1))
+        rms_errors = []
+        for i in range(len(states)):
+            states[i] = perturbate(states[i], (m,n))
+            rms = rmse(target, nth_generation(np.copy(states[i])))
+            rms_errors.append(rms)
+        lowest = min(rms_errors)
+        if lowest < best_score:
+            best_score = lowest
+            best = rms_errors.index(lowest)
+            best_state = states[best]
+            clear_output(wait=True)
+            print("lowest score: ", best_score)
