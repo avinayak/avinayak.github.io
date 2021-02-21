@@ -29,13 +29,23 @@ I began working on a proof of concept version using the hill climbing technique.
 
 Here's the important bits of code I used. Complete version of this POC is available here.
 
+    def perturbate(state, shape):
+        x,y = shape
+        px = int(np.random.uniform(x+1))-1
+        py = int(np.random.uniform(y+1))-1
+        state[px][py] = not state[px][py]
+        return state
+    
+    def rmse(predictions,targets):
+        return np.sqrt(np.mean((predictions-targets)**2))
+    
     while best_score>0.23:
         states = np.tile(np.copy(best_seed), (batch_size, 1, 1))
         rms_errors = []
-        for i in range(len(states)):
-            states[i] = perturbate(states[i], (m,n))
-            rms = rmse(target, nth_generation(np.copy(states[i])))
-            rms_errors.append(rms)
+        for state in range(len(states)):
+            states[state] = perturbate(states[state], (m,n))
+            rmse_val = rmse(target, nth_generation(np.copy(states[state])))
+            rms_errors.append(rmse_val)
         lowest = min(rms_errors)
         if lowest < best_score:
             best_score = lowest
