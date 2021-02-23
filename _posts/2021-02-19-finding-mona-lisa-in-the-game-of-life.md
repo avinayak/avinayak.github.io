@@ -79,3 +79,7 @@ We could just not round at all, and compare against the grayscale version. Howev
 ![](/uploads/screenshot-from-2021-02-23-18-54-34.png)
 
 This image is a perfect array of 0s and 1s and should give us a better fitting life state.
+
+### Garden of Eden
+
+Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation of any cellular automata are called Garden of Edens. It is almost impossible that our dithered monalisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target. 
