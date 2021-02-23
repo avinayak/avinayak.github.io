@@ -13,6 +13,8 @@ There was this rough idea I've been thinking about in [Conway's Game of Life](ht
 
 I came across [an article](https://kevingal.com/blog/mona-lisa-gol.html) of the same title by Kevin Galligan recently and I thought I could do something similar using a different approach. What if instead of using SAT Solvers, I use some kind of heuristic algorithm that could somehow "program" a large world of Game of Life to display an image after a few generations?
 
+## Proof of Concept
+
 I began working on a proof of concept version using the hill climbing technique. The idea was very simple.
 
 1. Initialize variable best-score = infinity and an empty matrix as best-result
@@ -54,15 +56,15 @@ Here's the important bit of code I used. Complete version of this POC is availab
 
 Hill Climbing works on finding the closest neighboring state to the state we have that has the least  difference from. The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random cell. This change is small enough that we don't risk stepping over some local minima so much. Also we use root mean square error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that RMSE was sufficient.
 
-After a few days or so(!), I was able to obtain something that resembled monalisa after running 4 generations of life.
+After a few days or so(!), I was able to obtain something that resembled Mona Lisa after running 4 generations of life.
 
 <video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4" type="video/mp4" /> </video>
 
-This was reassuring that my algorithm did indeed work, but I realize I made a buch of mistakes.
+This was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes.
 
-### Dithering
+## Dithering
 
-Target monalisa against which our random state was compared with was the medium resolution version taken from wikipedia. 
+Target Mona Lisa against which our random state was compared with was the medium resolution version taken from wikipedia. 
 
 ![](/uploads/screenshot-from-2021-02-23-18-38-08.png)
 
@@ -84,14 +86,16 @@ This image is a perfect array of 0s and 1s and should give us a better fitting l
 
 ### Garden of Eden
 
-Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation of any cellular automata are called Garden of Edens. It is almost impossible that our dithered monalisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target. 
+Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation of any cellular automata are called Garden of Edens. It is almost impossible that our dithered Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target. 
 
 This is a zoomed portion of the 4th generation of the state we just prepared
 
 ![](/uploads/screenshot-from-2021-02-23-19-08-47.png)
 
-As you can see, it's impossible to get a continuous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. The end result will be a higher contrast, but slightly darkened version of monalisa. At higher resolutions, this effect is not as apparent.
+As you can see, it's impossible to get a continuous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. The end result will be a higher contrast, but slightly darkened version of Mona Lisa. At higher resolutions, this effect is not as apparent.
 
-### Scaling Up
+### Scaling Up - Parallelization with JAX
 
-This problem is well suited for parallelization. 
+The single core unvectorized version is extremely slow. I tried running this in both my 8th gen Core i7 and the Google colab CPU machines, but you need to wait for hours/days (depedning on target resolution) to get something that resembles the original.
+
+Fortunately, This problem is well suited for parallelization. 
