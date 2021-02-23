@@ -84,7 +84,7 @@ This image is a perfect array of 0s and 1s and should give us a better fitting l
 
 ![](/uploads/screenshot-from-2021-02-23-18-54-34.png)
 
-### Garden of Eden
+## Garden of Eden
 
 Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation of any cellular automata are called Garden of Edens. It is almost impossible that our dithered Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target. 
 
@@ -94,7 +94,7 @@ This is a zoomed portion of the 4th generation of the state we just prepared.
 
 As you can see, it's impossible to get a continuous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. The end result will be a higher contrast, but slightly darkened version of Mona Lisa. At higher resolutions, this effect is not as apparent.
 
-### Scaling Up - Parallelization with JAX
+## Scaling Up - Parallelization with JAX
 
 The single core unvectorized version is extremely slow. I tried running this in both my 8th gen Core i7 and the Google Colab CPU machines, but you need to wait for hours/days (depending on target resolution) to get something that resembles the original.
 
