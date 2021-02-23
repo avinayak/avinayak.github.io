@@ -110,4 +110,28 @@ We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dim
 
 The initial canvas will be completely random(unlike the figure).
 
-Also, for every loop iteration, we need to produce a random 3d array called modifier with this property: Each slice across the 3rd dimension will be a 
+Also, for every loop iteration, we need to produce a random 3D array called modifier with this property: Each slice across the 3rd dimension will be a field of zeros with a single one place at a random location.
+
+![](/uploads/untssitled-3rd-copy.png)
+
+Something like (with shape 5, 3, 2. batch_size being 5)
+
+    array([[[1, 0],
+            [0, 0],
+            [0, 0]],
+    
+           [[1, 0],
+            [0, 0],
+            [0, 0]],
+    
+           [[0, 0],
+            [0, 1],
+            [0, 0]],
+    
+           [[0, 1],
+            [0, 0],
+            [0, 0]],
+    
+           [[1, 0],
+            [0, 0],
+            [0, 0]]])
