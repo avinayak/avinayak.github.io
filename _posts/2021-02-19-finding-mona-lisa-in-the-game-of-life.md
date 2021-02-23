@@ -56,11 +56,11 @@ Here's the important bit of code I used. Complete version of this POC is availab
 
 Hill Climbing works on finding the closest neighboring state to the state we have that has the least  difference from. The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random cell. This change is small enough that we don't risk stepping over some local minima so much. Also we use root mean square error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that RMSE was sufficient.
 
-After a few days or so(!), I was able to obtain something that resembled Mona Lisa after running 4 generations of life.
+After a few days of CPU time(!), I was able to obtain something that resembled Mona Lisa after running 4 generations of life.
 
 <video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4" type="video/mp4" /> </video>
 
-This was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes.
+This was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable.
 
 ## Dithering
 
