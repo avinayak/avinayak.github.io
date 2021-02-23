@@ -43,7 +43,7 @@ Here's the important bit of code I used. Complete version of this POC is availab
         states = np.tile(np.copy(best_seed), (batch_size, 1, 1))
         rms_errors = []
         for state in range(len(states)):
-            states[state] = perturbate(states[state], (m,n))
+            states[state] = modify(states[state], (m,n))
             rmse_val = rmse(target, nth_generation(np.copy(states[state])))
             rms_errors.append(rmse_val)
         lowest = min(rms_errors)
@@ -52,6 +52,6 @@ Here's the important bit of code I used. Complete version of this POC is availab
             best = rms_errors.index(lowest)
             best_state = states[best]
 
-Hill Climbing works on finding the closest neighboring state to the state we have that has the least  difference from. The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random state. this change is small enough that we don't risk stepping over some local minima so much. Also we use rms error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that rmse was sufficient.
+Hill Climbing works on finding the closest neighboring state to the state we have that has the least  difference from. The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random cell. This change is small enough that we don't risk stepping over some local minima so much. Also we use root mean square error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that rmse was sufficient.
 
-After a days or so, I was able to obtain something that resembled monalisa.
+After a days or so, I was able to obtain something that resembled monalisa after runnign 4 generations of life.
