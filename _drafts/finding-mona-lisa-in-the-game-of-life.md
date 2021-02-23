@@ -17,19 +17,19 @@ I began working on a proof of concept version using the hill climbing technique.
 
 1. Initialize variable best-score = infinity and an empty matrix as best-result
 2. Start with a random matrix of 1s and 0s representing live and dead cells in Life.
-3. Invert a single cell at a random location. 
+3. Invert a single cell at a random location (pertrubatipn).
 4. Create a copy of this matrix.
 5. Run N generations of Game of Life on the matrix
 6. Compute a score of how close the matrix is with the target.
    1. If the score is less than best_score
       1. Set it as best score and set the copy from step 4 as best-result.
-   2.  else
-      1. Copy best result to current matrix.
+   2. else
+   3. Copy best result to current matrix.
 7. Repeat 3
 
-Here's the important bits of code I used. Complete version of this POC is available here.
+Here's the important bit of code I used. Complete version of this POC is available here.
 
-    def perturbate(state, shape):
+    def modify(state, shape):
         x,y = shape
         px = int(np.random.uniform(x+1))-1
         py = int(np.random.uniform(y+1))-1
@@ -51,5 +51,7 @@ Here's the important bits of code I used. Complete version of this POC is availa
             best_score = lowest
             best = rms_errors.index(lowest)
             best_state = states[best]
-            clear_output(wait=True)
-            print("lowest score: ", best_score)
+
+Hill Climbing works on finding the closest neighboring state to the state we have that has the least  difference from. The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random state. this change is small enough that we don't risk stepping over some local minima so much. Also we use rms error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that rmse was sufficient.
+
+After a days or so, I was able to obtain something that resembled monalisa.
