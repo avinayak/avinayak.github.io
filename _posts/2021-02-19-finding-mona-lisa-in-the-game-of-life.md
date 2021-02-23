@@ -90,6 +90,8 @@ This is a zoomed portion of the 4th generation of the state we just prepared
 
 ![](/uploads/screenshot-from-2021-02-23-19-08-47.png)
 
-As you can see, it's impossible to get a continous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. the end result will be a higher contrast, but slightly darkened version of monalisa. At higher resolutions, this effect is not as apparent.
+As you can see, it's impossible to get a continuous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. The end result will be a higher contrast, but slightly darkened version of monalisa. At higher resolutions, this effect is not as apparent.
 
 ### Scaling Up
+
+This problem is well suited for parallelization. 
