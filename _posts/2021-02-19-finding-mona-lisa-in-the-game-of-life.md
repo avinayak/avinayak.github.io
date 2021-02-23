@@ -99,3 +99,7 @@ As you can see, it's impossible to get a continuous array of white cells because
 The single core unvectorized version is extremely slow. I tried running this in both my 8th gen Core i7 and the Google Colab CPU machines, but you need to wait for hours/days (depending on target resolution) to get something that resembles the original.
 
 Fortunately, This problem is well suited for parallelization. JAX is a python library that lets you use a version of numpy and compile it to highly vectorized code that can be run on a GPU/TPU. We need to rework this algorithm for a GPU.
+
+GPUs generally suited to high-throughput type computations that exhibit data-parallelism to exploit the wide vector width SIMD (Single Instruction Multiple Data) architecture.
+
+We extrude the target(Mona Lisa) and canvas(initial random state) to 3D.
