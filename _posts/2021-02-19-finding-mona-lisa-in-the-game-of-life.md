@@ -76,6 +76,10 @@ I think when you're comparing against boolean variables, It's better that we hav
 
 We could just not round at all, and compare against the grayscale version. However, I found that the best results are obtained when we use a rasterized version.
 
+![](/uploads/screenshot-from-2021-02-23-19-04-26.png)
+
+At highest resolutions, it looks a lot better. We need to scale of algorithm to operate at this level too.
+
 ![](/uploads/screenshot-from-2021-02-23-18-54-34.png)
 
 This image is a perfect array of 0s and 1s and should give us a better fitting life state.
