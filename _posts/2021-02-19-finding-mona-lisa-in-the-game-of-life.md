@@ -164,7 +164,7 @@ Next, get Mona Lisa from wikipedia
 
     !wget -O target.png https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/483px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg?download
 
-This is not a crazy high res version. only 483px wide. 
+This is not a crazy high res version. only 483px wide.
 
     batch_size = 100
     
@@ -178,7 +178,9 @@ This is not a crazy high res version. only 483px wide.
     
     plt.imshow(lisa, interpolation="nearest", cmap = plt.cm.gray)
 
-This section dithers Mona Lisa using the PIL dithering algorithm (Floyd Steinberg) and extrudes it to batch_size length. Store this in variable `lisa_loaf`. 
+This section dithers Mona Lisa using the PIL dithering algorithm (Floyd Steinberg) and extrudes it to batch_size length. 
+
+Store this in variable `lisa_loaf` (Consider a loaf of bread, with each slice being the Mona Lisa).
 
     key = jax.random.PRNGKey(int(time.time() * 1000)) #
     canvas_loaf = jax.random.randint( key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
