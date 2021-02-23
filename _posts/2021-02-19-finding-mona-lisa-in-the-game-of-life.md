@@ -141,3 +141,47 @@ Something like (with shape 5, 3, 2. batch_size being 5)
 The idea is that in every loop, we use the random modifier to calculate the next set of neihbours from our best matched like this `canvas = (best_canvas + modifier)%2`.
 
 We compute n generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE (mean being calculated for the slice only) on the nth generation canvas vs Mona Lisa , and find the one with the canvas slice with the lowest error. This is then set to best_canvas and the loop repeats till a finite number of iterations pass.
+
+## Code
+
+The notebook for this project is available here or run it in colab. I'll explain what every block is doing in this section.
+
+The core of this project, the game of life function is actually taken from [this post](http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html). Thank you  B. Nikolic :). I followed his convention of importing jax.numpy as jax.lax.
+
+    %matplotlib inline 
+    import jax
+    N=jax.numpy
+    L=jax.lax
+    from jax.experimental import loops
+    from jax import ops
+    import matplotlib.pyplot as plt
+    import numpy as onp
+    import time
+    from PIL import Image 
+    from google.colab import files
+
+Next, get Mona Lisa from wikipedia
+
+    !wget -O target.png https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/483px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg?download
+
+This is not a crazy high res version. only 483px wide. 
+
+    batch_size = 100
+    
+    image_file = Image.open("target.png")
+    image_file = image_file.convert('1')
+    lisa = N.array(image_file, dtype=N.int32)
+    width,height = lisa.shape
+    
+    lisa_loaf = onp.repeat(lisa[onp.newaxis, :, :,], batch_size, axis = 0)
+    print(lisa_loaf.shape)
+    
+    plt.imshow(lisa, interpolation="nearest", cmap = plt.cm.gray)
+
+This section dithers Mona Lisa using the PIL dithering algorithm (Floyd Steinberg) and extrudes it to batch_size length._ 
+
+_Store this in `lisa`_`loaf`. 
+
+    key = jax.random.PRNGKey(int(time.time() * 1000)) #
+    canvas_loaf = jax.random.randint( key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
+    plt.imshow(canvas_loaf[0], interpolation="nearest", cmap = plt.cm.gray)
