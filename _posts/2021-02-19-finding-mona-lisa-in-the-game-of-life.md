@@ -202,10 +202,12 @@ Here, we're initialing a random a random key for the JAX PRNG. Because of the wa
     
     @jax.jit
     def nv_rgen(state):
+      """ Run 5 generations of vmapped rgen over input """
       return v_rgen(v_rgen(v_rgen(v_rgen(v_rgen(state)))))
 
 please read B. Nikolc's post for an in depth explanation for rgen function, which runs 1 generation of Game of Life. 
 
-We use jax.vmap, probably the most important function in JAX. `vmap` lets us creates a function which maps an input function over argument axes.
+We use `jax.vmap`, a super useful in JAX. `vmap` lets us creates a function which maps an input function over argument axes.
 
-This lets us run a generation of game of life across every slice in our canvas in parallel. 
+This lets us run a generation of game of life across every slice in our canvas in parallel.   
+nv_rgen is where I'm not quite sure of. We need to run 5 generation of Game of Life on the canvas. According to python idioms, a loop should be used to execute this function 5 times. But conventional python loops are not allowed in JAX. For now this works, but maybe I'll fix this later.
