@@ -102,7 +102,7 @@ Fortunately, This problem is well suited for parallelization. JAX is a python li
 
 GPUs generally suited to high-throughput type computations that exhibit data-parallelism to exploit the wide vector width SIMD (Single Instruction Multiple Data) architecture.
 
-We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dimension with 3r dimension being `batch_size long`
+We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dimension with 3rd dimension being `batch_size` long.
 
 ![](/uploads/untssitled-another-copy.png)
 
@@ -135,3 +135,5 @@ Something like (with shape 5, 3, 2. batch_size being 5)
            [[1, 0],
             [0, 0],
             [0, 0]]])
+
+The idea is that in every loop, we use the random modifier to calculate the next set of neihbours from our best matched like this `canvas = (best_canvas + modifier)%2`.
