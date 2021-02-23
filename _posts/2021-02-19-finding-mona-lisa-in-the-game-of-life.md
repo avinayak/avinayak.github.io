@@ -5,6 +5,7 @@ categories:
 - algorithms
 - programming
 layout: post
+subtitle: well.. sort of.
 
 ---
 <video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_23-55-50.mp4" type="video/mp4" /> </video>

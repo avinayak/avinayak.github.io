@@ -5,6 +5,11 @@ fields:
 - type: text
   name: title
   label: title
+- name: subtitle
+  type: text
+  config:
+    required: false
+  label: subtitle
 - type: datetime
   name: date
   label: date
