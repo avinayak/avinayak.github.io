@@ -185,3 +185,5 @@ Store this in variable `lisa_loaf` (Consider a loaf of bread, with each slice be
     key = jax.random.PRNGKey(int(time.time() * 1000)) #
     canvas_loaf = jax.random.randint( key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
     plt.imshow(canvas_loaf[0], interpolation="nearest", cmap = plt.cm.gray)
+
+Here, we're initialziing a random 
