@@ -64,7 +64,7 @@ This was reassuring that my algorithm did indeed work, but I realize I made a bu
 
 ## Dithering
 
-Target Mona Lisa against which our random state was compared with was the medium resolution version taken from wikipedia. 
+Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia. 
 
 ![](/uploads/screenshot-from-2021-02-23-18-38-08.png)
 
@@ -72,7 +72,7 @@ or rather
 
 ![](/uploads/screenshot-from-2021-02-23-18-38-08-copy.png)
 
-I think when you're comparing against boolean variables, It's better that we have something in two colors, than the whole grayscale range. Simply rounding (which is what I did) these grayscale values to either be black or while seems to remove a lot of details.
+I think when you're comparing against boolean variables, It's better that we have something in two colors, than the whole gray scale range. Simply rounding (which is what I did) these gray scale values to either be black or while seems to remove a lot of details.
 
 ![](/uploads/screenshot-from-2021-02-23-18-39-11.png)
 
@@ -96,6 +96,6 @@ As you can see, it's impossible to get a continuous array of white cells because
 
 ### Scaling Up - Parallelization with JAX
 
-The single core unvectorized version is extremely slow. I tried running this in both my 8th gen Core i7 and the Google colab CPU machines, but you need to wait for hours/days (depedning on target resolution) to get something that resembles the original.
+The single core unvectorized version is extremely slow. I tried running this in both my 8th gen Core i7 and the Google Colab CPU machines, but you need to wait for hours/days (depending on target resolution) to get something that resembles the original.
 
 Fortunately, This problem is well suited for parallelization. 
