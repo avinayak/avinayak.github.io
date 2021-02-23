@@ -17,7 +17,7 @@ I began working on a proof of concept version using the hill climbing technique.
 
 1. Initialize variable best-score = infinity and an empty matrix as best-result
 2. Start with a random matrix of 1s and 0s representing live and dead cells in Life.
-3. Invert a single cell at a random location (pertrubatipn).
+3. Invert a single cell at a random location (modify).
 4. Create a copy of this matrix.
 5. Run N generations of Game of Life on the matrix
 6. Compute a score of how close the matrix is with the target.
@@ -52,10 +52,28 @@ Here's the important bit of code I used. Complete version of this POC is availab
             best = rms_errors.index(lowest)
             best_state = states[best]
 
-Hill Climbing works on finding the closest neighboring state to the state we have that has the least  difference from. The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random cell. This change is small enough that we don't risk stepping over some local minima so much. Also we use root mean square error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that rmse was sufficient.
+Hill Climbing works on finding the closest neighboring state to the state we have that has the least  difference from. The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random cell. This change is small enough that we don't risk stepping over some local minima so much. Also we use root mean square error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that RMSE was sufficient.
 
-After a few days or so(!), I was able to obtain something that resembled monalisa after runnign 4 generations of life.
+After a few days or so(!), I was able to obtain something that resembled monalisa after running 4 generations of life.
 
 <video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4" type="video/mp4" /> </video>
 
-I realized a much of mistakes I did in this PoC. 
+This was reassuring that my algorithm did indeed work, but I realize I made a buch of mistakes.
+
+### Dithering
+
+Target monalisa against which our random state was compared with was the medium resolution version taken from wikipedia. 
+
+![](/uploads/screenshot-from-2021-02-23-18-38-08.png)
+
+or rather
+
+![](/uploads/screenshot-from-2021-02-23-18-38-08-copy.png)
+
+I think when you're comparing against boolean variables, It's better that we have something in two colors, than the whole grayscale range. Simply rounding (which is what I did) these grayscale values to either be black or while seems to remove a lot of details.
+
+![](/uploads/screenshot-from-2021-02-23-18-39-11.png)
+
+We could just not round at all, and compare against the grayscale version. However, I found that the best results are obtained when we use a rasterized version.
+
+![](/uploads/screenshot-from-2021-02-23-18-49-50.png)
