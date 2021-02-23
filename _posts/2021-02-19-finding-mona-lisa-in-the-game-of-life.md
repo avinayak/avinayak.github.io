@@ -64,7 +64,7 @@ This was reassuring that my algorithm did indeed work, but I realize I made a bu
 
 ## Dithering
 
-Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia. 
+Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia.
 
 ![](/uploads/screenshot-from-2021-02-23-18-38-08.png)
 
@@ -86,7 +86,7 @@ This image is a perfect array of 0s and 1s and should give us a better fitting l
 
 ## Garden of Eden
 
-Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation of any cellular automata are called Garden of Edens. It is almost impossible that our dithered Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target. 
+Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation of any cellular automata are called Garden of Edens. It is almost impossible that our dithered Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target.
 
 This is a zoomed portion of the 4th generation of the state we just prepared.
 
@@ -138,5 +138,4 @@ Something like (with shape 5, 3, 2. batch_size being 5)
 
 The idea is that in every loop, we use the random modifier to calculate the next set of neihbours from our best matched like this `canvas = (best_canvas + modifier)%2`.
 
-We compute n generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE (mean being calculated for the slice only) vs the nth generation canvas vs Mona Lisa , and find the one with the canvas slice with the lowest error. This is then set to best_canvas and the loop repeats till a finite number of iterations pass.
-
+We compute n generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE (mean being calculated for the slice only) on the nth generation canvas vs Mona Lisa , and find the one with the canvas slice with the lowest error. This is then set to best_canvas and the loop repeats till a finite number of iterations pass.
