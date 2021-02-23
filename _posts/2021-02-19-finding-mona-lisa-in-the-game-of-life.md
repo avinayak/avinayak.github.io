@@ -178,9 +178,7 @@ This is not a crazy high res version. only 483px wide.
     
     plt.imshow(lisa, interpolation="nearest", cmap = plt.cm.gray)
 
-This section dithers Mona Lisa using the PIL dithering algorithm (Floyd Steinberg) and extrudes it to batch_size length._ 
-
-_Store this in `lisa`_`loaf`. 
+This section dithers Mona Lisa using the PIL dithering algorithm (Floyd Steinberg) and extrudes it to batch_size length. Store this in variable `lisa_loaf`. 
 
     key = jax.random.PRNGKey(int(time.time() * 1000)) #
     canvas_loaf = jax.random.randint( key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
