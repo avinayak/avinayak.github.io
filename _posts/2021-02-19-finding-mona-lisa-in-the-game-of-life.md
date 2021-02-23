@@ -175,9 +175,9 @@ This is not a crazy high res version. only 483px wide.
 
 This section dithers Mona Lisa using the PIL dithering algorithm (Floyd Steinberg) and extrudes it to batch_size length. 
 
-Store this in variable `lisa_loaf` (Consider a loaf of bread, with each slice being the Mona Lisa).
+Store this in variable `lisa_loaf` (Consider a loaf of bread, with each slice being the ditehred Mona Lisa).
 
     key = jax.random.PRNGKey(42)
     canvas_loaf = jax.random.randint(key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
 
-Here, we're initialzing a random a random key for the JAX PRNG. 
+Here, we're initialing a random a random key for the JAX PRNG. Because of the way jax works, all JAX random functions require an explicit PRNG state to be passed as a first argument. 42 is what we're seeding our PRNG with. We also create a random canvas_loaf with integers 0 and 1.
