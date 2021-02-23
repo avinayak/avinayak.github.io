@@ -78,12 +78,18 @@ We could just not round at all, and compare against the grayscale version. Howev
 
 ![](/uploads/screenshot-from-2021-02-23-19-04-26.png)
 
-At highest resolutions, it looks a lot better. We need to scale of algorithm to operate at this level too.
+This image is a perfect array of 0s and 1s and should give us a better fitting life state. At highest resolutions, it looks a lot better. We need to scale of algorithm to operate at this level too.
 
 ![](/uploads/screenshot-from-2021-02-23-18-54-34.png)
-
-This image is a perfect array of 0s and 1s and should give us a better fitting life state.
 
 ### Garden of Eden
 
 Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation of any cellular automata are called Garden of Edens. It is almost impossible that our dithered monalisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target. 
+
+This is a zoomed portion of the 4th generation of the state we just prepared
+
+![](/uploads/screenshot-from-2021-02-23-19-08-47.png)
+
+As you can see, it's impossible to get a continous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. the end result will be a higher contrast, but slightly darkened version of monalisa. At higher resolutions, this effect is not as apparent.
+
+### Scaling Up
