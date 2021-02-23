@@ -88,7 +88,7 @@ This image is a perfect array of 0s and 1s and should give us a better fitting l
 
 Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation of any cellular automata are called Garden of Edens. It is almost impossible that our dithered Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target. 
 
-This is a zoomed portion of the 4th generation of the state we just prepared
+This is a zoomed portion of the 4th generation of the state we just prepared.
 
 ![](/uploads/screenshot-from-2021-02-23-19-08-47.png)
 
