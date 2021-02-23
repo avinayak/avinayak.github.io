@@ -167,23 +167,17 @@ Next, get Mona Lisa from wikipedia
 This is not a crazy high res version. only 483px wide.
 
     batch_size = 100
-    
     image_file = Image.open("target.png")
     image_file = image_file.convert('1')
     lisa = N.array(image_file, dtype=N.int32)
     width,height = lisa.shape
-    
     lisa_loaf = onp.repeat(lisa[onp.newaxis, :, :,], batch_size, axis = 0)
-    print(lisa_loaf.shape)
-    
-    plt.imshow(lisa, interpolation="nearest", cmap = plt.cm.gray)
 
 This section dithers Mona Lisa using the PIL dithering algorithm (Floyd Steinberg) and extrudes it to batch_size length. 
 
 Store this in variable `lisa_loaf` (Consider a loaf of bread, with each slice being the Mona Lisa).
 
-    key = jax.random.PRNGKey(int(time.time() * 1000)) #
-    canvas_loaf = jax.random.randint( key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
-    plt.imshow(canvas_loaf[0], interpolation="nearest", cmap = plt.cm.gray)
+    key = jax.random.PRNGKey(42)
+    canvas_loaf = jax.random.randint(key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
 
-Here, we're initialziing a random 
+Here, we're initialzing a random a random key for the JAX PRNG. 
