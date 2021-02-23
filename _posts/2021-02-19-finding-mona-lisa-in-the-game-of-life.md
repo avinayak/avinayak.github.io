@@ -181,3 +181,29 @@ Store this in variable `lisa_loaf` (Consider a loaf of bread, with each slice be
     canvas_loaf = jax.random.randint(key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
 
 Here, we're initialing a random a random key for the JAX PRNG. Because of the way jax works, all JAX random functions require an explicit PRNG state to be passed as a first argument. 42 is what we're seeding our PRNG with. We also create a random canvas_loaf with integers 0 and 1.
+
+    @jax.jit
+    def rgen(a):
+        nghbrs=L.reduce_window(a, 0, L.add, (3,3), (1,1), "SAME")-a
+        birth=N.logical_and(a==0, nghbrs==3)
+        underpop=N.logical_and(a==1, nghbrs<2)
+        overpop=N.logical_and(a==1, nghbrs>3)
+        death=N.logical_or(underpop, overpop)
+        na=L.select(birth,
+                    N.ones(a.shape, N.int32),
+                    a)
+    
+        na=L.select(death,
+                    N.zeros(a.shape, N.int32),
+                    na)
+        return na
+    
+    v_rgen = jax.vmap(rgen)
+    
+    @jax.jit
+    def nv_rgen(state):
+      return v_rgen(v_rgen(v_rgen(v_rgen(v_rgen(state)))))
+
+please read B. Nikolc's post for an in depth explanation for rgen function, which runs 1 generation of Game of Life. We use jax.vmap, probably the most important function in JAX. `vmap` lets us creates a function which maps an input function over argument axes.
+
+This lets us run a generation of game of life across every slice in our canvas in parallel. 
