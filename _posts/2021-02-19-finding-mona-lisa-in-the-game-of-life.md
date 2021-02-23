@@ -102,4 +102,8 @@ Fortunately, This problem is well suited for parallelization. JAX is a python li
 
 GPUs generally suited to high-throughput type computations that exhibit data-parallelism to exploit the wide vector width SIMD (Single Instruction Multiple Data) architecture.
 
-We extrude the target(Mona Lisa) and canvas(initial random state) to 3D.
+We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dimension with side `batch_size.`
+
+![](/uploads/untssitled-another-copy.png)
+
+![](/uploads/untssitled-copy.png)
