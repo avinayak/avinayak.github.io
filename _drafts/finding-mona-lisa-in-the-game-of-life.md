@@ -55,3 +55,5 @@ Here's the important bit of code I used. Complete version of this POC is availab
 Hill Climbing works on finding the closest neighboring state to the state we have that has the least  difference from. The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random cell. This change is small enough that we don't risk stepping over some local minima so much. Also we use root mean square error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that rmse was sufficient.
 
 After a days or so, I was able to obtain something that resembled monalisa after runnign 4 generations of life.
+
+/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4
