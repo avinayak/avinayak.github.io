@@ -56,4 +56,5 @@ Hill Climbing works on finding the closest neighboring state to the state we hav
 
 After a days or so, I was able to obtain something that resembled monalisa after runnign 4 generations of life.
 
-/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4
+<video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4" type="video/mp4" /> </video>
+
