@@ -7,7 +7,7 @@ categories:
 layout: post
 
 ---
-# DRAFT
+<video loop autoplay muted> <source src="/uploads/life-5.mp4" type="video/mp4" /> </video>
 
 There was this rough idea I've been thinking about in [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) for a really long time.
 
