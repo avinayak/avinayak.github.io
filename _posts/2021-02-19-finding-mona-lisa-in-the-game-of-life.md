@@ -211,3 +211,5 @@ We use `jax.vmap`, a super useful in JAX. `vmap` lets us creates a function whic
 
 This lets us run a generation of game of life across every slice in our canvas in parallel.   
 nv_rgen is where I'm not quite sure of. We need to run 5 generation of Game of Life on the canvas. According to python idioms, a loop should be used to execute this function 5 times. But conventional python loops are not allowed in JAX. For now this works, but maybe I'll fix this later.
+
+Also, `@jax.jit` python decorator just tells the compiler to jit compile this function. it is'nt super useful in `nv_rgen`, as it's simply composed of other jitted functions.
