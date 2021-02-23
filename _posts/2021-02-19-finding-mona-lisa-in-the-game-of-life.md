@@ -214,32 +214,6 @@ nv_rgen is where I'm not quite sure of. We need to run 5 generation of Game of L
 
 Also, `@jax.jit` python decorator just tells the compiler to jit compile this function. it is'nt super useful in `nv_rgen`, as it's simply composed of other jitted functions.
 
-    @jax.jit
-    def rgen(a):
-        # This reduction over-counts the neighbours of live cells since it includes the
-        # central cell itself. Subtract out the array to correct for this.
-        nghbrs=L.reduce_window(a, 0, L.add, (3,3), (1,1), "SAME")-a
-        birth=N.logical_and(a==0, nghbrs==3)
-        underpop=N.logical_and(a==1, nghbrs<2)
-        overpop=N.logical_and(a==1, nghbrs>3)
-        death=N.logical_or(underpop, overpop)
-    
-        na=L.select(birth,
-                    N.ones(a.shape, N.int32),
-                    a)
-    
-        na=L.select(death,
-                    N.zeros(a.shape, N.int32),
-                    na)
-    
-        return na
-    
-    v_rgen = jax.vmap(rgen)
-    
-    @jax.jit
-    def nv_rgen(state):
-      return v_rgen(v_rgen(v_rgen(v_rgen(v_rgen(state)))))
-    
     def modify_nj(b, w, h, subkey):
       a = jax.random.normal(subkey, (b, w, h))
       return (a == a.max(axis=(1,2))[:,None,None]).astype(int)
