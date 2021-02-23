@@ -108,7 +108,7 @@ We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dim
 
 ![](/uploads/untssitled-copy.png)
 
-The initial canvas will be completely random(unlike the figure).
+The initial canvas will be completely random(unlike the figure). We set `best_canvas` to the inital canvas before our hill climbing loop.
 
 Also, for every loop iteration, we need to produce a random 3D array called modifier with this property: Each slice across the 3rd dimension will be a field of zeros with a single one place at a random location.
 
@@ -137,3 +137,6 @@ Something like (with shape 5, 3, 2. batch_size being 5)
             [0, 0]]])
 
 The idea is that in every loop, we use the random modifier to calculate the next set of neihbours from our best matched like this `canvas = (best_canvas + modifier)%2`.
+
+We compute n generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE (mean being calculated for the slice only) vs the nth generation canvas vs Mona Lisa , and find the one with the canvas slice with the lowest error. This is then set to best_canvas and the loop repeats till a finite number of iterations pass.
+
