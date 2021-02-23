@@ -204,6 +204,8 @@ Here, we're initialing a random a random key for the JAX PRNG. Because of the wa
     def nv_rgen(state):
       return v_rgen(v_rgen(v_rgen(v_rgen(v_rgen(state)))))
 
-please read B. Nikolc's post for an in depth explanation for rgen function, which runs 1 generation of Game of Life. We use jax.vmap, probably the most important function in JAX. `vmap` lets us creates a function which maps an input function over argument axes.
+please read B. Nikolc's post for an in depth explanation for rgen function, which runs 1 generation of Game of Life. 
+
+We use jax.vmap, probably the most important function in JAX. `vmap` lets us creates a function which maps an input function over argument axes.
 
 This lets us run a generation of game of life across every slice in our canvas in parallel. 
