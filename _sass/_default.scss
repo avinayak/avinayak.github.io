@@ -76,10 +76,10 @@ strong {
 }
 
 .logo {
-    margin: 22px 0px;
-    font-size: 26px;
+    margin: 0px;
+    font-size: 57px;
     font-weight: 200;
-    color: #333333;
+    color: #333;
     display: block;
 }
 
@@ -108,13 +108,13 @@ strong {
 .social-links {
     float:right;
     font-size: 24px;
-    color: $cloudy;
     list-style-type: none;
 }
 
 .social-links__entry {
     display: inline-block;
     margin-left: 10px;
+    color: #333;
 }
 
 /* =Titles */

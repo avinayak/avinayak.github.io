@@ -1,5 +1,5 @@
 ---
-title: "avinayak's blog"
+title: "¬"
 timezone: UTC
 collections:
   posts:
@@ -18,7 +18,7 @@ author:
   github: avinayak
   twitter: atulvinayak
   unsplash: atulvi
-highlightstyle: agate
+highlightstyle: github-gist
 styles:
 - agate
 - androidstudio
