@@ -1,6 +1,6 @@
 ---
 title: "#つぶやきProcessing Showcase"
-subtitle: ''
+subtitle: Continued post
 date: 2020-07-31 15:00:00 +0000
 categories:
 - design
@@ -36,6 +36,3 @@ layout: post
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I realized that increasing lightness value can give much realistic discs like so. <a href="https://t.co/M7hedi5IJ6">pic.twitter.com/M7hedi5IJ6</a></p>&mdash; yakinavault (@yakinavault) <a href="https://twitter.com/yakinavault/status/1313353818910810112?ref_src=twsrc%5Etfw">October 6, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">w=1e3;s=20;setup=_=&gt;createCanvas(w,w);t=0;draw=_=&gt;{noStroke();translate(-10,t-=1);for(v=x=0;x&lt;w;x+=s,v=x/s)for(z=y=0;y&lt;w-t;y+=s,z=y/s){fill(p=z%5&lt;2||v%6&lt;3?0:~~(noise(v,z)*2.2)*255,p-70,0);rect(x,y,s,s)}}<br>//<a href="https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&amp;ref_src=twsrc%5Etfw">#つぶやきProcessing</a> <a href="https://t.co/yEdjdZeKfu">pic.twitter.com/yEdjdZeKfu</a></p>&mdash; yakinavault (@yakinavault) <a href="https://twitter.com/yakinavault/status/1304311898880405505?ref_src=twsrc%5Etfw">September 11, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
