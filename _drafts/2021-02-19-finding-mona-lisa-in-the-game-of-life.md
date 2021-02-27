@@ -1,6 +1,6 @@
 ---
 title: Finding Mona Lisa in the Game of Life
-date: 2021-02-19 15:00:00 +0000
+date: 2021-02-19T15:00:00.000+00:00
 categories:
 - algorithms
 - programming
@@ -208,21 +208,48 @@ Here, we're initialing a random a random key for the JAX PRNG. Because of the wa
 
 please read B. Nikolc's post for an in depth explanation for rgen function, which runs 1 generation of Game of Life.
 
-We use `jax.vmap`, a super useful in JAX. `vmap` lets us creates a function which maps an input function over argument axes.
+We use `jax.vmap`, a super useful in JAX. `vmap` lets us creates a function which maps an input function over argument axes. This lets us run a generation of game of life across every slice in our canvas.
 
-This lets us run a generation of game of life across every slice in our canvas in parallel.  
-nv_rgen is where I'm not quite sure of. We need to run 5 generation of Game of Life on the canvas. According to python idioms, a loop should be used to execute this function 5 times. But conventional python loops are not allowed in JAX. For now this works, but maybe I'll fix this later.
+  
+`nv_rgen` is where I'm not quite sure of. We need to run 5 generation of Game of Life on the canvas. According to python idioms, a loop should be used to execute this function 5 times. But conventional python loops are not allowed in JAX. This non-elegant way works for now, but maybe I'll fix this later.
 
-Also, `@jax.jit` python decorator just tells the compiler to jit compile this function. it is'nt super useful in `nv_rgen`, as it's simply composed of other jitted functions.
+Also, `@jax.jit` python decorator just tells the compiler to jit compile this function. it isn't super useful in `nv_rgen`, as it's simply composed of other jitted functions.
 
     def modify_nj(b, w, h, subkey):
       a = jax.random.normal(subkey, (b, w, h))
       return (a == a.max(axis=(1,2))[:,None,None]).astype(int)
     
     modify = jax.jit(modify_nj, static_argnums=(0,1,2))
-    
+
+`modify_nj` generates the sparse ones tensor we talked about before. it generates this from a random tensor and sets max of every slice to one and rest to zero. We use JAX PRNG for generating random, which I'll get to soon. 
+
+We jit this function as `modify`. Additionally, we need to mark b,w,h arguments as static so that the compiler knows they're constant throughout the execution.
+
     def rmse_nj(original, canvas, b, w, h):
-      reshaped = L.reshape((original-canvas)**2,(b,w*h))
-      return N.sqrt(N.mean(reshaped , axis=1))
+      return N.sqrt(N.mean(L.reshape((original-canvas)**2,(b,w*h)) , axis=1))
     
     rmse = jax.jit(rmse_nj, static_argnums=(2,3,4))
+
+`rmse` is pretty self explanatory. The only major change from the CPU version is that we compute mean across 1st axis (loaf axis).
+
+    def hill_climb(original,canvas, key, iterations):
+      with loops.Scope() as s:
+        s.best_score = N.inf
+        s.curr_min = 0.0
+        s.best_canvas = canvas
+        s.canvas = canvas
+        s.rmse_vals = rmse(original, s.canvas, batch_size, width, height)
+        s.key = key
+        for run in s.range(iterations):
+          s.key, subkey = jax.random.split(s.key)
+          s.canvas+=modify(batch_size, width, height, subkey)
+          s.canvas%=2
+          s.rmse_vals = rmse(original, nv_rgen( s.canvas ), batch_size, width, height)
+          s.curr_min = N.min(s.rmse_vals)
+          for _ in s.cond_range(s.curr_min < s.best_score):
+            s.best_score = s.curr_min
+            s.best_canvas = N.repeat((s.canvas[N.argmin(s.rmse_vals)])[N.newaxis, :, :,], batch_size, axis = 0)
+          s.canvas = s.best_canvas
+        return s.canvas
+
+`hill_clim` _is the main function in the program. it is one big JAX loop construct. JAX loops (jax.experimental.loops for now) is a syntactic sugar for lax.fori\\_loop_
