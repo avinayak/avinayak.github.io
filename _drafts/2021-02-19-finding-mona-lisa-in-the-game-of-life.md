@@ -69,33 +69,37 @@ After a few days of CPU time(!), I was able to obtain something that resembled M
 
 It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable.
 
-## Dithering
+## Garden of Eden and Dithering
 
 Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia and converted to monochrome using PIL's `Image.open('target.png').convert('L')`
 
 ![](/uploads/screenshot-from-2021-02-23-18-38-08-copy.png)
 
-When you're comparing against boolean variables, It's better that we the target as a binary matrix rather than the whole grayscale range. Simply rounding (which is what I did) these gray scale values to either be black or while seems to remove a lot of details.
+When you're comparing against boolean variables, It's better that we the target as a binary matrix rather than the whole grayscale range. 
+
+In this attempt, I simply rounded these grayscale values to 0s and 1s. This was a mistake as it removed a lot of image details.
 
 ![](/uploads/screenshot-from-2021-02-23-18-39-11.png)
 
-We could just not round at all, and compare against the gray scale version. However, I found that the best results are obtained when we use a rasterized version.
-
-![](/uploads/screenshot-from-2021-02-23-19-04-26.png)
-
-This image is a perfect array of 0s and 1s and should give us a better fitting life state. At highest resolutions, it looks a lot better. We need to scale of algorithm to operate at this level too.
-
-![](/uploads/screenshot-from-2021-02-23-18-54-34.png)
+We could just not round at all, and compare against the grayscale version. There is a better way. 
 
 ## Garden of Eden
 
-Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation of any cellular automata are called Garden of Edens. It is almost impossible that our dithered Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target.
+Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation (n>0) of any cellular automata are called Garden of Edens. It is almost impossible that our monochrome-rounded Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target.
 
-This is a zoomed portion of the 4th generation of the state we just prepared.
+This is a portion of the 4th generation of the state we just prepared.
 
 ![](/uploads/screenshot-from-2021-02-23-19-08-47.png)
 
-As you can see, it's impossible to get a continuous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. The end result will be a higher contrast, but slightly darkened version of Mona Lisa. At higher resolutions, this effect is not as apparent.
+Judging by the texture, the way life patterns evolve and from just experimenting with images, I found that comparing against a  2bit dithered version the target should improve the quality of results. 
+
+![](/uploads/screenshot-from-2021-02-23-19-04-26.png)
+
+Dithered image has a somewhat even distribution of 0 and 1 cells which is somewhat close to what a randomly initialized Game of Life state will look like after a few generations. This property is also maintained when you scale up the image, which is what we're going to do.
+
+![](/uploads/screenshot-from-2021-02-23-18-54-34.png)
+
+Also you can see from the last result, it's impossible to get a continuous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. The end result will be a higher contrast, but slightly darkened version of Mona Lisa. At higher resolutions, this effect is not as apparent.
 
 ## Scaling Up - Parallelization with JAX
 
