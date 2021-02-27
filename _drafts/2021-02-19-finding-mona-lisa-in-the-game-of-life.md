@@ -22,47 +22,44 @@ There are ways achive this by placing still life states at specific pixels as de
 
 I began working on a proof of concept using the hill climbing algorithm. The idea was very simple.
 
-```
-best_score := infinity
-target := mona lisa with dimensions m x n
-canvas := random matrix of m x n
-best_result := canvas
-do
-    modified_canvas := Copy of canvas with a single random cell inverted
-    nth_modified_canvas := Run N generations of Game of Life modified_canvas
-    Compute a score of how close nth_modified_canvas is with target
-    if score < best_score then
-    	best_score := score
-        best_result := modified_canvas
-    canvas := best_result
-while(iteration limit is reached or best_result is close enough to target)
+    best_score := infinity
+    target := mona lisa with dimensions m x n
+    canvas := random matrix of m x n
+    best_result := canvas
+    do
+        modified_canvas := Copy of canvas with a single random cell inverted
+        nth_modified_canvas := Run N generations of Game of Life modified_canvas
+        Compute a score of how close nth_modified_canvas is with target
+        if score < best_score then
+        	best_score := score
+            best_result := modified_canvas
+        canvas := best_result
+    while(max_iterations limit passed or best_score < threshold)
+    
 
-```
+Here's the important bits of code I used.
 
-Here's the important bit of code I used. Complete version of this POC is available here.
-
-    def modify(state, shape):
+    def modify(canvas, shape):
         x,y = shape
         px = int(np.random.uniform(x+1))-1
         py = int(np.random.uniform(y+1))-1
-        state[px][py] = not state[px][py]
-        return state
+        canvas[px][py] = not canvas[px][py]
+        return canvas
     
     def rmse(predictions,targets):
         return np.sqrt(np.mean((predictions-targets)**2))
     
-    while best_score>0.23:
-        states = np.tile(np.copy(best_seed), (batch_size, 1, 1))
+    while best_score>limit:
+        canvases = np.tile(np.copy(best_seed), (batch_size, 1, 1))
         rms_errors = []
-        for state in range(len(states)):
-            states[state] = modify(states[state], (m,n))
-            rmse_val = rmse(target, nth_generation(np.copy(states[state])))
+        for canvas in range(len(canvases)):
+            canvases[canvas] = modify(states[state], (m,n))
+            rmse_val = rmse(target, nth_generation(np.copy(canvases[canvas])))
             rms_errors.append(rmse_val)
         lowest = min(rms_errors)
         if lowest < best_score:
             best_score = lowest
-            best = rms_errors.index(lowest)
-            best_state = states[best]
+            best_result = canvases[rms_errors.index(lowest)]
 
 Hill Climbing works on finding the closest neighboring state to the state we have that has the least  difference from. The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random cell. This change is small enough that we don't risk stepping over some local minima so much. Also we use root mean square error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that RMSE was sufficient.
 
@@ -70,15 +67,11 @@ After a few days of CPU time(!), I was able to obtain something that resembled M
 
 <video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4" type="video/mp4" /> </video>
 
-This was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable.
+It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable.
 
 ## Dithering
 
-Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia.
-
-![](/uploads/screenshot-from-2021-02-23-18-38-08.png)
-
-or rather
+Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia and converted to monochrome using PIL's `Image.open('target.png').convert('L')`
 
 ![](/uploads/screenshot-from-2021-02-23-18-38-08-copy.png)
 
@@ -286,7 +279,7 @@ After a finite number of iterations, we'd obtain a Game of Life state that revea
 
 # Results
 
-Running \~1000 iterations for a 483px wide mona lisa on the google colab GPU runtime only takes around 40 seconds!. Compared to the CPU version which takes several hours to do the same for a smaller image, I think we've achieved our goals. 
+Running \~1000 iterations for a 483px wide mona lisa on the google colab GPU runtime only takes around 40 seconds!. Compared to the CPU version which takes several hours to do the same for a smaller image, I think we've achieved our goals.
 
 A life state with the highest similarity to the target is achieved after running for \~23000 iterations (10 minutes). After 23K, the gains start to diminish greatly and does'nt seem to   improve much, even if you run for 100K iterations.
 
