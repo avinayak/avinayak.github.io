@@ -308,6 +308,10 @@ A life state with the highest similarity to the target is achieved after running
 
 <cap>Moon, 6 generations (https://unsplash.com/photos/pd4lo70LdbI)</cap>
 
+<video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_23-55-50.mp4" type="video/mp4" /> </video>
+
+<cap>Chess, 10 generations (https://unsplash.com/photos/3xMaFio-A7Q)</cap>
+
 # Conclusion
 
 I was really looking for an excuse to dive into JAX that doesn't necessarily invoke it's automatic differentiation capabilities. JAX can be used to any general computing problem that works on tensors. I'm sure I made many mistakes here, but this was very much a learning experience for me.
