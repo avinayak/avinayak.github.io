@@ -78,6 +78,8 @@ Target Mona Lisa against which our random state was compared with was the medium
 
 ![](/uploads/screenshot-from-2021-02-23-18-38-08-copy.png)
 
+<cap>https://en.wikipedia.org/wiki/Mona_Lisa#/media/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg</cap>
+
 When you're comparing against boolean variables, It's better that we the target as a binary matrix rather than the whole grayscale range.
 
 In this attempt, I simply rounded these grayscale values to 0s and 1s. This was a mistake as it washed away a lot of details.
@@ -97,6 +99,8 @@ This is a portion of the 4th generation of the state we just prepared.
 Judging by the texture, the way life patterns evolve and from just experimenting with images, I found that comparing against a  1-bit dithered version the target should improve the quality of results.
 
 ![](/uploads/screenshot-from-2021-02-23-19-04-26.png)
+
+<cap>1-bit Dithering on Mona Lisa</cap>
 
 Dithered image has a somewhat even distribution of 0 and 1 cells which is somewhat close to what a randomly initialized Game of Life state will look like after a few generations. This property is also maintained when you scale up the image, (which we'll optimize for soon).
 
@@ -149,9 +153,7 @@ Something like
             [0, 0],
             [0, 0]]])
 
-## 
-
-<cap>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
+<cap></br>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
 
 The idea is that in every loop, we use the mutator to calculate the nearest set of neihbouring states from our best_canvas like this `canvas = (best\_canvas + mutator)%2`.
 
