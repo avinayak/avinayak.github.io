@@ -5,10 +5,12 @@ categories:
 - algorithms
 - programming
 layout: post
-subtitle: well.. sort of. as you can see.
+subtitle: with JAX
 
 ---
 <video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_23-55-50.mp4" type="video/mp4" /> </video>
+
+The results of this experiment are not that close to the actual image, but it's satisfactory.
 
 There was this rough idea I've been thinking about in [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) for a really long time.
 
