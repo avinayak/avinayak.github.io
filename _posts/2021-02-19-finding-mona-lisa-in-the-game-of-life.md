@@ -18,7 +18,9 @@ There was this rough idea I've been thinking about in [Conway's Game of Life](ht
 
 I came across [an article](https://kevingal.com/blog/mona-lisa-gol.html) of the same title by Kevin Galligan recently and I thought I could do something similar using a different approach. What if instead of using SAT Solvers, I use some kind of heuristic algorithm that could somehow "program" a large world of Game of Life to display an image after a few generations?
 
-There are ways achive this by placing still life states at specific pixels as described in this [codegolf question](https://codegolf.stackexchange.com/questions/38573/paint-a-still-life-or-a-moving-one-draw-an-image-in-the-game-of-life), but what I'm thinking of is to display mona lisa for a single generation with non-still(um.. living) life.
+There are other ways of achiveing this. One is by placing still life states at specific pixels as described in this [codegolf question](https://codegolf.stackexchange.com/questions/38573/paint-a-still-life-or-a-moving-one-draw-an-image-in-the-game-of-life).
+
+What I'm thinking of is to display Mona Lisa for a single generation with non-still ..um.. 'living' life.
 
 # Algorithm
 
