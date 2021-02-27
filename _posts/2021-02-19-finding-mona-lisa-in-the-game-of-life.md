@@ -195,7 +195,7 @@ This is not a crazy high res version.It's only 483px wide.
     width,height = lisa.shape
     lisa_loaf = onp.repeat(lisa[onp.newaxis, :, :,], batch_size, axis = 0)
 
-![](/uploads/dithered-image.png)
+![](/uploads/download-37.png)
 
 This section dithers Mona Lisa using the and extrudes it to `batch_size` length.
 
