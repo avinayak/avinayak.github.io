@@ -276,3 +276,11 @@ Why are conditionals also loops in JAX? er.. I'm not quite sure about this. It s
 If we found a better canvas slice, we extrude that and set it as our best_canvas and it's score as the best_score
 
 After a finite number of iterations, we'd obtain a Game of Life state that reveals a mon lisa after N generations.
+
+# Results
+
+Running \~1000 iterations for a 483px wide mona lisa on the google colab GPU runtime only takes around 40 seconds!. Compared to the CPU version which takes several hours to do the same for a smaller image, I think we've achieved our goals. 
+
+A life state with the highest similarity to the target is achieved after running for \~23000 iterations (10 minutes). After 23K, the gains start to diminish greatly and does'nt seem to   improve much, even if you run for 100K iterations.
+
+# Conclusion
