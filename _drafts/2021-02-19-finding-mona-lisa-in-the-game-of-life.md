@@ -232,25 +232,23 @@ We jit this function as `modify`. Additionally, we need to mark b,w,h arguments 
 
 `rmse` is pretty self explanatory. The only major change from the CPU version is that we compute mean across 1st axis (loaf axis).
 
-    def hill_climb(original,canvas, key, iterations):
-      with loops.Scope() as s:
-        s.best_score = N.inf
-        s.curr_min = 0.0
-        s.best_canvas = canvas
-        s.canvas = canvas
-        s.rmse_vals = rmse(original, s.canvas, batch_size, width, height)
-        s.key = key
-        for run in s.range(iterations):
-          s.key, subkey = jax.random.split(s.key)
-          s.canvas+=modify(batch_size, width, height, subkey)
-          s.canvas%=2
-          s.rmse_vals = rmse(original, nv_rgen( s.canvas ), batch_size, width, height)
-          s.curr_min = N.min(s.rmse_vals)
-          for _ in s.cond_range(s.curr_min < s.best_score):
-            s.best_score = s.curr_min
-            s.best_canvas = N.repeat((s.canvas[N.argmin(s.rmse_vals)])[N.newaxis, :, :,], batch_size, axis = 0)
-          s.canvas = s.best_canvas
-        return s.canvas
+def hill_climb(original, canvas, prng_key, iterations):
+  with loops.Scope() as s:
+    s.best_score = N.inf
+    s.best_canvas = canvas
+    s.canvas = canvas
+    s.prng_key = prng_key
+    for run in s.range(iterations):
+      s.prng_key, subkey = jax.random.split(s.prng_key)
+      s.canvas+=modify(batch_size, width, height, subkey)
+      s.canvas%=2
+      rmse_vals = rmse(original, nv_rgen( s.canvas ), batch_size, width, height)
+      curr_min = N.min(rmse_vals)
+      for _ in s.cond_range(curr_min < s.best_score):
+        s.best_score = curr_min
+        s.best_canvas = N.repeat((s.canvas[N.argmin(rmse_vals)])[N.newaxis, :, :,], batch_size, axis = 0)
+      s.canvas = s.best_canvas
+    return s.canvas
 
 `hill\_clim` is the main function in the program. it is one big JAX loop construct. We could use standard python loops here, but we need to take full advantage of using JAX. 
 
