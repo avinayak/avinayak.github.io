@@ -153,9 +153,9 @@ Something like
             [0, 0],
             [0, 0]]])
 
-<cap> <br>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
+<cap><br>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
 
-The idea is that in every loop, we use the mutator to calculate the nearest set of neihbouring states from our best_canvas like this `canvas = (best\_canvas + mutator)%2`.
+The idea is that in every loop, we use the mutator to calculate the nearest set of neihbouring states from our best_canvas like this `canvas = (best_canvas + mutator)%2`.
 
 We compute N generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE(mean being calculated for the slice only) on the Nth generation canvas against Mona Lisa, and find the slice with the lowest error.
 This is slice is then extruded and set to best_canvas and the loop repeats till a finite number of iterations pass.
@@ -164,7 +164,7 @@ This is slice is then extruded and set to best_canvas and the loop repeats till 
 
 The notebook for this project is available here or run it in colab. I'll explain what every block is doing in this section. If you want to see results, skip to the end of the article.
 
-The core of this project, the game of life function is actually taken from [this post](http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html). Thank you  B. Nikolic :). I followed his convention of importing jax.numpy as jax.lax.
+The core of this project, the game of life function is actually taken from [this post](http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html). Thank you  B. Nikolic :). I followed his convention of importing `jax.numpy` as `N`, `jax.lax` as `L`.
 
     %matplotlib inline 
     import jax
@@ -178,11 +178,11 @@ The core of this project, the game of life function is actually taken from [this
     from PIL import Image 
     from google.colab import files
 
-Next, wget Mona Lisa
+Next, `wget` Mona Lisa
 
     !wget -O target.png https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/483px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg?download
 
-This is not a crazy high res version. only 483px wide.
+This is not a crazy high res version.It's only 483px wide.
 
     batch_size = 100
     image_file = Image.open("target.png")
@@ -191,12 +191,12 @@ This is not a crazy high res version. only 483px wide.
     width,height = lisa.shape
     lisa_loaf = onp.repeat(lisa[onp.newaxis, :, :,], batch_size, axis = 0)
 
-This section dithers Mona Lisa using the and extrudes it to batch_size length.
+This section dithers Mona Lisa using the and extrudes it to `batch_size` length.
 
     key = jax.random.PRNGKey(42)
     canvas_loaf = jax.random.randint(key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
 
-Here, we're seeding JAX PRNG(will be explained soon).Also we're creating the initial random canvas_loaf with integers 0 and 1.
+Here, we're seeding JAX PRNG(will be explained soon).Also we're creating the initial random `canvas_loaf` with integers 0 and 1.
 
     @jax.jit
     def rgen(a):
@@ -225,7 +225,7 @@ Here, we're seeding JAX PRNG(will be explained soon).Also we're creating the ini
           state = vectorized_rgen(state)
       return state
 
-Please read [B. Nikolc's post](http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html) for an in depth explanation for `rgen` function, which runs a single generation of Game of Life.
+Please read [B. Nikolc's post](http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html) for an explanation for `rgen` function, which runs a single generation of Game of Life.
 
 `jax.vmap` lets us creates a function which maps an input function over argument axes (vectorize). This lets us run a generation of game of life across every slice in our canvas.
 
@@ -239,7 +239,7 @@ Also, `@jax.jit` python decorator just tells the compiler to jit compile this fu
     
     mutate = jax.jit(mutate_nj, static_argnums=(0,1,2))
 
-`mutate_nj`(nj = non jitted) generates the mutator tensor we talked about before. It generates this using `jax.random.normal` and sets max of every slice to `1` and rest to `0`. I'll explain the subkey argument soon.
+`mutate_nj`(nj = non jitted) generates the mutator tensor we talked about before. It generates this using `jax.random.normal` and sets max of every slice to `1` and rest to `0`. I'll explain the `subkey` argument soon.
 
 We jit this function as `mutate`. Additionally, we need to mark `b,w,h` arguments as static so that the compiler knows they're constant throughout the execution.
 
@@ -270,7 +270,7 @@ We jit this function as `mutate`. Additionally, we need to mark `b,w,h` argument
 
 `hill_climb` is the main function in the program. It is one big JAX loop construct. We could use standard python loops here, but we need to take full advantage of using JAX.
 
-JAX loops (`jax.experimental.loops` for now) is a syntactic sugar functions like `lax.fori_loop_` and `lax.cond`. lax loops(actual XLA loops) that have more than a few statements and nesting gets very complicated. JAX (Experimental) loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie. anything that mutates across interations have to be stored as a scope member. For us, this includes the `best_score`, `best_canvas`, temporary canvas where we run life and the PRNG key.
+JAX loops (`jax.experimental.loops` for now) is a syntactic sugar functions like `lax.fori_loop_` and `lax.cond`. lax loops(actual XLA loops) that have more than a few statements and nesting gets very complicated. JAX (Experimental) loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie. anything that mutates across interations have to be stored as a scope member. For us, this includes the `best_score`, `best_canvas`, temporary canvas where we run life and the PRNG `key`.
 
 ### JAX PRNGS
 
@@ -280,9 +280,7 @@ Unlike numpy, JAX random generation is "unmanaged". Every `jax.random` fucntion 
 
 Not updating the PRNG state will quickly result in the same set of randoms over and over again. I did'nt  quite understand this part the first time I wrote the loop, and it resulted in the algorithm ceasing to find new variations of canvas states. This happened becasue we're generating the same mutator tensor over and over again.
 
-Splitting PRNG state is also the only way to ensure that every parallel component of the algorithm generate distinct randoms.
-
-Find and in depth explanation of JAX PRNG [here](https://github.com/google/jax/blob/master/design_notes/prng.md)
+Splitting PRNG state is also the way to ensure that every parallel component of the algorithm generate distinct randoms. Find more details of JAX PRNG Design [here](https://github.com/google/jax/blob/master/design_notes/prng.md)
 
 ### cond_range
 
