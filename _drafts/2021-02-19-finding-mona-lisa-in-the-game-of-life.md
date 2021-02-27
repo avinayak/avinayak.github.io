@@ -91,9 +91,11 @@ This is a portion of the 4th generation of the state we just prepared.
 
 ![](/uploads/screenshot-from-2021-02-23-19-08-47.png)
 
-Judging by the texture, the way life patterns evolve and from just experimenting with images, I found that comparing against a  2bit dithered version the target should improve the quality of results. 
+Judging by the texture, the way life patterns evolve and from just experimenting with images, I found that comparing against a  1-bit dithered version the target should improve the quality of results. 
 
 ![](/uploads/screenshot-from-2021-02-23-19-04-26.png)
+
+We could do this using PIL (it's [Floyd–Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering)) using `Image.open('target.png').convert('1')`
 
 Dithered image has a somewhat even distribution of 0 and 1 cells which is somewhat close to what a randomly initialized Game of Life state will look like after a few generations. This property is also maintained when you scale up the image, which is what we're going to do.
 
