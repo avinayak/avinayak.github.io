@@ -114,7 +114,7 @@ Also you can see from the last result, it's impossible to get a continuous array
 
 The single core unvectorized version is extremely slow. I tried running this in both my 8th gen Core i7 and the Google Colab CPU machines, but you need to wait for hours/days (depending on target resolution) to get something that resembles the original.
 
-Fortunately, This problem is well suited for parallelization. 
+Fortunately, This problem is well suited for parallelization.
 
 ![](https://raw.githubusercontent.com/google/jax/master/images/jax_logo_250px.png)
 
@@ -194,6 +194,8 @@ This is not a crazy high res version.It's only 483px wide.
     lisa = N.array(image_file, dtype=N.int32)
     width,height = lisa.shape
     lisa_loaf = onp.repeat(lisa[onp.newaxis, :, :,], batch_size, axis = 0)
+
+![](/uploads/dithered-image.png)
 
 This section dithers Mona Lisa using the and extrudes it to `batch_size` length.
 
