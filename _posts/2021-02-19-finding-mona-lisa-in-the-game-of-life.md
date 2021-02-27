@@ -35,9 +35,8 @@ I began working on a proof of concept using the hill climbing algorithm. The ide
             best_result := modified_canvas
         canvas := best_result
     while(max_iterations limit passed or best_score < threshold)
-    
 
-Here's the important bits of code I used.
+Here's the important bit of code I used.
 
     def modify(canvas, shape):
         x,y = shape
@@ -75,23 +74,23 @@ Target Mona Lisa against which our random state was compared with was the medium
 
 ![](/uploads/screenshot-from-2021-02-23-18-38-08-copy.png)
 
-When you're comparing against boolean variables, It's better that we the target as a binary matrix rather than the whole grayscale range. 
+When you're comparing against boolean variables, It's better that we the target as a binary matrix rather than the whole grayscale range.
 
 In this attempt, I simply rounded these grayscale values to 0s and 1s. This was a mistake as it washed away a lot of details.
 
 ![](/uploads/screenshot-from-2021-02-23-18-39-11.png)
 
-We could just not round at all and compare against the grayscale version, but there is a better way. 
+We could just not round at all and compare against the grayscale version, but there is a better way.
 
 ## Garden of Eden States
 
-Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation (n>0) of any cellular automata are called Garden of Edens. It is almost impossible that our monochrome-rounded Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target.
+Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation (n>0) of any Cellular Automata are called Garden of Edens. It is almost impossible that our monochrome-rounded Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target.
 
 This is a portion of the 4th generation of the state we just prepared.
 
 ![](/uploads/screenshot-from-2021-02-23-19-08-47.png)
 
-Judging by the texture, the way life patterns evolve and from just experimenting with images, I found that comparing against a  1-bit dithered version the target should improve the quality of results. 
+Judging by the texture, the way life patterns evolve and from just experimenting with images, I found that comparing against a  1-bit dithered version the target should improve the quality of results.
 
 ![](/uploads/screenshot-from-2021-02-23-19-04-26.png)
 
@@ -118,15 +117,15 @@ We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dim
 ![](/uploads/untssitled-another-copy.png)
 
 ![](/uploads/untssitled-copy.png)
-<cap>Initial canvas will be completely random(unlike the figure).</cap> 
+<cap>Initial canvas will be completely random(unlike the figure).</cap>
 
-We set `best_canvas` to the inital canvas before our hill climbing loop.
+We set `best_canvas` to the initial random canvas before our hill climbing loop.
 
-Also, for every loop iteration, we need to produce a random 3D array called modifier with this property: Each slice across the 3rd dimension will be a field of zeros with a single one place at a random location.
+Also, for every loop iteration, we need to produce a random tensor called mutator(same shape as `target`) with this property: Each slice should have all zeros except a single one place at a random location.
 
 ![](/uploads/untssitled-3rd-copy.png)
 
-Something like (with shape 5, 3, 2. batch_size being 5)
+Something like
 
     array([[[1, 0],
             [0, 0],
@@ -147,6 +146,8 @@ Something like (with shape 5, 3, 2. batch_size being 5)
            [[1, 0],
             [0, 0],
             [0, 0]]])
+
+<cap>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
 
 The idea is that in every loop, we use the random modifier to calculate the next set of neihbours from our best matched like this `canvas = (best_canvas + modifier)%2`.
 
@@ -185,7 +186,7 @@ This is not a crazy high res version. only 483px wide.
 
 This section dithers Mona Lisa using the PIL dithering algorithm (Floyd Steinberg) and extrudes it to batch_size length.
 
-Store this in variable `lisa_loaf` 
+Store this in variable `lisa_loaf`
 
     key = jax.random.PRNGKey(42)
     canvas_loaf = jax.random.randint(key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
