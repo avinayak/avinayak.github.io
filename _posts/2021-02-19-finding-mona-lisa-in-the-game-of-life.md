@@ -271,9 +271,9 @@ JAX loops (`jax.experimental.loops` for now) is a syntactic sugar functions like
 
 ### JAX PRNGS
 
-Numpy uses the Mersenne Twister PRNG for all of it's functions having random. As I understand, when executing in parallel, producing a large number of randoms, this method has flaws. It is difficult to ensure that we have enoough entropy for produoing large enough randoms.
+Numpy uses a managed PRNG for all of it's functions having random. ie, seeding it and managing it's state are entirely managed by numpy.  As I understand, in parallel executions(like in a GPU) and in situtaion that need a large number of randoms, this method has flaws. It is difficult to ensure that we have enough entropy for producing large enough quantity randoms.
 
-Unlike numpy, JAX random is unmanaged but the library. Every jax.random fucntion has to be passed teh current state of the PRNG. and evertime we execute one of these, the PRNG state has to be updated jax.random.split.
+Unlike numpy, JAX random generation is "unmanaged". Every `jax.random` fucntion needs the current state of the PRNG as it's first argument, and evertime we execute one of these functions, the PRNG state has to be updated using `jax.random.split`.
 
 Not updating the PRNG state will quickly result in the same set of randoms over and over again. I quite did'nt understand this part the first time I wrote the loop, and it resulted in the algorithm ceasing to find new variations of canvas states. This happened becasue we're generating the same 'ones' tensor over and over again.
 
