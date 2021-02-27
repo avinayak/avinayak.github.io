@@ -267,7 +267,7 @@ Find and in depth explanation of JAX PRNG here https://github.com/google/jax/blo
 
 ### cond_range
 
-Why are conditionals also loops in JAX? er.. I'm not quite sure about this. It should be possible for cond_range to output a regular boolean instead of a 0/1 long iterator. But for some reason, it's build like that and it works.
+Why are conditionals also loops in JAX? er.. I'm not quite sure about this. It should be possible for cond_range to output a regular boolean instead of a 0/1-long iterator. But for some reason, it's build like that.
 
 If we found a better canvas slice, we extrude that and set it as our best_canvas and it's score as the best_score
 
