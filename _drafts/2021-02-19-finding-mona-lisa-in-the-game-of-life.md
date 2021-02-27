@@ -18,7 +18,7 @@ I came across [an article](https://kevingal.com/blog/mona-lisa-gol.html) of the 
 
 There are ways achive this by placing still life states at specific pixels as described in this [codegolf question](https://codegolf.stackexchange.com/questions/38573/paint-a-still-life-or-a-moving-one-draw-an-image-in-the-game-of-life), but what I'm thinking of is to display mona lisa for a single generation with non-still(um.. living) life.
 
-## Proof of Concept
+# Algorithm
 
 I began working on a proof of concept using the hill climbing algorithm. The idea was very simple.
 
@@ -69,7 +69,7 @@ After a few days of CPU time(!), I was able to obtain something that resembled M
 
 It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable.
 
-## Garden of Eden and Dithering
+# Dithering
 
 Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia and converted to monochrome using PIL's `Image.open('target.png').convert('L')`
 
@@ -77,13 +77,13 @@ Target Mona Lisa against which our random state was compared with was the medium
 
 When you're comparing against boolean variables, It's better that we the target as a binary matrix rather than the whole grayscale range. 
 
-In this attempt, I simply rounded these grayscale values to 0s and 1s. This was a mistake as it removed a lot of image details.
+In this attempt, I simply rounded these grayscale values to 0s and 1s. This was a mistake as it washed away a lot of details.
 
 ![](/uploads/screenshot-from-2021-02-23-18-39-11.png)
 
-We could just not round at all, and compare against the grayscale version. There is a better way. 
+We could just not round at all and compare against the grayscale version, but there is a better way. 
 
-## Garden of Eden
+## Garden of Eden States
 
 Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation (n>0) of any cellular automata are called Garden of Edens. It is almost impossible that our monochrome-rounded Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target.
 
@@ -95,23 +95,25 @@ Judging by the texture, the way life patterns evolve and from just experimenting
 
 ![](/uploads/screenshot-from-2021-02-23-19-04-26.png)
 
-We could do this using PIL (it's [Floyd–Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering)) using `Image.open('target.png').convert('1')`
+Dithered image has a somewhat even distribution of 0 and 1 cells which is somewhat close to what a randomly initialized Game of Life state will look like after a few generations. This property is also maintained when you scale up the image, (which we'll optimize for soon).
 
-Dithered image has a somewhat even distribution of 0 and 1 cells which is somewhat close to what a randomly initialized Game of Life state will look like after a few generations. This property is also maintained when you scale up the image, which is what we're going to do.
+We could do this using PIL (it's [Floyd–Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering)) using `Image.open('target.png').convert('1')`
 
 ![](/uploads/screenshot-from-2021-02-23-18-54-34.png)
 
 Also you can see from the last result, it's impossible to get a continuous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. The end result will be a higher contrast, but slightly darkened version of Mona Lisa. At higher resolutions, this effect is not as apparent.
 
-## Scaling Up - Parallelization with JAX
+# Scaling Up
+
+## Parallelization with JAX
 
 The single core unvectorized version is extremely slow. I tried running this in both my 8th gen Core i7 and the Google Colab CPU machines, but you need to wait for hours/days (depending on target resolution) to get something that resembles the original.
 
 Fortunately, This problem is well suited for parallelization. JAX is a python library that lets you use a version of numpy and compile it to highly vectorized code that can be run on a GPU/TPU. We need to rework this algorithm for a GPU.
 
-GPUs generally suited to high-throughput type computations that exhibit data-parallelism to exploit the wide vector width SIMD (Single Instruction Multiple Data) architecture.
+GPUs generally suited to high-throughput type computations that has data-parallelism. We need to exploit the SIMD (Single Instruction Multiple Data) architecture to gain faster execution speeds.
 
-We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dimension with 3rd dimension being `batch_size` long.
+We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dimension with 3rd dimension being `batch_size` long tensor loafs (Consider a loaf of bread, with each slice being dithered Mona Lisa).
 
 ![](/uploads/untssitled-another-copy.png)
 
@@ -182,7 +184,7 @@ This is not a crazy high res version. only 483px wide.
 
 This section dithers Mona Lisa using the PIL dithering algorithm (Floyd Steinberg) and extrudes it to batch_size length.
 
-Store this in variable `lisa_loaf` (Consider a loaf of bread, with each slice being the ditehred Mona Lisa).
+Store this in variable `lisa_loaf` 
 
     key = jax.random.PRNGKey(42)
     canvas_loaf = jax.random.randint(key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
