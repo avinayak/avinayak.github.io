@@ -210,7 +210,6 @@ please read B. Nikolc's post for an in depth explanation for rgen function, whic
 
 We use `jax.vmap`, a super useful in JAX. `vmap` lets us creates a function which maps an input function over argument axes. This lets us run a generation of game of life across every slice in our canvas.
 
-  
 `nv_rgen` is where I'm not quite sure of. We need to run 5 generation of Game of Life on the canvas. According to python idioms, a loop should be used to execute this function 5 times. But conventional python loops are not allowed in JAX. This non-elegant way works for now, but maybe I'll fix this later.
 
 Also, `@jax.jit` python decorator just tells the compiler to jit compile this function. it isn't super useful in `nv_rgen`, as it's simply composed of other jitted functions.
@@ -221,7 +220,7 @@ Also, `@jax.jit` python decorator just tells the compiler to jit compile this fu
     
     modify = jax.jit(modify_nj, static_argnums=(0,1,2))
 
-`modify_nj` generates the sparse ones tensor we talked about before. it generates this from a random tensor and sets max of every slice to one and rest to zero. We use JAX PRNG for generating random, which I'll get to soon. 
+`modify_nj` generates the sparse ones tensor we talked about before. it generates this from a random tensor and sets max of every slice to one and rest to zero. We use JAX PRNG for generating random, which I'll get to soon.
 
 We jit this function as `modify`. Additionally, we need to mark b,w,h arguments as static so that the compiler knows they're constant throughout the execution.
 
@@ -232,24 +231,24 @@ We jit this function as `modify`. Additionally, we need to mark b,w,h arguments 
 
 `rmse` is pretty self explanatory. The only major change from the CPU version is that we compute mean across 1st axis (loaf axis).
 
-def hill_climb(original, canvas, prng_key, iterations):
-  with loops.Scope() as s:
-    s.best_score = N.inf
-    s.best_canvas = canvas
-    s.canvas = canvas
-    s.prng_key = prng_key
-    for run in s.range(iterations):
-      s.prng_key, subkey = jax.random.split(s.prng_key)
-      s.canvas+=modify(batch_size, width, height, subkey)
-      s.canvas%=2
-      rmse_vals = rmse(original, nv_rgen( s.canvas ), batch_size, width, height)
-      curr_min = N.min(rmse_vals)
-      for _ in s.cond_range(curr_min < s.best_score):
-        s.best_score = curr_min
-        s.best_canvas = N.repeat((s.canvas[N.argmin(rmse_vals)])[N.newaxis, :, :,], batch_size, axis = 0)
-      s.canvas = s.best_canvas
-    return s.canvas
+    def hill_climb(original, canvas, prng_key, iterations):
+      with loops.Scope() as s:
+        s.best_score = N.inf
+        s.best_canvas = canvas
+        s.canvas = canvas
+        s.prng_key = prng_key
+        for run in s.range(iterations):
+          s.prng_key, subkey = jax.random.split(s.prng_key)
+          s.canvas+=modify(batch_size, width, height, subkey)
+          s.canvas%=2
+          rmse_vals = rmse(original, nv_rgen( s.canvas ), batch_size, width, height)
+          curr_min = N.min(rmse_vals)
+          for _ in s.cond_range(curr_min < s.best_score):
+            s.best_score = curr_min
+            s.best_canvas = N.repeat((s.canvas[N.argmin(rmse_vals)])[N.newaxis, :, :,], batch_size, axis = 0)
+          s.canvas = s.best_canvas
+        return s.canvas
 
-`hill\_clim` is the main function in the program. it is one big JAX loop construct. We could use standard python loops here, but we need to take full advantage of using JAX. 
+`hill\_clim` is the main function in the program. it is one big JAX loop construct. We could use standard python loops here, but we need to take full advantage of using JAX.
 
-JAX loops (jax.experimental.loops for now) is a syntactic sugar functions like lax.fori\_loop\_ and lax.cond. lax loops that have more than a few statements and nesting gets very complicated. JAX loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie anything that mutates across interations have to be stored as a scope member. For us, this includes the best_score, best_canvas and the PRNG key which is refreshed in every interation. 
+JAX loops (jax.experimental.loops for now) is a syntactic sugar functions like lax.fori_loop_ and lax.cond. lax loops that have more than a few statements and nesting gets very complicated. JAX loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie anything that mutates across interations have to be stored as a scope member. For us, this includes the best_score, best_canvas and the PRNG key which is refreshed in every interation.
