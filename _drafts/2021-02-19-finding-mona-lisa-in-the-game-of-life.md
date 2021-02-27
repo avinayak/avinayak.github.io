@@ -118,8 +118,7 @@ We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dim
 ![](/uploads/untssitled-another-copy.png)
 
 ![](/uploads/untssitled-copy.png)
-
-Initial canvas will be completely random(unlike the figure). 
+<cap>Initial canvas will be completely random(unlike the figure).</cap> 
 
 We set `best_canvas` to the inital canvas before our hill climbing loop.
 
