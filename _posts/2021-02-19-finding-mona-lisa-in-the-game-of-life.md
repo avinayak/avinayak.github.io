@@ -275,11 +275,11 @@ Numpy uses a managed PRNG for all of it's functions having random. ie, seeding i
 
 Unlike numpy, JAX random generation is "unmanaged". Every `jax.random` fucntion needs the current state of the PRNG as it's first argument, and evertime we execute one of these functions, the PRNG state has to be updated using `jax.random.split`.
 
-Not updating the PRNG state will quickly result in the same set of randoms over and over again. I quite did'nt understand this part the first time I wrote the loop, and it resulted in the algorithm ceasing to find new variations of canvas states. This happened becasue we're generating the same 'ones' tensor over and over again.
+Not updating the PRNG state will quickly result in the same set of randoms over and over again. I did'nt  quite understand this part the first time I wrote the loop, and it resulted in the algorithm ceasing to find new variations of canvas states. This happened becasue we're generating the same mutator tensor over and over again.
 
-Splitting PRNG state is the only way to ensure that every parallel component of the algorithm generate distinct randoms.
+Splitting PRNG state is also the only way to ensure that every parallel component of the algorithm generate distinct randoms.
 
-Find and in depth explanation of JAX PRNG here https://github.com/google/jax/blob/master/design_notes/prng.md
+Find and in depth explanation of JAX PRNG [here](https://github.com/google/jax/blob/master/design_notes/prng.md)
 
 ### cond_range
 
