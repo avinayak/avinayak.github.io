@@ -22,7 +22,7 @@ What I'm thinking of is to display Mona Lisa for a single generation with non-st
 
 # Algorithm
 
-I began working on a proof of concept using the hill climbing algorithm. The idea was very simple. Iteratively modify a random 2D Game of Life state until it's Nth generation looks similar to Mona Lisa.
+I began working on a proof of concept using the hill climbing algorithm. The idea was very simple. Iteratively modify a random 2D Game of Life state until it's Nth generation looks similar to Mona Lisa. Here's the full algorithm.
 
 ```text
     best_score := infinity
@@ -40,7 +40,7 @@ I began working on a proof of concept using the hill climbing algorithm. The ide
     while(max_iterations limit passed or best_score < threshold)
 ```
 
-I hacked up a single core version of the algorithm. Here's a snippet from that:
+I hacked up a single core prototype. Here's a snippet from that:
 
     def modify(canvas, shape):
         x,y = shape
