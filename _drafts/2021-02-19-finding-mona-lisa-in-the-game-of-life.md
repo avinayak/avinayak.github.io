@@ -75,11 +75,11 @@ Target Mona Lisa against which our random state was compared with was the medium
 
 ![](/uploads/screenshot-from-2021-02-23-18-38-08-copy.png)
 
-I think when you're comparing against boolean variables, It's better that we have something in two colors, than the whole gray scale range. Simply rounding (which is what I did) these gray scale values to either be black or while seems to remove a lot of details.
+When you're comparing against boolean variables, It's better that we the target as a binary matrix rather than the whole grayscale range. Simply rounding (which is what I did) these gray scale values to either be black or while seems to remove a lot of details.
 
 ![](/uploads/screenshot-from-2021-02-23-18-39-11.png)
 
-We could just not round at all, and compare against the grayscale version. However, I found that the best results are obtained when we use a rasterized version.
+We could just not round at all, and compare against the gray scale version. However, I found that the best results are obtained when we use a rasterized version.
 
 ![](/uploads/screenshot-from-2021-02-23-19-04-26.png)
 
