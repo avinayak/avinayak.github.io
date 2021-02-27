@@ -22,6 +22,7 @@ There are ways achive this by placing still life states at specific pixels as de
 
 I began working on a proof of concept using the hill climbing algorithm. The idea was very simple.
 
+```text
     best_score := infinity
     target := mona lisa with dimensions m x n
     canvas := random matrix of m x n
@@ -35,6 +36,7 @@ I began working on a proof of concept using the hill climbing algorithm. The ide
             best_result := modified_canvas
         canvas := best_result
     while(max_iterations limit passed or best_score < threshold)
+```
 
 Here's the important bit of code I used.
 
@@ -146,7 +148,6 @@ Something like
            [[1, 0],
             [0, 0],
             [0, 0]]])
-
 <cap>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
 
 The idea is that in every loop, we use the random modifier to calculate the next set of neihbours from our best matched like this `canvas = (best_canvas + modifier)%2`.
