@@ -251,4 +251,14 @@ We jit this function as `modify`. Additionally, we need to mark b,w,h arguments 
 
 `hill\_clim` is the main function in the program. it is one big JAX loop construct. We could use standard python loops here, but we need to take full advantage of using JAX.
 
-JAX loops (jax.experimental.loops for now) is a syntactic sugar functions like lax.fori_loop_ and lax.cond. lax loops that have more than a few statements and nesting gets very complicated. JAX loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie anything that mutates across interations have to be stored as a scope member. For us, this includes the best_score, best_canvas and the PRNG key which is refreshed in every interation.
+JAX loops (jax.experimental.loops for now) is a syntactic sugar functions like lax.fori_loop_ and lax.cond. lax loops that have more than a few statements and nesting gets very complicated. JAX (Experimental) loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie. anything that mutates across interations have to be stored as a scope member. For us, this includes the best_score, best_canvas and temporary canvas where we run life and the PRNG key.
+
+### JAX PRNGS
+
+Numpy uses the Mersenne Twister PRNG for all of it's functions having random. As I understand, when executing in parallel, producing a large number of randoms, this method has flaws. It is difficult to ensure that we have enoough entropy for produoing large enough randoms.
+
+Unlike numpy, JAX random is unmanaged but the library. Every jax.random fucntion has to be passed teh current state of the PRNG. and evertime we execute one of these, the PRNG state has to be updated jax.random.split. 
+
+Not updating the PRNG state will quickly result in the same set of randoms over and over again. I quite did'nt understand this part the first time I wrote the loop, and it resulted in the algorithm ceasing to find new variations of canvas states. This happened becasue we're generating the same 'ones' tensor over and over again.
+
+Splitting PRNG state is the only way to ensure that every parallel components of the algorithm generate distinct randoms. 
