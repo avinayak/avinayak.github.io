@@ -16,7 +16,7 @@ The results of this experiment are not exactly close to my target as you can see
 
 I came across [an article](https://kevingal.com/blog/mona-lisa-gol.html) of the same title by Kevin Galligan recently and I thought I could do something similar using a different approach. What if instead of using SAT Solvers, I use some kind of heuristic algorithm that could somehow "program" a large world of Game of Life to display an image after a few generations?
 
-There are other ways of achiveing this. One is by placing still life states at specific pixels as described in this [codegolf question](https://codegolf.stackexchange.com/questions/38573/paint-a-still-life-or-a-moving-one-draw-an-image-in-the-game-of-life).
+There are other ways of achieving this. One is by placing still life states at specific pixels as described in this [codegolf question](https://codegolf.stackexchange.com/questions/38573/paint-a-still-life-or-a-moving-one-draw-an-image-in-the-game-of-life).
 
 What I'm thinking of is to display Mona Lisa for a single generation with non-still um.. 'living' life.
 
@@ -159,7 +159,7 @@ Something like
 
 <cap><br>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
 
-The idea is that in every loop, we use the mutator to calculate the nearest set of neihbouring states from our best_canvas like this `canvas = (best_canvas + mutator)%2`.
+The idea is that in every loop, we use the mutator to calculate the nearest set of neighboring states from our best_canvas like this `canvas = (best_canvas + mutator)%2`.
 
 We compute N generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE(mean being calculated for the slice only) on the Nth generation canvas against Mona Lisa, and find the slice with the lowest error.
 This is slice is then extruded and set to best_canvas and the loop repeats till a finite number of iterations pass.
@@ -202,7 +202,7 @@ This section dithers Mona Lisa using the and extrudes it to `batch_size` length.
     key = jax.random.PRNGKey(42)
     canvas_loaf = jax.random.randint(key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
 
-Here, we're seeding JAX PRNG(will be explained soon).Also we're creating the initial random `canvas_loaf` with integers 0 and 1.
+Here, we're seeding JAX PRNG(will be explained soon). Also we're creating the initial random `canvas_loaf` with integers 0 and 1.
 
     @jax.jit
     def rgen(a):
@@ -280,9 +280,9 @@ JAX loops (`jax.experimental.loops` for now) is a syntactic sugar functions like
 
 ### JAX PRNGS
 
-Numpy uses a managed PRNG for all of it's functions having random. ie, seeding it and managing it's state are entirely managed by numpy.  As I understand, in parallel executions(like in a GPU) and in situtaion that need a large number of randoms, this method has flaws. It is difficult to ensure that we have enough entropy for producing large enough quantity randoms.
+Numpy uses a managed PRNG for all of it's functions having random. ie, seeding it and managing it's state are entirely managed by numpy.  As I understand, in parallel executions(like in a GPU) and in situation that need a large number of randoms, this method has flaws. It is difficult to ensure that we have enough entropy for producing large enough quantity randoms.
 
-Unlike numpy, JAX random generation is "unmanaged". Every `jax.random` fucntion needs the current state of the PRNG as it's first argument, and evertime we execute one of these functions, the PRNG state has to be updated using `jax.random.split`.
+Unlike numpy, JAX random generation is "unmanaged". Every `jax.random` function needs the current state of the PRNG as it's first argument, and every time we execute one of these functions, the PRNG state has to be updated using `jax.random.split`.
 
 Not updating the PRNG state will quickly result in the same set of randoms over and over again. I did'nt  quite understand this part the first time I wrote the loop, and it resulted in the algorithm ceasing to find new variations of canvas states. This happened becasue we're generating the same mutator tensor over and over again.
 
@@ -298,9 +298,9 @@ After a finite number of iterations, we'd obtain a Game of Life state that revea
 
 # Results
 
-Running \~1000 iterations for a 483px wide mona lisa on the google colab GPU runtime only takes around 40 seconds!. Compared to the CPU version which takes several hours to do the same for a smaller image, I think we've achieved our goals.
+Running \~1000 iterations for a 483px wide Mona Lisa on the google colab GPU runtime only takes around 40 seconds!. Compared to the CPU version which takes several hours to do the same for a smaller image, I think we've achieved our goals.
 
-A life state with the highest similarity to the target is achieved after running for \~23000 iterations (10 minutes). After 23K, the gains start to diminish greatly and does'nt seem to   improve much, even if you run for 100K iterations.
+A life state with the highest similarity to the target is achieved after running for \~23000 iterations (10 minutes). After 23K, the gains start to diminish greatly and doesn't seem to   improve much, even if you run for 100K iterations.
 
 <video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_23-55-50.mp4" type="video/mp4" /> </video>
 
