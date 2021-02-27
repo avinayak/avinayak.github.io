@@ -20,11 +20,11 @@ I came across [an article](https://kevingal.com/blog/mona-lisa-gol.html) of the 
 
 There are other ways of achiveing this. One is by placing still life states at specific pixels as described in this [codegolf question](https://codegolf.stackexchange.com/questions/38573/paint-a-still-life-or-a-moving-one-draw-an-image-in-the-game-of-life).
 
-What I'm thinking of is to display Mona Lisa for a single generation with non-still ..um.. 'living' life.
+What I'm thinking of is to display Mona Lisa for a single generation with non-still um.. 'living' life.
 
 # Algorithm
 
-I began working on a proof of concept using the hill climbing algorithm. The idea was very simple.
+I began working on a proof of concept using the hill climbing algorithm. The idea was very simple. Iteratively modify a random 2D Game of Life state until it's Nth generation looks similar to Mona Lisa.
 
 ```text
     best_score := infinity
@@ -42,7 +42,7 @@ I began working on a proof of concept using the hill climbing algorithm. The ide
     while(max_iterations limit passed or best_score < threshold)
 ```
 
-Here's the important bit of code I used.
+I hacked up a single core version of the algorithm. Here's a snippet from that:
 
     def modify(canvas, shape):
         x,y = shape
@@ -66,13 +66,13 @@ Here's the important bit of code I used.
             best_score = lowest
             best_result = canvases[rms_errors.index(lowest)]
 
-Hill Climbing works on finding the closest neighboring state to the state we have that has the least  difference from. The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random cell. This change is small enough that we don't risk stepping over some local minima so much. Also we use root mean square error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that RMSE was sufficient.
+Hill Climbing works by finding the closest neighboring state to a current state with the least error from a 'target_state' (Mona Lisa). The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random cell. This change is small enough that we don't risk stepping over any local minima. Also we use root mean square error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that RMSE was sufficient.
 
 After a few days of CPU time(!), I was able to obtain something that resembled Mona Lisa after running 4 generations of life.
 
 <video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4" type="video/mp4" /> </video>
 
-It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable.
+It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable or fast.
 
 # Dithering
 
@@ -88,7 +88,7 @@ In this attempt, I simply rounded these grayscale values to 0s and 1s. This was 
 
 We could just not round at all and compare against the grayscale version, but there is a better way.
 
-## Garden of Eden States
+# Garden of Eden States
 
 Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation (n>0) of any Cellular Automata are called Garden of Edens. It is almost impossible that our monochrome-rounded Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target.
 
@@ -151,6 +151,7 @@ Something like
             [0, 0],
             [0, 0]]])
 
+##
 
 <cap>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
 
