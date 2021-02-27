@@ -16,11 +16,13 @@ There was this rough idea I've been thinking about in [Conway's Game of Life](ht
 
 I came across [an article](https://kevingal.com/blog/mona-lisa-gol.html) of the same title by Kevin Galligan recently and I thought I could do something similar using a different approach. What if instead of using SAT Solvers, I use some kind of heuristic algorithm that could somehow "program" a large world of Game of Life to display an image after a few generations?
 
+There are ways achive this by placing still life states at specific pixels as described in this [codegolf question](https://codegolf.stackexchange.com/questions/38573/paint-a-still-life-or-a-moving-one-draw-an-image-in-the-game-of-life), but what I'm thinking of is to display mona lisa for a single generation with non-still(um.. living) life.
+
 ## Proof of Concept
 
-I began working on a proof of concept version using the hill climbing technique. The idea was very simple.
+I began working on a proof of concept version using the hill climbing algorithm. The idea was very simple.
 
-1. Initialize variable best-score = infinity and an empty matrix as best-result
+1. Initialize best-score = infinity and an empty matrix as best-result
 2. Start with a random matrix of 1s and 0s representing live and dead cells in Life.
 3. Invert a single cell at a random location (modify).
 4. Create a copy of this matrix.
