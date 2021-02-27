@@ -218,22 +218,22 @@ Please read B. Nikolc's post for an in depth explanation for `rgen` function, wh
 
 Also, `@jax.jit` python decorator just tells the compiler to jit compile this function. I'm not sure if we there was any improvement in this case as `nv_rgen` is simply composed of other jitted functions.
 
-    def modify_nj(b, w, h, subkey):
+    def mutate_nj(b, w, h, subkey):
       a = jax.random.normal(subkey, (b, w, h))
       return (a == a.max(axis=(1,2))[:,None,None]).astype(int)
     
-    modify = jax.jit(modify_nj, static_argnums=(0,1,2))
+    mutate = jax.jit(mutate_nj, static_argnums=(0,1,2))
 
-`modify_nj` generates the sparse ones tensor we talked about before. it generates this from a random tensor and sets max of every slice to one and rest to zero. We use JAX PRNG for generating random, which I'll get to soon.
+`mutate_nj` generates the sparse ones tensor we talked about before. it generates this from a random.normal tensor and sets max of every slice to '1' and rest to '0'. We use JAX PRNG for generating random, which I'll get to soon.
 
-We jit this function as `modify`. Additionally, we need to mark b,w,h arguments as static so that the compiler knows they're constant throughout the execution.
+We jit this function as `mutate`. Additionally, we need to mark `b,w,h` arguments as static so that the compiler knows they're constant throughout the execution.
 
     def rmse_nj(original, canvas, b, w, h):
       return N.sqrt(N.mean(L.reshape((original-canvas)**2,(b,w*h)) , axis=1))
     
     rmse = jax.jit(rmse_nj, static_argnums=(2,3,4))
 
-`rmse` is pretty self explanatory. The only major change from the CPU version is that we compute mean across 1st axis (loaf axis).
+`rmse` is pretty self explanatory. The only major change from the CPU version is that we compute mean across 1st axis (loaf's long axis).
 
     def hill_climb(original, canvas, prng_key, iterations):
       with loops.Scope() as s:
