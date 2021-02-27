@@ -22,19 +22,22 @@ There are ways achive this by placing still life states at specific pixels as de
 
 I began working on a proof of concept using the hill climbing algorithm. The idea was very simple.
 
+```
+best_score := infinity
+target := mona lisa with dimensions m x n
+canvas := random matrix of m x n
+best_result := canvas
+do
+    modified_canvas := Copy of canvas with a single random cell inverted
+    nth_modified_canvas := Run N generations of Game of Life modified_canvas
+    Compute a score of how close nth_modified_canvas is with target
+    if score < best_score then
+    	best_score := score
+        best_result := modified_canvas
+    canvas := best_result
+while(iteration limit is reached or best_result is close enough to target)
 
-
-1. best-score := infinity and an empty matrix as best-result
-2. Start with a random matrix of 1s and 0s representing live and dead cells in Life.
-3. Invert a single cell at a random location (modify).
-4. Create a copy of this matrix.
-5. Run N generations of Game of Life on the matrix
-6. Compute a score of how close the matrix is with the target.
-   1. If the score is less than best_score
-      1. Set it as best score and set the copy from step 4 as best-result.
-   2. else
-   3. Copy best result to current matrix.
-7. Repeat 3
+```
 
 Here's the important bit of code I used. Complete version of this POC is available here.
 
