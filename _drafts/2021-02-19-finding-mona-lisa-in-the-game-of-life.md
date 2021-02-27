@@ -261,4 +261,14 @@ Unlike numpy, JAX random is unmanaged but the library. Every jax.random fucntion
 
 Not updating the PRNG state will quickly result in the same set of randoms over and over again. I quite did'nt understand this part the first time I wrote the loop, and it resulted in the algorithm ceasing to find new variations of canvas states. This happened becasue we're generating the same 'ones' tensor over and over again.
 
-Splitting PRNG state is the only way to ensure that every parallel components of the algorithm generate distinct randoms. 
+Splitting PRNG state is the only way to ensure that every parallel component of the algorithm generate distinct randoms. 
+
+Find and in depth explanation of JAX PRNG here https://github.com/google/jax/blob/master/design_notes/prng.md
+
+### cond_range
+
+Why are conditionals also loops in JAX? er.. I'm not quite sure about this. It should be possible for cond_range to output a regular boolean instead of a 0/1 long iterator. But for some reason, it's build like that and it works.
+
+If we found a better canvas slice, we extrude that and set it as our best_canvas and it's score as the best_score
+
+After a finite number of iterations, we'd obtain a Game of Life state that reveals a mon lisa after N generations.
