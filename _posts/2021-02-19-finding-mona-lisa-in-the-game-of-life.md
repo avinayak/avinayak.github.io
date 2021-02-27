@@ -149,16 +149,17 @@ Something like
             [0, 0],
             [0, 0]]])
 
+
 <cap>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
 
-The idea is that in every loop, we use the mutator to calculate the nearest set of neihbouring states from our best matched canvas like this `canvas = (best_canvas + mutator)%2`.
+The idea is that in every loop, we use the mutator to calculate the nearest set of neihbouring states from our best\_canvas like this `canvas = (best\_canvas + mutator)%2`.
 
-We compute N generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE(mean being calculated for the slice only) on the Nth generation canvas vs Mona Lisa , and find the canvas slice with the lowest error. 
+We compute N generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE(mean being calculated for the slice only) on the Nth generation canvas against Mona Lisa, and find the slice with the lowest error. 
 This is slice is then extruded and set to best_canvas and the loop repeats till a finite number of iterations pass.
 
 ## Code
 
-The notebook for this project is available here or run it in colab. I'll explain what every block is doing in this section.
+The notebook for this project is available here or run it in colab. I'll explain what every block is doing in this section. If you want to see results, skip to the end of the article.
 
 The core of this project, the game of life function is actually taken from [this post](http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html). Thank you  B. Nikolic :). I followed his convention of importing jax.numpy as jax.lax.
 
@@ -187,14 +188,12 @@ This is not a crazy high res version. only 483px wide.
     width,height = lisa.shape
     lisa_loaf = onp.repeat(lisa[onp.newaxis, :, :,], batch_size, axis = 0)
 
-This section dithers Mona Lisa using the PIL dithering algorithm (Floyd Steinberg) and extrudes it to batch_size length.
-
-Store this in variable `lisa_loaf`
+This section dithers Mona Lisa using the and extrudes it to batch_size length.
 
     key = jax.random.PRNGKey(42)
     canvas_loaf = jax.random.randint(key, (batch_size, width, height), 0, 2, dtype= N.int32) #for tests, initialize random lisa
 
-Here, we're initialing a random a random key for the JAX PRNG. Because of the way jax works, all JAX random functions require an explicit PRNG state to be passed as a first argument. 42 is what we're seeding our PRNG with. We also create a random canvas_loaf with integers 0 and 1.
+Here, we're seeding JAX PRNG(will be explained soon).Also we're creating the initial random canvas_loaf with integers 0 and 1.
 
     @jax.jit
     def rgen(a):
@@ -227,7 +226,7 @@ Please read B. Nikolc's post for an in depth explanation for `rgen` function, wh
 
 `jax.vmap` lets us creates a function which maps an input function over argument axes (vectorize). This lets us run a generation of game of life across every slice in our canvas.
 
-`nv_rgen`  runs __generations_ of life on our canvas.
+`nv_rgen`  runs N generations of life on our canvas.
 
 Also, `@jax.jit` python decorator just tells the compiler to jit compile this function. I'm not sure if we there was any improvement in this case as `nv_rgen` is simply composed of other jitted functions.
 
@@ -237,7 +236,7 @@ Also, `@jax.jit` python decorator just tells the compiler to jit compile this fu
     
     mutate = jax.jit(mutate_nj, static_argnums=(0,1,2))
 
-`mutate_nj` generates the sparse ones tensor we talked about before. it generates this from a random.normal tensor and sets max of every slice to '1' and rest to '0'. We use JAX PRNG for generating random, which I'll get to soon.
+`mutate_nj`(nj = non jitted) generates the mutator tensor we talked about before. It generates this using `jax.random.normal` and sets max of every slice to `1` and rest to `0`. I'll explain the subkey argument soon.
 
 We jit this function as `mutate`. Additionally, we need to mark `b,w,h` arguments as static so that the compiler knows they're constant throughout the execution.
 
@@ -266,9 +265,9 @@ We jit this function as `mutate`. Additionally, we need to mark `b,w,h` argument
           s.canvas = s.best_canvas
         return s.canvas
 
-`hill\_clim` is the main function in the program. it is one big JAX loop construct. We could use standard python loops here, but we need to take full advantage of using JAX.
+`hill\_climb` is the main function in the program. It is one big JAX loop construct. We could use standard python loops here, but we need to take full advantage of using JAX.
 
-JAX loops (jax.experimental.loops for now) is a syntactic sugar functions like lax.fori_loop_ and lax.cond. lax loops that have more than a few statements and nesting gets very complicated. JAX (Experimental) loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie. anything that mutates across interations have to be stored as a scope member. For us, this includes the best_score, best_canvas and temporary canvas where we run life and the PRNG key.
+JAX loops (`jax.experimental.loops` for now) is a syntactic sugar functions like `lax.fori_loop_` and `lax.cond`. lax loops(actual XLA loops) that have more than a few statements and nesting gets very complicated. JAX (Experimental) loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie. anything that mutates across interations have to be stored as a scope member. For us, this includes the `best\_score`, `best\_canvas`, temporary canvas where we run life and the PRNG key.
 
 ### JAX PRNGS
 
