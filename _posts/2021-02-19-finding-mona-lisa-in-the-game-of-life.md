@@ -153,7 +153,7 @@ Something like
             [0, 0],
             [0, 0]]])
 
-<cap></br>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
+<cap> <br>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
 
 The idea is that in every loop, we use the mutator to calculate the nearest set of neihbouring states from our best_canvas like this `canvas = (best\_canvas + mutator)%2`.
 
