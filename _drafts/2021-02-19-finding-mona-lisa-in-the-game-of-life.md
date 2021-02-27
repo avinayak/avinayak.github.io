@@ -252,4 +252,4 @@ We jit this function as `modify`. Additionally, we need to mark b,w,h arguments 
           s.canvas = s.best_canvas
         return s.canvas
 
-`hill_clim` _is the main function in the program. it is one big JAX loop construct. JAX loops (jax.experimental.loops for now) is a syntactic sugar for lax.fori\\_loop_
+`hill\_clim` is the main function in the program. it is one big JAX loop construct. JAX loops (jax.experimental.loops for now) is a syntactic sugar functions like lax.fori\_loop\_ and lax.cond. lax loops that have more than a few statements and nesting gets very complicated. JAX loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie anything that mutates across interations have to be stored as a scope member. For us, this includes the best_score, best_canvas and the PRNG key which is refreshed in every interation. 
