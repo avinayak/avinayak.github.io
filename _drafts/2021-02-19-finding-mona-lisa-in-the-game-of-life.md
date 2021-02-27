@@ -119,7 +119,9 @@ We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dim
 
 ![](/uploads/untssitled-copy.png)
 
-The initial canvas will be completely random(unlike the figure). We set `best_canvas` to the inital canvas before our hill climbing loop.
+Initial canvas will be completely random(unlike the figure). 
+
+We set `best_canvas` to the inital canvas before our hill climbing loop.
 
 Also, for every loop iteration, we need to produce a random 3D array called modifier with this property: Each slice across the 3rd dimension will be a field of zeros with a single one place at a random location.
 
