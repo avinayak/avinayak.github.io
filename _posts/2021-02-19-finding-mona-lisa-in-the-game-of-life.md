@@ -164,7 +164,7 @@ This is slice is then extruded and set to best_canvas and the loop repeats till 
 
 The notebook for this project is available here or run it in colab. I'll explain what every block is doing in this section. If you want to see results, skip to the end of the article.
 
-The core of this project, the game of life function is actually taken from [this post](http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html). Thank you  B. Nikolic :). I followed his convention of importing `jax.numpy` as `N`, `jax.lax` as `L`.
+The core of this project, the game of life function is actually taken from [this post](http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html). Thank you  Bojan Nikolic :). I followed his convention of importing `jax.numpy` as `N`, `jax.lax` as `L`.
 
     %matplotlib inline 
     import jax
@@ -286,9 +286,9 @@ Splitting PRNG state is also the way to ensure that every parallel component of 
 
 Why are conditionals also loops in JAX? er.. I'm not quite sure about this. It should be possible for cond_range to output a regular boolean instead of a 0/1-long iterator. But for some reason, it's build like that.
 
-If we found a better canvas slice, we extrude that and set it as our best_canvas and it's score as the best_score
+If we found a better canvas slice, we extrude that and set it as our `best_canvas` and it's score as the `best_score`.
 
-After a finite number of iterations, we'd obtain a Game of Life state that reveals a mon lisa after N generations.
+After a finite number of iterations, we'd obtain a Game of Life state that reveals a Mona Lisa after N generations.
 
 # Results
 
@@ -298,4 +298,6 @@ A life state with the highest similarity to the target is achieved after running
 
 # Conclusion
 
-I was really waiting for an excuse to dive into JAX that doesn't necessarily invoke it's automatic differentiation capabilities. JAX can be used to any general computing problem that works on tensors. I'm sure I made many mistakes here, but this was very much a learning experience for me. Thanks for reading through.
+I was really looking for an excuse to dive into JAX that doesn't necessarily invoke it's automatic differentiation capabilities. JAX can be used to any general computing problem that works on tensors. I'm sure I made many mistakes here, but this was very much a learning experience for me. 
+
+Thank you Kevin Galligan for the original idea and Bojan Nikolic for the snippet.
