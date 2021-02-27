@@ -298,15 +298,15 @@ A life state with the highest similarity to the target is achieved after running
 
 <video loop autoplay muted> <source src="/uploads/lisa3.mp4" type="video/mp4" /> </video>
 
-<cap>Mona Lisa in 3 generations</cap>
+<cap>Mona Lisa, 3 generations</cap>
 
-<video loop autoplay muted> <source src="/uploads/david.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/uploads/david_2e.mp4" type="video/mp4" /> </video>
 
-<cap>David in 3 generations (https://unsplash.com/photos/1L4E_lsIb9Q)</cap>
+<cap>David by Michelangelo, 3 generations</cap>
 
-<video loop autoplay muted> <source src="/uploads/moon.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/uploads/moon2e.mp4" type="video/mp4" /> </video>
 
-<cap>Moon in 6 generations (https://unsplash.com/photos/pd4lo70LdbI)</cap>
+<cap>Moon, 6 generations (https://unsplash.com/photos/pd4lo70LdbI)</cap>
 
 # Conclusion
 
