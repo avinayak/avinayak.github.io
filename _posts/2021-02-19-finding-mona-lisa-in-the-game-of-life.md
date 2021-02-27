@@ -110,13 +110,17 @@ We could do this using PIL (it's [Floyd–Steinberg dithering](https://en.wikipe
 
 Also you can see from the last result, it's impossible to get a continuous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. The end result will be a higher contrast, but slightly darkened version of Mona Lisa. At higher resolutions, this effect is not as apparent.
 
-# Scaling Up - Parallelization with JAX
+# Vectorization with JAX
 
 The single core unvectorized version is extremely slow. I tried running this in both my 8th gen Core i7 and the Google Colab CPU machines, but you need to wait for hours/days (depending on target resolution) to get something that resembles the original.
 
-Fortunately, This problem is well suited for parallelization. JAX is a python library that lets you use a version of numpy and compile it to highly vectorized code that can be run on a GPU/TPU. We need to rework this algorithm for a GPU.
+Fortunately, This problem is well suited for parallelization. 
 
-GPUs generally suited to high-throughput type computations that has data-parallelism. We need to exploit the SIMD (Single Instruction Multiple Data) architecture to gain faster execution speeds.
+![](https://raw.githubusercontent.com/google/jax/master/images/jax_logo_250px.png)
+
+JAX is a python library that lets you use a version of numpy and compile it to highly vectorized code that can be run on a GPU/TPU. We need to rework this algorithm for a GPU.
+
+GPUs generally suited to high-throughput type computations that has good data-parallelism. We need to exploit the SIMD (Single Instruction Multiple Data) architecture to gain faster execution speeds.
 
 We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dimension with 3rd dimension being `batch_size` long tensor loafs (Consider a loaf of bread, with each slice being dithered Mona Lisa).
 
