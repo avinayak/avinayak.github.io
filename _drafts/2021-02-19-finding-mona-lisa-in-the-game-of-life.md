@@ -185,11 +185,14 @@ Here, we're initialing a random a random key for the JAX PRNG. Because of the wa
 
     @jax.jit
     def rgen(a):
+        # This reduction over-counts the neighbours of live cells since it includes the
+        # central cell itself. Subtract out the array to correct for this.
         nghbrs=L.reduce_window(a, 0, L.add, (3,3), (1,1), "SAME")-a
         birth=N.logical_and(a==0, nghbrs==3)
         underpop=N.logical_and(a==1, nghbrs<2)
         overpop=N.logical_and(a==1, nghbrs>3)
         death=N.logical_or(underpop, overpop)
+    
         na=L.select(birth,
                     N.ones(a.shape, N.int32),
                     a)
@@ -199,20 +202,21 @@ Here, we're initialing a random a random key for the JAX PRNG. Because of the wa
                     na)
         return na
     
-    v_rgen = jax.vmap(rgen)
+    vectorized_rgen = jax.vmap(rgen)
     
     @jax.jit
     def nv_rgen(state):
-      """ Run 5 generations of vmapped rgen over input """
-      return v_rgen(v_rgen(v_rgen(v_rgen(v_rgen(state)))))
+      for _ in range(n_generations):
+          state = vectorized_rgen(state)
+      return state
 
-please read B. Nikolc's post for an in depth explanation for rgen function, which runs 1 generation of Game of Life.
+Please read B. Nikolc's post for an in depth explanation for `rgen` function, which runs 1 generation of Game of Life.
 
-We use `jax.vmap`, a super useful in JAX. `vmap` lets us creates a function which maps an input function over argument axes. This lets us run a generation of game of life across every slice in our canvas.
+`jax.vmap` lets us creates a function which maps an input function over argument axes (vectorize). This lets us run a generation of game of life across every slice in our canvas.
 
-`nv_rgen` is where I'm not quite sure of. We need to run 5 generation of Game of Life on the canvas. According to python idioms, a loop should be used to execute this function 5 times. But conventional python loops are not allowed in JAX. This non-elegant way works for now, but maybe I'll fix this later.
+`nv_rgen`  runs __generations_ of life on our canvas.
 
-Also, `@jax.jit` python decorator just tells the compiler to jit compile this function. it isn't super useful in `nv_rgen`, as it's simply composed of other jitted functions.
+Also, `@jax.jit` python decorator just tells the compiler to jit compile this function. I'm not sure if we there was any improvement in this case as `nv_rgen` is simply composed of other jitted functions.
 
     def modify_nj(b, w, h, subkey):
       a = jax.random.normal(subkey, (b, w, h))
@@ -257,11 +261,11 @@ JAX loops (jax.experimental.loops for now) is a syntactic sugar functions like l
 
 Numpy uses the Mersenne Twister PRNG for all of it's functions having random. As I understand, when executing in parallel, producing a large number of randoms, this method has flaws. It is difficult to ensure that we have enoough entropy for produoing large enough randoms.
 
-Unlike numpy, JAX random is unmanaged but the library. Every jax.random fucntion has to be passed teh current state of the PRNG. and evertime we execute one of these, the PRNG state has to be updated jax.random.split. 
+Unlike numpy, JAX random is unmanaged but the library. Every jax.random fucntion has to be passed teh current state of the PRNG. and evertime we execute one of these, the PRNG state has to be updated jax.random.split.
 
 Not updating the PRNG state will quickly result in the same set of randoms over and over again. I quite did'nt understand this part the first time I wrote the loop, and it resulted in the algorithm ceasing to find new variations of canvas states. This happened becasue we're generating the same 'ones' tensor over and over again.
 
-Splitting PRNG state is the only way to ensure that every parallel component of the algorithm generate distinct randoms. 
+Splitting PRNG state is the only way to ensure that every parallel component of the algorithm generate distinct randoms.
 
 Find and in depth explanation of JAX PRNG here https://github.com/google/jax/blob/master/design_notes/prng.md
 
