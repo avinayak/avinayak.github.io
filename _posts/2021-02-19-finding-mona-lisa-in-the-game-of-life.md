@@ -173,7 +173,7 @@ The core of this project, the game of life function is actually taken from [this
     from PIL import Image 
     from google.colab import files
 
-Next, get Mona Lisa from wikipedia
+Next, wget Mona Lisa
 
     !wget -O target.png https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/483px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg?download
 
@@ -220,7 +220,7 @@ Here, we're seeding JAX PRNG(will be explained soon).Also we're creating the ini
           state = vectorized_rgen(state)
       return state
 
-Please read B. Nikolc's post for an in depth explanation for `rgen` function, which runs 1 generation of Game of Life.
+Please read [B. Nikolc's post](http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html) for an in depth explanation for `rgen` function, which runs a single generation of Game of Life.
 
 `jax.vmap` lets us creates a function which maps an input function over argument axes (vectorize). This lets us run a generation of game of life across every slice in our canvas.
 
