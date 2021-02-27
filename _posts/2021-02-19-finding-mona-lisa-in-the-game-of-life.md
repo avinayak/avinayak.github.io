@@ -151,13 +151,13 @@ Something like
             [0, 0],
             [0, 0]]])
 
-##
+## 
 
 <cap>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
 
-The idea is that in every loop, we use the mutator to calculate the nearest set of neihbouring states from our best\_canvas like this `canvas = (best\_canvas + mutator)%2`.
+The idea is that in every loop, we use the mutator to calculate the nearest set of neihbouring states from our best_canvas like this `canvas = (best\_canvas + mutator)%2`.
 
-We compute N generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE(mean being calculated for the slice only) on the Nth generation canvas against Mona Lisa, and find the slice with the lowest error. 
+We compute N generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE(mean being calculated for the slice only) on the Nth generation canvas against Mona Lisa, and find the slice with the lowest error.
 This is slice is then extruded and set to best_canvas and the loop repeats till a finite number of iterations pass.
 
 ## Code
@@ -268,9 +268,9 @@ We jit this function as `mutate`. Additionally, we need to mark `b,w,h` argument
           s.canvas = s.best_canvas
         return s.canvas
 
-`hill\_climb` is the main function in the program. It is one big JAX loop construct. We could use standard python loops here, but we need to take full advantage of using JAX.
+`hill_climb` is the main function in the program. It is one big JAX loop construct. We could use standard python loops here, but we need to take full advantage of using JAX.
 
-JAX loops (`jax.experimental.loops` for now) is a syntactic sugar functions like `lax.fori_loop_` and `lax.cond`. lax loops(actual XLA loops) that have more than a few statements and nesting gets very complicated. JAX (Experimental) loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie. anything that mutates across interations have to be stored as a scope member. For us, this includes the `best\_score`, `best\_canvas`, temporary canvas where we run life and the PRNG key.
+JAX loops (`jax.experimental.loops` for now) is a syntactic sugar functions like `lax.fori_loop_` and `lax.cond`. lax loops(actual XLA loops) that have more than a few statements and nesting gets very complicated. JAX (Experimental) loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie. anything that mutates across interations have to be stored as a scope member. For us, this includes the `best_score`, `best_canvas`, temporary canvas where we run life and the PRNG key.
 
 ### JAX PRNGS
 
