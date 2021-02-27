@@ -150,9 +150,10 @@ Something like
             [0, 0]]])
 <cap>Example mutator with shape 5, 3, 2. batch_size being 5</cap>
 
-The idea is that in every loop, we use the random modifier to calculate the next set of neihbours from our best matched like this `canvas = (best_canvas + modifier)%2`.
+The idea is that in every loop, we use the mutator to calculate the nearest set of neihbouring states from our best matched canvas like this `canvas = (best_canvas + mutator)%2`.
 
-We compute n generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE (mean being calculated for the slice only) on the nth generation canvas vs Mona Lisa , and find the one with the canvas slice with the lowest error. This is then set to best_canvas and the loop repeats till a finite number of iterations pass.
+We compute N generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE(mean being calculated for the slice only) on the Nth generation canvas vs Mona Lisa , and find the canvas slice with the lowest error. 
+This is slice is then extruded and set to best_canvas and the loop repeats till a finite number of iterations pass.
 
 ## Code
 
