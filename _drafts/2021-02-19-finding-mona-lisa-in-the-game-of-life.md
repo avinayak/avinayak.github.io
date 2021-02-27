@@ -20,9 +20,11 @@ There are ways achive this by placing still life states at specific pixels as de
 
 ## Proof of Concept
 
-I began working on a proof of concept version using the hill climbing algorithm. The idea was very simple.
+I began working on a proof of concept using the hill climbing algorithm. The idea was very simple.
 
-1. Initialize best-score = infinity and an empty matrix as best-result
+
+
+1. best-score := infinity and an empty matrix as best-result
 2. Start with a random matrix of 1s and 0s representing live and dead cells in Life.
 3. Invert a single cell at a random location (modify).
 4. Create a copy of this matrix.
