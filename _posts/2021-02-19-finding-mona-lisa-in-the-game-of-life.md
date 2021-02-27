@@ -296,11 +296,18 @@ Running \~1000 iterations for a 483px wide mona lisa on the google colab GPU run
 
 A life state with the highest similarity to the target is achieved after running for \~23000 iterations (10 minutes). After 23K, the gains start to diminish greatly and does'nt seem to   improve much, even if you run for 100K iterations.
 
+/uploads/lisa-5.mp4
 
-<cap>David in 3 generations (Original Photograph at https://unsplash.com/photos/1L4E_lsIb9Q)</cap>
+<cap>Mona Lisa in 3 generations</cap>
+
+[david.mp4](/uploads/david.mp4 "david.mp4")
+
+<cap>David in 3 generations (https://unsplash.com/photos/1L4E_lsIb9Q)</cap>
+
+<cap>Moon in 6 generations (https://unsplash.com/photos/pd4lo70LdbI)</cap>
 
 # Conclusion
 
-I was really looking for an excuse to dive into JAX that doesn't necessarily invoke it's automatic differentiation capabilities. JAX can be used to any general computing problem that works on tensors. I'm sure I made many mistakes here, but this was very much a learning experience for me. 
+I was really looking for an excuse to dive into JAX that doesn't necessarily invoke it's automatic differentiation capabilities. JAX can be used to any general computing problem that works on tensors. I'm sure I made many mistakes here, but this was very much a learning experience for me.
 
 Thank you Kevin Galligan for the original idea and Bojan Nikolic for the snippet.
