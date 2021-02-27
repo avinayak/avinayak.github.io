@@ -13,14 +13,16 @@ $cloudy: #828282;
 @import "mixins", "default", "404";
 
 code {
+  background-color: #f5f5f5 !important;
   border-radius: 7px;
   font-size: 14px;
+  padding: 1em !important;
 }
 
 code.highlighter-rouge {
   background-color: #eaeaea;
-  padding: 2px 4px;
-  border-radius: 0px;
+  padding: 2px 4px !important;
+  border-radius: 4px;
 }
 
 cap {
