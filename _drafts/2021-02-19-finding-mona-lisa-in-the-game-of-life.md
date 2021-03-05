@@ -306,6 +306,10 @@ A life state with the highest similarity to the target is achieved after running
 
 <cap>Mona Lisa, 10 generations</cap>
 
+<video loop autoplay muted> <source src="/uploads/checkerboard.mp4" type="video/mp4" /> </video>
+
+<cap>Checkerboard Test Pattern, 7 generations</cap>
+
 <video loop autoplay muted> <source src="/uploads/david_2e.mp4" type="video/mp4" /> </video>
 
 <cap>David by Michelangelo, 3 generations</cap>
@@ -313,10 +317,6 @@ A life state with the highest similarity to the target is achieved after running
 <video loop autoplay muted> <source src="/uploads/moon2e.mp4" type="video/mp4" /> </video>
 
 <cap>Moon, 6 generations (https://unsplash.com/photos/pd4lo70LdbI)</cap>
-
-<video loop autoplay muted> <source src="/uploads/moon2e.mp4" type="video/mp4" /> </video>
-
-<cap>Chess, 10 generations (https://unsplash.com/photos/3xMaFio-A7Q)</cap>
 
 # Conclusion
 
