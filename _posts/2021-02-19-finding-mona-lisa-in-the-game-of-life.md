@@ -304,7 +304,7 @@ A life state with the highest similarity to the target is achieved after running
 
 <cap>Mona Lisa, 10 generations</cap>
 
-<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/checkerboard.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/check.webm" type="video/mp4" /> </video>
 
 <cap>Checkerboard Test Pattern, 7 generations</cap>
 
