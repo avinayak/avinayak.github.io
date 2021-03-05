@@ -68,7 +68,7 @@ Hill Climbing works by finding the closest neighboring state to a current state 
 
 After a few days of CPU time(!), I was able to obtain something that resembled Mona Lisa after running 4 generations of life.
 
-<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/lisa_cpu.webm" type="video/mp4" /> </video>
 
 It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable or fast.
 
