@@ -300,7 +300,7 @@ Running \~1000 iterations for a 483px wide Mona Lisa on the google colab GPU run
 
 A life state with the highest similarity to the target is achieved after running for \~23000 iterations (10 minutes). After 23K, the gains start to diminish greatly and doesn't seem to   improve much, even if you run for 100K iterations.
 
-<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-02-23_23-55-50.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/lisa_low.webm" type="video/mp4" /> </video>
 
 <cap>Mona Lisa, 10 generations</cap>
 
