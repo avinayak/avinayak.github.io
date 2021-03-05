@@ -318,6 +318,6 @@ A life state with the highest similarity to the target is achieved after running
 
 # Conclusion
 
-I was really looking for an excuse to dive into JAX that doesn't necessarily invoke it's automatic differentiation capabilities. JAX can be used to any general computing problem that works on tensors. I'm sure I made many mistakes here, but this was very much a learning experience for me.
+I was really looking for an excuse to dive into JAX that doesn't necessarily involve it's automatic differentiation capabilities. JAX can be used to any general computing problem that works on tensors. I'm sure I made many mistakes here, but this was very much a learning experience for me.
 
-Thank you Kevin Galligan for the original idea and Bojan Nikolic for the snippet.
+Thank you Kevin Galligan for the original idea and Bojan Nikolic for the Game of Life snippet.
