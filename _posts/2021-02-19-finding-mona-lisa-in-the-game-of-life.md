@@ -8,7 +8,7 @@ layout: post
 subtitle: with JAX
 
 ---
-<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-02-23_23-55-50.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/lisa.webm" type="video/mp4" /> </video>
 
 The results of this experiment are not exactly close to my target as you can see, but I thought it was worth a blog post anyway. There was this rough idea I've been thinking about in [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) for a really long time.
 
