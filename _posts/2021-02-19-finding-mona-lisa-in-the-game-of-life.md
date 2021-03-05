@@ -8,7 +8,7 @@ layout: post
 subtitle: with JAX
 
 ---
-<video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_23-55-50.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-02-23_23-55-50.mp4" type="video/mp4" /> </video>
 
 The results of this experiment are not exactly close to my target as you can see, but I thought it was worth a blog post anyway. There was this rough idea I've been thinking about in [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) for a really long time.
 
@@ -68,7 +68,7 @@ Hill Climbing works by finding the closest neighboring state to a current state 
 
 After a few days of CPU time(!), I was able to obtain something that resembled Mona Lisa after running 4 generations of life.
 
-<video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-02-23_18-21-21.mp4" type="video/mp4" /> </video>
 
 It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable or fast.
 
@@ -302,19 +302,19 @@ Running \~1000 iterations for a 483px wide Mona Lisa on the google colab GPU run
 
 A life state with the highest similarity to the target is achieved after running for \~23000 iterations (10 minutes). After 23K, the gains start to diminish greatly and doesn't seem to   improve much, even if you run for 100K iterations.
 
-<video loop autoplay muted> <source src="/uploads/simplescreenrecorder-2021-02-23_23-55-50.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/simplescreenrecorder-2021-02-23_23-55-50.mp4" type="video/mp4" /> </video>
 
 <cap>Mona Lisa, 10 generations</cap>
 
-<video loop autoplay muted> <source src="/uploads/checkerboard.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/checkerboard.mp4" type="video/mp4" /> </video>
 
 <cap>Checkerboard Test Pattern, 7 generations</cap>
 
-<video loop autoplay muted> <source src="/uploads/david_2e.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/david_2e.mp4" type="video/mp4" /> </video>
 
 <cap>David by Michelangelo, 3 generations</cap>
 
-<video loop autoplay muted> <source src="/uploads/moon2e.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/moon2e.mp4" type="video/mp4" /> </video>
 
 <cap>Moon, 6 generations (https://unsplash.com/photos/pd4lo70LdbI)</cap>
 
