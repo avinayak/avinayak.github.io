@@ -78,7 +78,7 @@ Target Mona Lisa against which our random state was compared with was the medium
 
 ![](/uploads/screenshot-from-2021-02-23-18-38-08-copy.png)
 
-<cap>https://en.wikipedia.org/wiki/Mona_Lisa#/media/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg</cap>
+<cap><a href="https://en.wikipedia.org/wiki/Mona_Lisa#/media/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg">Taken from wikipedia</a></cap>
 
 When you're comparing against boolean variables, It's better that we the target as a binary matrix rather than the whole grayscale range.
 
