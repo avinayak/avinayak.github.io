@@ -298,6 +298,8 @@ After a finite number of iterations, we'd obtain a Game of Life state that revea
 
 Running \~1000 iterations for a 483px wide Mona Lisa on the google colab GPU runtime only takes around 40 seconds!. Compared to the CPU version which takes several hours to do the same for a smaller image, I think we've achieved our goals.
 
+![](/uploads/lisa_still.png)
+
 A life state with the highest similarity to the target is achieved after running for \~23000 iterations (10 minutes). After 23K, the gains start to diminish greatly and doesn't seem to   improve much, even if you run for 100K iterations.
 
 <video loop autoplay muted> <source src="https://avinayak.github.io/uploads/lisa.webm" type="video/webm" /> </video>
