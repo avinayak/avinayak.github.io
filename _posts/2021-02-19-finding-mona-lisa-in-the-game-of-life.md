@@ -308,6 +308,10 @@ A life state with the highest similarity to the target is achieved after running
 
 <cap>Checkerboard Test Pattern, 7 generations</cap>
 
+<video loop autoplay muted> <source src="[https://avinayak.github.io/uploads/test2.webm](https://avinayak.github.io/uploads/check.webm "https://avinayak.github.io/uploads/check.webm")" type="video/webm" /> </video>
+
+<cap>Text Test Pattern, 5 generations</cap>
+
 <video loop autoplay muted> <source src="https://avinayak.github.io/uploads/david.webm" type="video/mp4" /> </video>
 
 <cap>David by Michelangelo, 3 generations</cap>
