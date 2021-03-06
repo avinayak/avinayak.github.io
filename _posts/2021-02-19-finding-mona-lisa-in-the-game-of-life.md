@@ -326,10 +326,14 @@ Also, Images targetted at lower generations tend to have better fit as expected.
 
 <video loop autoplay muted> <source src="https://avinayak.github.io/uploads/neil.webm" type="video/mp4" /> </video>
 
-<cap>Neil Armstrong, 7 generations ([https://unsplash.com/photos/pd4lo70LdbI](https://unsplash.com/photos/pd4lo70LdbI "https://unsplash.com/photos/pd4lo70LdbI"))</cap>
+<cap>Neil Armstrong, 7 generations</cap>
 
 # Conclusion
 
 I was really looking for an excuse to dive into JAX that doesn't necessarily involve it's automatic differentiation capabilities. JAX can be used to any general computing problem that works on tensors. I'm sure I made many mistakes here, but this was very much a learning experience for me.
 
 Thank you Kevin Galligan for the original idea and Bojan Nikolic for the Game of Life snippet.
+
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/conway.webm" type="video/mp4" /> </video>
+
+<cap>John Horton Conway FRS (26 December 1937 – 11 April 2020) RIP</cap>
