@@ -166,7 +166,7 @@ This is slice is then extruded and set to best_canvas and the loop repeats till 
 
 ## Code
 
-The notebook for this project is available here or run it in colab. I'll explain what every block is doing in this section. If you want to see results, skip to the end of the article.
+The notebook for this project is [available in github](https://github.com/avinayak/mona_lisa_gol_jax/blob/main/mona_lisa_overdrive.ipynb). I'll explain what every block is doing in this section. If you want to see results, skip to the end of the article.
 
 The core of this project, the game of life function is actually taken from [this post](http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html). Thank you  Bojan Nikolic :). I followed his convention of importing `jax.numpy` as `N`, `jax.lax` as `L`.
 
