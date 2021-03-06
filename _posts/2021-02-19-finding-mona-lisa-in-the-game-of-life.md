@@ -18,7 +18,7 @@ I came across [an article](https://kevingal.com/blog/mona-lisa-gol.html) of the 
 
 There are other ways of achieving this. One is by placing still life states at specific pixels as described in this [codegolf question](https://codegolf.stackexchange.com/questions/38573/paint-a-still-life-or-a-moving-one-draw-an-image-in-the-game-of-life).
 
-What I'm thinking of is to display Mona Lisa for a single generation with non-still um.. 'living' life.
+What I'm thinking of is to display Mona Lisa for a single generation with 'non-still' life.
 
 # Algorithm
 
@@ -40,7 +40,7 @@ I began working on a proof of concept using the hill climbing algorithm. The ide
     while(max_iterations limit passed or best_score < threshold)
 ```
 
-I hacked up a single core prototype. Here's a snippet from that:
+I hacked up a single core prototype.
 
     def modify(canvas, shape):
         x,y = shape
