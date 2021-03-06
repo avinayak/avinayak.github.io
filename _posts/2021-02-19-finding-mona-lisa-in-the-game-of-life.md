@@ -308,7 +308,7 @@ A life state with the highest similarity to the target is achieved after running
 
 <cap>Checkerboard Test Pattern, 7 generations</cap>
 
-<video loop autoplay muted> <source src="[https://avinayak.github.io/uploads/test2.webm](https://avinayak.github.io/uploads/check.webm "https://avinayak.github.io/uploads/check.webm")" type="video/webm" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/check.webm" type="video/webm" /> </video>
 
 <cap>Text Test Pattern, 5 generations</cap>
 
@@ -320,7 +320,7 @@ A life state with the highest similarity to the target is achieved after running
 
 <cap>Moon, 7 generations (https://unsplash.com/photos/pd4lo70LdbI)</cap>
 
-<video loop autoplay muted> <source src="[https://avinayak.github.io/uploads/neil.webm](https://avinayak.github.io/uploads/moon.webm "https://avinayak.github.io/uploads/moon.webm")" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/moon.webm" type="video/mp4" /> </video>
 
 <cap>Neil Armstrong, 7 generations ([https://unsplash.com/photos/pd4lo70LdbI](https://unsplash.com/photos/pd4lo70LdbI "https://unsplash.com/photos/pd4lo70LdbI"))</cap>
 
