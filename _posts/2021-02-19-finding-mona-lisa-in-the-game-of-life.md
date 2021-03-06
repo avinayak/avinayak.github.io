@@ -18,7 +18,7 @@ I came across [an article](https://kevingal.com/blog/mona-lisa-gol.html) of the 
 
 There are other ways of achieving this. One is by placing still life states at specific pixels as described in this [codegolf question](https://codegolf.stackexchange.com/questions/38573/paint-a-still-life-or-a-moving-one-draw-an-image-in-the-game-of-life).
 
-What I'm thinking of is to display Mona Lisa for a single generation with 'non-still' life.
+What I'm thinking of is to display Mona Lisa for a single frame/generation of 'non-still' Game of Life.
 
 # Algorithm
 
@@ -70,9 +70,9 @@ After a few days of CPU time(!), I was able to obtain something that resembled M
 
 <video loop autoplay muted> <source src="https://avinayak.github.io/uploads/lisa_cpu.webm" type="video/mp4" /> </video>
 
-It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable or fast.
+It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable for larger images or fast.
 
-# Dithering
+# Target image modification
 
 Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia and converted to monochrome using PIL's `Image.open('target.png').convert('L')`
 
@@ -96,7 +96,7 @@ This is a portion of the 4th generation of the state we just prepared.
 
 ![](/uploads/screenshot-from-2021-02-23-19-08-47.png)
 
-Judging by the texture, the way life patterns evolve and from just experimenting with images, I found that comparing against a  1-bit dithered version the target should improve the quality of results.
+Judging by the texture, the way life patterns evolve and from just experimenting with images, I found that comparing against a 1-bit dithered version the target should improve the quality of results.
 
 ![](/uploads/screenshot-from-2021-02-23-19-04-26.png)
 
