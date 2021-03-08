@@ -10,6 +10,8 @@ subtitle: with JAX
 ---
 <video loop autoplay muted> <source src="https://avinayak.github.io/uploads/lisa.webm" type="video/webm" /> </video>
 
+<cap>This video might take a few seconds to load. Please squint for best results :).</cap>
+
 The results of this experiment are not exactly close to my target as you can see, but I thought it was worth a blog post anyway. There was this rough idea I've been thinking about in [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) for a really long time.
 
 <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">I wonder if it's possible to use some kind of stochastic algorithm that gives you an initial state which forms legible text after many cycles.</p>— yakinavault (@yakinavault) <a href="https://twitter.com/yakinavault/status/1291586306489761792?ref_src=twsrc%5Etfw">August 7, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
