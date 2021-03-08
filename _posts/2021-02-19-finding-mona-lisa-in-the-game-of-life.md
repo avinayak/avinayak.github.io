@@ -72,7 +72,7 @@ After a few days of CPU time(!), I was able to obtain something that resembled M
 
 It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable for larger images or fast.
 
-# Target image modification
+# Preprocessing
 
 Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia and converted to monochrome using PIL's `Image.open('target.png').convert('L')`
 
