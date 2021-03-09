@@ -2,18 +2,19 @@
 title: About
 permalink: "/about/"
 layout: page
-subtitle: ¬
----
+subtitle: "¬"
 
+---
 # About ¬
 
-Hi! I'm Atul. A programmer based around Tokyo. This is ¬ a blog that covers some of the experiments that I do in my spare time. 
-Feel free to email me if you have any queries.
+Hi! I'm Atul. A programmer based around Tokyo. This is a blog that covers some of the experiments that I do in my spare time. 
 
-![](/uploads/me_low_res.png)
+I'm also [@yakinavault](https://twitter.com/yakinavault) on twitter. I use this account primarily for experimental stuff.
 
-Email me at su.atul.vi - gmail.com
+Feel free to email me at su.atul.vi - gmail.com if you have any queries.
+
+![https://github.com/avinayak](/uploads/me_low_res.png)
 <!-- You can see my resume [here](https://goo.gl/96aepH) or download a [PDF](https://goo.gl/D2GXJ9). -->
 Or you can check my [github](https://github.com/avinayak) page, which has all my projects to date.
 
-[Buy me a ko-fi :)](https://ko-fi.com/S6S51GBT3)
+##### [BUY ME A KO-FI :)](https://ko-fi.com/S6S51GBT3)
