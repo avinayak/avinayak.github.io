@@ -1,12 +1,12 @@
 ---
 title: A Music player that can uplift your mood
-date: 2013-10-20 00:00:00 Z
+date: 2013-10-20T00:00:00.000+00:00
 categories:
 - programming
 layout: post
 subtitle: SVM Failure
----
 
+---
 This is the beginning of a big project I’m undertaking as a part of my Blackberry 10 Internship. It is a music player, which can analyze mood of a given track, and also guess our mood from the songs played. It uses support vector machine based regression to locate a song’s mood.
 
 It had lots of cool (*planned*) features like an ‘Uplift Me’, which plays a sad song at first, but slowly plays happy songs!
