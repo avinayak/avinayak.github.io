@@ -124,9 +124,7 @@ JAX is a python library that lets you use a version of numpy and compile it to h
 
 GPUs generally suited to high-throughput type computations that has good data-parallelism. We need to exploit the SIMD (Single Instruction Multiple Data) architecture to gain faster execution speeds.
 
-We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dimension with 3rd dimension being `batch_size` long tensor loafs (Consider a loaf of bread, with each slice being dithered Mona Lisa).
-
-![](/uploads/untssitled-another-copy.png)
+We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dimension with 3rd dimension being `batch_size` long tensor loafs.
 
 ![](/uploads/untssitled-copy.png)
 <cap>Initial canvas will be completely random(unlike the figure).</cap>
@@ -339,3 +337,5 @@ Thank you Kevin Galligan for the original idea and Bojan Nikolic for the Game of
 <video loop autoplay muted> <source src="https://avinayak.github.io/uploads/conway.webm" type="video/mp4" /> </video>
 
 <cap>John Horton Conway FRS (26 December 1937 – 11 April 2020) RIP</cap>
+
+[HN Thread ](https://news.ycombinator.com/item?id=26384403)
