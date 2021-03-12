@@ -15,4 +15,4 @@ Hi! I'm Atul Vinayak. I'm a programmer based in Tokyo, Japan. I'm also [@yakinav
 
 <!-- You can see my resume [here](https://goo.gl/96aepH) or download a [PDF](https://goo.gl/D2GXJ9). -->
 
-##### [BUY ME A KO-FI :)](https://ko-fi.com/S6S51GBT3)
+### [☕](https://ko-fi.com/S6S51GBT3)
