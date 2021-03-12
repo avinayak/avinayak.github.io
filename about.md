@@ -7,9 +7,7 @@ subtitle: "¬"
 ---
 # About ¬
 
-Hi! I'm Atul Vinayak. I'm a programmer based around Tokyo, Japan. This is a blog that covers some of the experiments that I do in my spare time.
-
-I'm also [@yakinavault](https://twitter.com/yakinavault) on twitter. 
+Hi! I'm Atul Vinayak. I'm a programmer based in Tokyo, Japan. I'm also [@yakinavault](https://twitter.com/yakinavault) on twitter. 
 
 ![https://github.com/avinayak](/uploads/me_low_res.png)
 
