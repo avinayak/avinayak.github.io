@@ -1,6 +1,6 @@
 ---
-title: Tweet Processing(#つぶやきProcessing) Showcase
-subtitle: Continued post
+title: Tweet p5.js (#つぶやきProcessing) Showcase
+subtitle: Continued post of tweet embeds
 date: 2020-07-31T15:00:00.000+00:00
 categories:
 - design
