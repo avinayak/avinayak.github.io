@@ -245,3 +245,11 @@ Also, if you look carefully, you can see that this is basically a terenary opera
 
       M[Z] = *(Z + x);
     }
+    
+The if true case looks like an elaborate swap operation. It's comma seperated, but this statement can be boken down like so
+
+    {
+          J[T[E] = T[A]] = E;
+          J[T[A] = A - Z] = A;
+          x = "_.";
+    }
