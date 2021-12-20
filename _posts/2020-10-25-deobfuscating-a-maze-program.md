@@ -263,5 +263,4 @@ and then
       x = "_.";
 	}
 
-
 Now we have some clarity on what happens inside the loop. It wither prints a ` "_."` (and does some magical swap operation) or a `" |"` based on a condition.
