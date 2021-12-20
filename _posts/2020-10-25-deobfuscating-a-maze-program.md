@@ -223,7 +223,7 @@ Also, this give us a clue about A. A is set to W-1 in as soon as the loop starts
 
 The update statement is just `Z || printf(M)`. Seeing as this is the only other printf, we can be sure that this is the point where the maze gets rendered.
 
-The body of the loop is something like `M[Z] = Z[..stuff..];`. This looks bizarre. Z is used both as an array and an index. But if you know pointer math, `M[Z] = Z[X];` is equivalent to `M[Z] = *(Z + x);`. This is exactly what we're going to do. ie, create a `char *x` and assign this the value of whatever Z is adding with
+The body of the loop is something like `M[Z] = Z[..stuff..];`. This looks bizarre. Z is used both as an array and an index. But if you know pointer math, `M[Z] = Z[x];` is equivalent to `M[Z] = *(Z + x);`. This is exactly what we're going to do. ie, create a `char *x` and assign this the value of whatever Z is adding with
 
     for (; (A -= Z = !Z) || (printf("\n|"), A = W - 1, H--); Z || printf(M))
     {
