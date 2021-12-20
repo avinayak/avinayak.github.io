@@ -239,7 +239,7 @@ Also, if you look carefully, you can see that this is basically a terenary opera
       char *x;
 
       if (A - (E = A[J - Z]) && !H & A == T[A] | 805306347 < rand() || !H & !Z)
-        x = (J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_.");
+        { x = (J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_."); }
       else
         x = " |";
 
