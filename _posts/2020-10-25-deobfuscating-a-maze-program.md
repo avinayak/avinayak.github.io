@@ -232,3 +232,16 @@ The body of the loop is something like `M[Z] = Z[..stuff..];`. This looks bizarr
       M[Z] = *(Z + x);
     }
     
+Also, if you look carefully, you can see that this is basically a terenary operator with condition `(A - (E = A[J - Z]) && !H & A == T[A] | 805306347 < rand() || !H & !Z)` with values `(J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_.")` and `" |";`. Let's convert this to a proper if else:
+
+    for (; (A -= Z = !Z) || (printf("\n|"), A = W - 1, H--); Z || printf(M))
+    {
+      char *x;
+
+      if (A - (E = A[J - Z]) && !H & A == T[A] | 805306347 < rand() || !H & !Z)
+        x = (J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_.");
+      else
+        x = " |";
+
+      M[Z] = *(Z + x);
+    }
