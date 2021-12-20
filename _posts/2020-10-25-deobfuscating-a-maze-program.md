@@ -253,3 +253,5 @@ The if success case looks like an elaborate swap operation. It's comma seperated
           J[T[A] = A - Z] = A;
           x = "_.";
     }
+
+Now we have some clarity on what happens inside the loop. It wither prints a ` "_."` (and does some magical swap operation) or a `" |"` based on a condition. 
