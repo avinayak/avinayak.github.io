@@ -149,7 +149,7 @@ running this yields a 60x20 maze as expected
 
 let's start by looking at line 5: `for ( * J = A = 1; --E; J[E] = T[E] = E)printf("._");`
 
-`printf("._")` is responsible for the first line of wall. but the loop it's part of is doing something else.
+`printf("._")` is responsible for the first line of wall, but the loop it's part of is doing something else.
 
 * It initializes first value of array J and char A as 1.
 * evaluates `--E`, so runs 29 times
@@ -223,63 +223,12 @@ Also, this give us a clue about A. A is set to W-1 in as soon as the loop starts
 
 The update statement is just `Z || printf(M)`. Seeing as this is the only other printf, we can be sure that this is the point where the maze gets rendered.
 
-The body of the loop is something like `M[Z] = Z[..stuff..];`. This is bizarre. Z is used both as an array and an index.
-
-Since Z=0 or 1, we can guess the structure of M from the rest of the code. it'll always be of the form `< X, Y, '\0' >`, where X or Y can be one of the characters used to render the maze ('.' , '|' , ' ' or '_').
-
-Let's looks at the "stuff" inside Z\[\] now. I added parenthesis for clarity on operator precedence, but I don't think it's much help for a line as long as this
-
-    ((A - (E = A[J - Z])) && ((!H & A == T[A] | 6 << 27 < rand()) || (!H & !Z))) ? (J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_.") : (" |")
-
-This is roughly in the form of `(s1 && (s2 || s3)) ? (s4, s5, "-."): " |"`. It's just a ternary operator that returns " |" or "-.".
-
-we can replace the ternary operator with and if-else and the loop now looks like
+The body of the loop is something like `M[Z] = Z[..stuff..];`. This looks bizarre. Z is used both as an array and an index. But if you know pointer math, `M[Z] = Z[X];` is equivalent to `M[Z] = *(Z + x);`. This is exactly what we're going to do. ie, create a `char *x` and assign this the value of whatever Z is adding with
 
     for (; (A -= Z = !Z) || (printf("\n|"), A = W - 1, H--); Z || printf(M))
-    	{
-    		if (((A - (E = A[J - Z])) && ((!H & A == T[A] | 6 << 27 < rand()) || (!H & !Z))))
-    		{
-    			J[T[E] = T[A]] = E;
-    			J[T[A] = A - Z] = A;
-    			M[Z] = Z["_."];
-    		}
-    		else
-    		{
-    			M[Z] = Z[" |"];
-    		}
-    	}
+    {
+      char *x = A - (E = A[J - Z]) && !H & A == T[A] | 805306347 < rand() || !H & !Z ? (J[T[E] = T[A]] = E, J[T[A] = A - Z] = A, "_.") : " |";
 
-much cleaner! one step further to clear up the condition.
-
-    	for (; (A -= Z = !Z) || (printf("\n|"), A = W - 1, H--); Z || printf(M))
-    	{
-    		char s1 = A - (E = A[J - Z]);
-    		char s2 = !H & A == T[A] | 6 << 27 < rand();
-    		char s3 = !H & !Z;
-    		if (s1 && (s2 || s3))
-    		{
-    			J[T[E] = T[A]] = E;
-    			J[T[A] = A - Z] = A;
-    			M[Z] = Z["_."];
-    		}
-    		else
-    		{
-    			M[Z] = Z[" |"];
-    		}
-    	}
-
-It's starting to be readable now.
-
-lets look at condition s1. the inner `A[J - Z]` is equivalent to `J[A - Z]`. why? it's just pointer math. think about it..
-
-for condition s2, I added more parenthesis
-
-    (!H & (A == T[A])) | (6 << 27) < rand()
-
-and 6 << 27 is just 805306368 so
-
-    (!H & (A == T[A])) | (805306368) < rand()
-
-why this number? I think the whole point was to get a random boolean. We could try just replacing this with rand()%2.
-
-as for condition s3, it's very clear what this does. This is just a way to draw the bottom wall. we can confirm this by removing this condition.
+      M[Z] = *(Z + x);
+    }
+    
