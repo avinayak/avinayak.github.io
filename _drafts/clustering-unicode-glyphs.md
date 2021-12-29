@@ -16,10 +16,14 @@ I wanted to see what would happen if I apply a clustering algorithm to all the U
 
 I found this official [VAE MLP Clustering tutorial](https://blog.keras.io/building-autoencoders-in-keras.html) on MNIST dataset for the keras library. Perfect. I hacked up a python script that generates Unifont glyphs in the 28x28x65536 pixel numpy array using Pillow Image processing lib. 
 
-The problem though was 
+The problem though was missing glyphs. 
 
-That's right the [tofu](https://en.wikipedia.org/wiki/Tofu_(disambiguation)#Computing_and_technology). I found that a huge portion of unifont tofu. We have to de-tofu this dataset. 
+![](/uploads/captdure.PNG)
 
-I could've done some cool pattern matching filtering, or manually figuring out the tofu from unifont documentation, but I I decided to write each 28x28 pixel glyph image to files and delete the tofu manually.
+I found that a huge portion of unifont tofu (White squares with hexadecimal codepoint). We have to de-tofu this dataset. 
+
+I could've done some cool pattern matching filtering, or manually figuring out the tofu from unifont documentation, but I I decided to export each 28x28 pixel glyph image to files and delete the tofu manually.
 
 ![](/uploads/wwwture.PNG)
+
+Now, I regenerate the dataset with the missing files removed.
