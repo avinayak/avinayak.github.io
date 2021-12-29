@@ -14,4 +14,4 @@ I wanted to see if I apply a clustering algorithm to all the Unicode characters.
 
 ## Creating Dataset
 
-I found this official [VAE MLP Clustering tutorial](https://blog.keras.io/building-autoencoders-in-keras.html) on MNIST dataset for the keras library. Perfect. I hacked up a python script that generates Unifont glyphs 
+I found this official [VAE MLP Clustering tutorial](https://blog.keras.io/building-autoencoders-in-keras.html) on MNIST dataset for the keras library. Perfect. I hacked up a python script that generates Unifont glyphs in the 28x28xN pixel numpy array.
