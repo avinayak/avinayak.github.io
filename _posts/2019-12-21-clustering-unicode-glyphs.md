@@ -26,6 +26,8 @@ I could've done some cool pattern matching filtering or manually figuring out th
 
 ![](/uploads/wwwture.PNG)
 
-Now, I regenerated the dataset with the missing file indices removed.
+Now, I regenerated the dataset with the missing file indices removed. Also, we're only going to work with Plane0 of Unicode, so only characters from 0-65535.
 
 ## Clustering
+
+I fed the dataset to the algorithm, 
