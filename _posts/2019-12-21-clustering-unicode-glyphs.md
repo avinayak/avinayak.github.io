@@ -18,7 +18,7 @@ I found this official [VAE MLP Clustering tutorial](https://blog.keras.io/buildi
 
 The problem though was missing glyphs.
 
-![](/uploads/screenshot-from-2021-12-30-19-51-11.png)
+![](/uploads/screenshot-from-2021-12-30-20-37-55.png)
 
 I found that a huge portion of unifont was tofu (White squares with hexadecimal codepoint). We have to de-tofu this dataset.
 
