@@ -34,4 +34,4 @@ Adapting the clustering algorithm to use my dataset was easy. I did have issues 
 
 ![](/uploads/chart2.png)
 
-This is beautiful. As expected, 
+This is beautiful. As expected,  The biggest cluster is Sino-Korean-Japonic characters. 
