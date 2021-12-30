@@ -40,7 +40,6 @@ This is beautiful. As expected, The biggest cluster is Sino-Korean-Japonic chara
 
 I tried creating a visualizer based with d3-zoom, but it was struggling to keep up with the almost 50K points rendered using DOM. I looked elsewhere and found this WebGL based cluster visualization [https://colineberhardt.github.io/d3fc-webgl-hathi-explorer/](https://colineberhardt.github.io/d3fc-webgl-hathi-explorer/ "https://colineberhardt.github.io/d3fc-webgl-hathi-explorer/") . This works great. It streams the point file using Web workers, so it could easily load all the points. The only problem though was it could not render the font yet (I may work on this later). I hacked up this visualization: [unicode-cluster-viz](https://avinayak.github.io/unicode-cluster-viz/ "https://avinayak.github.io/unicode-cluster-viz/").
 
-<iframe src="https://avinayak.github.io/unicode-cluster-viz/" title="Cluster Viz"></iframe>
+<iframe src="https://avinayak.github.io/unicode-cluster-viz/" style="height: 800px;width: 100%;" frameBorder="0" ></iframe>
 
 Here are some intresting clusters:
-
