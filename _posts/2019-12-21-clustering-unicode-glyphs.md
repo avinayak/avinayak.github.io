@@ -10,7 +10,7 @@ I saw this image of Language families across the globe today, and decided I want
 
 ![](/uploads/language_families_map.png)
 
-What would happen if I apply a clustering algorithm to all the Unicode characters? I wanted to this done really quickly, So no reinventing the wheel.. The plans is to get the SoTA clustering algorithm and swap the dataset with the Unicode character data. Ideally, I wanted to do this with the Noto font, but I had a feeling it might get complicated (ie. Noto requires you to swap in .ttf files depending on what codepoints your glyphs are in). In the name of quick and easy Sunday afternoon project, I decided to go with [unifont](https://unifoundry.com/unifont/ "unifont").
+What would happen if I apply a clustering algorithm to all the Unicode characters? I wanted to this done really quickly, So no reinventing the wheel. The plans is to get the SoTA clustering algorithm and swap the dataset with the Unicode character data. Ideally, I wanted to do this with the Noto font, but I had a feeling it might get complicated (ie. Noto requires you to swap in .ttf files depending on what codepoints your glyphs are in). In the name of quick and easy Sunday afternoon project, I decided to go with [unifont](https://unifoundry.com/unifont/ "unifont").
 
 ## Creating Dataset
 
