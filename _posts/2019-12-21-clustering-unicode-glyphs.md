@@ -46,7 +46,7 @@ Here are some interesting clusters..
 
 ![](/uploads/screenshot-from-2021-12-30-20-24-41.png)
 
-Hangul.
+Hangul
 
 ![](/uploads/screenshot-from-2021-12-30-20-14-12.png)
 
