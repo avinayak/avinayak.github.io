@@ -42,6 +42,8 @@ I tried creating a visualizer based with d3-zoom, but it was struggling to keep 
 
 <iframe src="https://avinayak.github.io/unicode-cluster-viz/" style="height: 800px;width: 100%;" frameBorder="0" ></iframe>
 
-Here are some interesting clusters.. Most of the plus shaped box drawing characters (╅ ╆ ╇) are clustered and the rest of the corner pieces are below.
+Here are some interesting clusters.. 
 
 ![](/uploads/screenshot-from-2021-12-30-20-14-12.png)
+
+Most of the plus shaped box drawing characters (╅ ╆ ╇) are clustered and the rest of the corner pieces are below.
