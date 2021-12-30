@@ -42,6 +42,8 @@ I tried creating a visualizer based with d3-zoom, but it was struggling to keep 
 
 <iframe src="https://avinayak.github.io/unicode-cluster-viz/" style="height: 800px;width: 100%;" frameBorder="0" ></iframe>
 
+Mainly, we get 3 large clusters Hangul (Green patches), CJK (Yellow) and everything else (Reddish). This corresponds really well with the historical origins of all human languages. Sino-Tibetan languages evolved independently to all other human languages becasue of geographics. Hangul was developed from Sino-Korean in mid fifteenth century, but has it's distinct style. 
+
 Here are some interesting clusters..
 
 ![](/uploads/screenshot-from-2021-12-30-20-27-34.png)
