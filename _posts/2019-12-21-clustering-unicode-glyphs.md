@@ -34,4 +34,6 @@ Adapting the clustering algorithm to use my dataset was easy. I did have issues 
 
 ![](/uploads/chart2.png)
 
-This is beautiful. As expected, The biggest cluster is Sino-Korean-Japonic characters. 
+This is beautiful. As expected, The biggest cluster is Sino-Korean-Japonic characters. I decided to build a better visualizer to higlight different Unicode ranges using d3js.
+
+## Visualizing
