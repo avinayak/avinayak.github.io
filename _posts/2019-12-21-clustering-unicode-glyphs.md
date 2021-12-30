@@ -34,7 +34,7 @@ Adapting the clustering algorithm to use my dataset was easy. I did have issues 
 
 ![](/uploads/chart2.png)
 
-This is beautiful. As expected, The biggest cluster is Sino-Korean-Japonic characters. I decided to build a better visualizer to highlight different Unicode ranges using d3js.
+This is beautiful. As expected, The biggest cluster is CJK + Hangul characters. I decided to build a better visualizer to highlight different Unicode ranges using d3js.
 
 ## Visualizing
 
@@ -43,6 +43,10 @@ I tried creating a visualizer based with d3-zoom, but it was struggling to keep 
 <iframe src="https://avinayak.github.io/unicode-cluster-viz/" style="height: 800px;width: 100%;" frameBorder="0" ></iframe>
 
 Here are some interesting clusters..
+
+![](/uploads/screenshot-from-2021-12-30-20-27-34.png)
+
+CJK
 
 ![](/uploads/screenshot-from-2021-12-30-20-24-41.png)
 
@@ -55,3 +59,5 @@ Most of the plus shaped box drawing characters (╅ ╆ ╇) are clustered and t
 ![](/uploads/screenshot-from-2021-12-30-20-20-07.png)
 
 Braille Patterns (⠻ ⠼ ⠽ ⠾ ⠿) are nice and clustered as they look very very similar.
+
+Anyway. Learned lot. I might get back to this project with better clustering and visualization.
