@@ -30,4 +30,4 @@ Now, I regenerated the dataset with the missing file indices removed. Also, we'r
 
 ## Clustering
 
-I fed the dataset to the algorithm, 
+Adapting the clustering algorithm to use my dataset was easy. I did have issues trying to run this on a GPU though. CPU took only around 5 minutes. 
