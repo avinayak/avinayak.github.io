@@ -47,3 +47,7 @@ Here are some interesting clusters..
 ![](/uploads/screenshot-from-2021-12-30-20-14-12.png)
 
 Most of the plus shaped box drawing characters (╅ ╆ ╇) are clustered and the rest of the corner pieces are below.
+
+![](/uploads/screenshot-from-2021-12-30-20-20-07.png)
+
+Braille Patterns (⠻ ⠼ ⠽ ⠾ ⠿)are nice and clustered as they look very very similar.  
