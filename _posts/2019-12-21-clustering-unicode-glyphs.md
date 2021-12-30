@@ -44,10 +44,14 @@ I tried creating a visualizer based with d3-zoom, but it was struggling to keep 
 
 Here are some interesting clusters.. 
 
+![](/uploads/screenshot-from-2021-12-30-20-24-41.png)
+
+Hangul.
+
 ![](/uploads/screenshot-from-2021-12-30-20-14-12.png)
 
 Most of the plus shaped box drawing characters (╅ ╆ ╇) are clustered and the rest of the corner pieces are below.
 
 ![](/uploads/screenshot-from-2021-12-30-20-20-07.png)
 
-Braille Patterns (⠻ ⠼ ⠽ ⠾ ⠿)are nice and clustered as they look very very similar.  
+Braille Patterns (⠻ ⠼ ⠽ ⠾ ⠿) are nice and clustered as they look very very similar.  
