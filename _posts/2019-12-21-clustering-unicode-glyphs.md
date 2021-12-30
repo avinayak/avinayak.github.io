@@ -32,7 +32,7 @@ Now, I regenerated the dataset with the missing file indices removed. Also, we'r
 
 Adapting the clustering algorithm to use my dataset was easy. I did have issues trying to run this on a GPU though. CPU took only around 5 minutes. I added code to plot the values to an image file with the unifont text using PIL with coordinates from the latent space and I obtained this super high res image.
 
-![](/uploads/chart2.png)
+![](/uploads/chart3.png)
 
 This is beautiful. As expected, The biggest cluster is CJK + Hangul characters. I decided to build a better visualizer to highlight different Unicode ranges using d3js.
 
