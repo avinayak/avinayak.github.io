@@ -20,7 +20,7 @@ The problem though was missing glyphs.
 
 ![](/uploads/screenshot-from-2021-12-30-20-37-55.png)
 
-I found that a huge portion of unifont was tofu (White squares with hexadecimal codepoint). We have to de-tofu this dataset.
+I found that a huge portion of unifont was tofu (Black squares with hexadecimal codepoint in this case). We have to de-tofu this dataset.
 
 I could've done some cool pattern matching filtering or manually figuring out the tofu from unifont documentation, but I I decided to export each 28x28 pixel glyph image to files and delete the tofu manually.
 
