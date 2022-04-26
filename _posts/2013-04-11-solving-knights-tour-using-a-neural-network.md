@@ -1,6 +1,6 @@
 ---
-title: Solving Knights Tour using a Neural Network
-date: 2013-04-11T00:00:00.000+00:00
+title: Solving Knights Tour using a Neural Network [DRAFT]
+date: 2022-04-01 00:00:00 +0000
 categories:
 - programming
 - algorithm
