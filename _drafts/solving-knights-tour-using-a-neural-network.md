@@ -7,4 +7,4 @@ categories:
 layout: post
 
 ---
-Recently came across this post by Dimitry Brant: ["Knight’s Tours Using a Neural Network"](https://dmitrybrant.com/knights-tour)
+Recently came across this post by Dimitry Brant: [Knight’s Tours Using a Neural Network](https://dmitrybrant.com/knights-tour). A properly vectorized numpy reimplementation is long overdue, so I decided to give it a shot.  
