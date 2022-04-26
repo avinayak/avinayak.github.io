@@ -7,6 +7,9 @@ categories:
 layout: post
 
 ---
+<video loop autoplay muted> <source src="https://avinayak.github.io/uploads/tour.mp4" type="video/webm" /> </video>
+
+
 Recently came across this post by Dimitry Brant: [Knight’s Tours Using a Neural Network](https://dmitrybrant.com/knights-tour). A properly vectorized numpy re-implementation is long overdue, so I decided to give it a shot.  
 
 A **knight's tour** is a sequence of moves of a [knight](https://en.wikipedia.org/wiki/Knight_(chess) "Knight (chess)") on a [chessboard](https://en.wikipedia.org/wiki/Chessboard "Chessboard") such that the knight visits every square exactly once. There are at-least 4 ways to solve this: Backtracking, Divide an Conquer, Warnsdorff's Heuristic and what most interesting of all, using a Neural Network. 
@@ -114,4 +117,3 @@ This is neither the most efficient nor practical algorithm to solve this problem
     if __name__ == "__main__":
         print("running knights tour NN..")
         print(knights_tour(8, 8))
-    
