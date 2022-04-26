@@ -116,6 +116,5 @@ This is neither the most efficient nor practical algorithm to solve this problem
     if __name__ == "__main__":
         print("running knights tour NN..")
         print(list(knights_tour(8, 8).flatten()))
-    
 
 ![](/uploads/80.png)
