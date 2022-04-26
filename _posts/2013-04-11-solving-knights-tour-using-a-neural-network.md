@@ -31,8 +31,6 @@ This is neither the most efficient nor practical algorithm to solve this problem
       1. If so, Check if a Hamiltonian Tour exists. If yes, we have a solution.
    6. If No solution has been found after an arbitrary number of attempts, try with new initial conditions. 
 
-## Code
-
     import numpy as np
     import itertools
     
