@@ -107,12 +107,11 @@ This is neither the most efficient nor practical algorithm to solve this problem
     
                 if is_2_degree(Vt, N):
                     tour_found, tour = hamiltonian_cycle(N, Vt, width, height)
-                    if tour_found > 0:
-                        print(tour)
-                        return
+                    if tour_found:
+                        return tour
     
     
     if __name__ == "__main__":
         print("running knights tour NN..")
-        knights_tour(16, 16)
+        print(knights_tour(8, 8))
     
