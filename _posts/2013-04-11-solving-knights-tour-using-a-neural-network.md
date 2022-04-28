@@ -1,5 +1,5 @@
 ---
-title: Solving Knights Tour using a Neural Network [DRAFT]
+title: Solving Knights Tour using a Neural Network
 date: 2022-04-01 00:00:00 +0000
 categories:
 - programming
@@ -19,9 +19,9 @@ This is neither the most efficient nor practical algorithm to solve this problem
 
 ## Algorithm
 
-1. Setup a Knight's Graph, A graph of all possible paths on a given chessboard. We represent this using a np array of shape (4, N). The 4 numbers representing a Neuron's links <x0, y0, x1, y1>.
-2. Initialize Vt, a vector the size of all the vertices of Knight's Graph, initialized randomly with 0/1. This vector is the Neural Network's state. Each element in Vt represents one Neuron.
-3. Initialize Ut, a zeros vector the size of all the vertices of Knight's Graph.
+1. Setup a Knight's Graph, A graph of all possible paths on a given chessboard. We represent this using a np array of shape (4, N). The 4 columns representing a Neuron's links in the chess board<x0, y0, x1, y1>. N being the number of neurons. For an 8x8 chessboard N = 168.
+2. Initialize Vt, a vector of size N, initialized randomly with 0/1. This vector is the Neural Network's state. Each element in Vt represents one Neuron.
+3. Initialize Ut, a zeros vector of size N.
 4. Repeat following
    1. Ut_1 = Ut + 3 - sum(Vt of Corresponding Neighboring Neurons) - Vt
    2. Set Vt = 0 in indexes where Ut_1 < 0
