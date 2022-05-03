@@ -14,9 +14,9 @@ Most GameBoy(classic) emulators tend to use the boring grayscale palette with no
 
 ![](/uploads/screenshot-from-2022-05-03-20-56-07.png)
 
-This, when they could look like
+when they could look like..
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">SD Hiryuu no Ken Gaiden<br>by Culture Brain(1995) for GameBoy<a href="https://twitter.com/hashtag/pixelart?src=hash&ref_src=twsrc%5Etfw">#pixelart</a> <a href="https://twitter.com/hashtag/gameboy?src=hash&ref_src=twsrc%5Etfw">#gameboy</a> <a href="https://t.co/18PkLWsyXQ">pic.twitter.com/18PkLWsyXQ</a></p>— Pixel Snips (@pixelsnips) <a href="https://twitter.com/pixelsnips/status/1298047083874639872?ref_src=twsrc%5Etfw">August 24, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<video loop="" autoplay="" muted=""> <source src="https://video.twimg.com/ext_tw_video/1298047067340673024/pu/vid/800x720/TzN9E11-NUJsJqpW.mp4" type="video/webm"> </video>
 
 By the way.. that was from a discontinued bot experiment (ie. rip youtube gameboy gameplay videos, upscale it and apply random palette) I ran in 2020.
 
@@ -36,4 +36,4 @@ Width and height are same as that of number of pixels in a gameboy (160 x 144). 
 
 ## CSS Shaders?
 
-I knew that you could apply pixel level transformations 
+I knew that you could apply pixel level transformations using css `filters`. For example `filter: hue-rotate(90deg);`. You could apply this filter to almost anything, even a  I knew for a fact that this is internally just a simple fragment shader. Can you 
