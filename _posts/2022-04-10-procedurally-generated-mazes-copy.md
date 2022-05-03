@@ -14,6 +14,8 @@ Most GameBoy(classic) emulators tend to use the boring grayscale palette with no
 
 ![](/uploads/screenshot-from-2022-05-03-20-56-07.png)
 
+<video loop="" autoplay="" muted=""> <source src="https://video.twimg.com/ext_tw_video/1297925940022931457/pu/vid/800x720/WrOfp_Ri6QvMC4jP.mp4?tag" type="video/webm"> </video>
+
 when they could look like..
 
 <video loop="" autoplay="" muted=""> <source src="https://video.twimg.com/ext_tw_video/1298047067340673024/pu/vid/800x720/TzN9E11-NUJsJqpW.mp4" type="video/webm"> </video>
