@@ -10,9 +10,7 @@ layout: post
 ---
 ## The problem
 
-Most GameBoy(classic) emulators tend to use the boring grayscale palette with no possibility of even having the option to choose a different set of colors. ie. They all look like this
-
-![](/uploads/screenshot-from-2022-05-03-20-56-07.png)
+Most GameBoy(classic) emulators tend to use the boring grayscale palette with no possibility of even having the option to choose a different set of colors. ie. They all look like this..
 
 <video loop="" autoplay="" muted=""> <source src="https://video.twimg.com/ext_tw_video/1297925940022931457/pu/vid/800x720/WrOfp_Ri6QvMC4jP.mp4?tag" type="video/webm"> </video>
 
