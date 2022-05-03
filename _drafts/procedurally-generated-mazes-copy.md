@@ -1,49 +1,20 @@
 ---
-title: Procedurally Generated Mazes-(copy)
-date: 2013-04-11T00:00:00.000+00:00
+title: Fast Palette overlay for WasmBoy using feColorMatrix
+date: 2022-04-10 00:00:00 +0000
 categories:
 - programming
 - design
+- math
 layout: post
 
 ---
-Maze Generation started out as an experiment.
+The problem: Most Gameboy(classic) emulators tend to use the Grayscale palette with no possibility of even having the option to choose a different set of colors. ie. They all look like 
 
-I was fascinated by maze generation algorithms. I used a randomized version of [Kruskal’s algorithm](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_Kruskal's_algorithm). 
+![](/uploads/screenshot-from-2022-05-03-20-56-07.png)
 
+This, when they could look like
 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">SD Hiryuu no Ken Gaiden<br>by Culture Brain(1995) for GameBoy<a href="https://twitter.com/hashtag/pixelart?src=hash&amp;ref_src=twsrc%5Etfw">#pixelart</a> <a href="https://twitter.com/hashtag/gameboy?src=hash&amp;ref_src=twsrc%5Etfw">#gameboy</a> <a href="https://t.co/18PkLWsyXQ">pic.twitter.com/18PkLWsyXQ</a></p>&mdash; Pixel Snips (@pixelsnips) <a href="https://twitter.com/pixelsnips/status/1298047083874639872?ref_src=twsrc%5Etfw">August 24, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+By the way.. that was from a discontinued bot experiment(ie. rip youtube gameboy gameplay videos, upscale it and apply random palette) I ran in 2020.
 
-
-{% highlight txt %}
-
-Create a list of all walls, and create a set for each cell, 
-each containing just that one cell.
-
-For each wall, in some random order:
-    If the cells divided by this wall belong to distinct sets:
-        Remove the current wall.
-        Join the sets of the formerly divided cells.
-{% endhighlight %}
-
-I tried to do it in python in the begining, and later in C (for practice). The algorithm scaled really well, and I used it to generate huuge mazes of ~5GB with a single path between points.
-
-The project took about a week to complete. Later on, the algorithm was used to design a real physical maze game in college.
-
-![My helpful screenshot](/assets/images/maze1.png)
-
-The UI was witten in C using the excellent GTK Libraries, and Clutter for Vector graphics.
-
-A few days later, I explored the Dead end filling algorithm to solve any randomly generated maze.
-
-![My helpful screenshot](/assets/images/maze2.png)
-
-Now, at this point, I thought it’d be cool if i could turn it into a game :). so…
-
-![My helpful screenshot](/assets/images/maze3.png)
-
-The human player is blue and a Computer player is red. The aim of the game is to get to the ohter diagonal end first. I had to adjust the velocity of the computer palyer so that it’s nearly impossible to beat the machine, unless you time your keystrokes accurately and not make **any** mistakes.
-
-Here is a youtube video (mute to avoid the horrible background music) of the path the Machine takes to solve. *This is not how dead end filling works* . The maze is already solved. I’m just animating the solution path.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/AkNWvK6vhzk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
