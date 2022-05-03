@@ -48,3 +48,6 @@ I started to research more on libraries like https://github.com/PixelsCommander/
 ```css
 filter: url("../../media/examples/shadow.svg#element-id");
 ```
+
+Quick experimentation showed me this
+
