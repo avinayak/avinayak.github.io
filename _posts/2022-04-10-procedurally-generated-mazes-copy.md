@@ -37,3 +37,6 @@ Width and height are same as that of number of pixels in a gameboy (160 x 144). 
 I knew that you could apply pixel level transformations using css `filters`. For example `filter: hue-rotate(90deg);`. You could apply this filter to almost anything, even a  I knew for a fact that this is internally just a simple fragment shader. Can you add your own custom shaders? Googling around game be this: https://developer.chrome.com/blog/introduction-to-custom-filters-aka-css-shaders/. I got excited only to be let down few minutes later..
 
 ![](/uploads/screenshot-from-2022-05-03-21-38-14.png)
+
+## SVG Shaders
+
