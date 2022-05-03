@@ -18,7 +18,7 @@ when they could look like..
 
 <video loop="" autoplay="" muted=""> <source src="https://video.twimg.com/ext_tw_video/1298047067340673024/pu/vid/800x720/TzN9E11-NUJsJqpW.mp4" type="video/webm"> </video>
 
-Recently, I came across this cool wasm based GameBoy emulator called [WasmBoy](https://github.com/torch2424/wasmboy). It's actually possible to use WasmBoy as a library and create your own emulator front-end (like [https://vaporboy.net/](https://vaporboy.net/ "https://vaporboy.net/")). I wanted to make a cool minimal GameBoy emulator frontend, but with the additional feature of being able to select a palette.
+Recently, I came across this cool wasm based GameBoy emulator called [WasmBoy](https://github.com/torch2424/wasmboy). It's actually possible to use WasmBoy as a library and create your own emulator front-end (like [https://vaporboy.net/](https://vaporboy.net/ "https://vaporboy.net/")). I wanted to make a cool minimal electron/web based GameBoy emulator frontend, but with the additional feature of being able to select a palette.
 
 ## How
 
@@ -37,9 +37,14 @@ Width and height are same as that of number of pixels in a gameboy (160 x 144). 
 I knew that you could apply pixel level transformations using css `filters`. For example `filter: hue-rotate(90deg);`. You could apply this filter to almost anything, even a  I knew for a fact that this is internally just a simple fragment shader. Can you add your own custom shaders? Googling around gave be this: https://developer.chrome.com/blog/introduction-to-custom-filters-aka-css-shaders/. I got excited only to be let down few minutes later..
 
 ![](/uploads/screenshot-from-2022-05-03-21-38-14.png)
+<caption>Doh!</caption>
 
 Bummer :/
 
 ## SVG Filters
 
-I came across SVG Filters while researching how to apply shaders to a div element. Libraries like  https://github.com/PixelsCommander/HTML-GL do this really well. 
+I started to research more on libraries like https://github.com/PixelsCommander/HTML-GL, to apply a shader to any given DOM element. I saw svg filters on the way, but discarded them thinking they could never be applied to canvas elements, or that they would have any other filters than the ones css offered. I was wrong. SVG filters were more powerful tools and they could be referenced from css like
+
+```css
+filter: url("../../media/examples/shadow.svg#element-id");
+```
