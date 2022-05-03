@@ -18,3 +18,4 @@ This, when they could look like
 
 By the way.. that was from a discontinued bot experiment(ie. rip youtube gameboy gameplay videos, upscale it and apply random palette) I ran in 2020.
 
+Recently, I came across this cool wasm based gameboy emulator called [WasmBoy](https://github.com/torch2424/wasmboy). 
