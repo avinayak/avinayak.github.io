@@ -49,5 +49,8 @@ I started to research more on libraries like https://github.com/PixelsCommander/
 filter: url("../../media/examples/shadow.svg#element-id");
 ```
 
-Quick experimentation showed me this
+Quick experimentation showed game me this..
 
+![](/uploads/screenshot-from-2022-05-01-00-45-23.png)
+
+While it may look terrible, this is the result of applying a random feColorMatrix on the grayscale canvas from WasmBoy. The question now is, how do I map each of the grayscale levels to a specific color in a palette? Time to break out python.
