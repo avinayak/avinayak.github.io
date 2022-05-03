@@ -34,4 +34,4 @@ Width and height are same as that of number of pixels in a gameboy (160 x 144). 
 
 ## CSS Shaders?
 
-I knew that you could apply pixel level transformations using css `filters`. For example `filter: hue-rotate(90deg);`. You could apply this filter to almost anything, even a  I knew for a fact that this is internally just a simple fragment shader. Can you 
+I knew that you could apply pixel level transformations using css `filters`. For example `filter: hue-rotate(90deg);`. You could apply this filter to almost anything, even a  I knew for a fact that this is internally just a simple fragment shader. Can you add your own custom shaders? 
