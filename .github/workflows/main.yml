@@ -17,3 +17,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         GH_PAGES_CNAME: "a.tulv.in"
+        PELICAN_CONTENT_FOLDER: "content"

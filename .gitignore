@@ -1,3 +1,4 @@
 output/
 *.pyc
 __pycache__/
+venv/
