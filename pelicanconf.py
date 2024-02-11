@@ -32,8 +32,8 @@ ABOUT = (
     ("Me", "/me"),
     ("Projects", "/projects"),
     ("Resume", "https://goo.gl/D2GXJ9"),
-    ("Photography/Unsplash", "https://unsplash.com/collections/519921/s'ok-pics"),
-    ("Design Ref Collection", "https://v.tulv.in"),
+    ("Photography", "https://unsplash.com/collections/519921/s'ok-pics"),
+    ("Visual References", "https://v.tulv.in"),
 )
 
 

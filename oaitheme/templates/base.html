@@ -40,7 +40,7 @@
 			<div class="col-md-12">
 				<hr/>
 				<div class="row">
-					<div class="col-md-3">
+					<div class="col-md-3  col-xs-6">
 						<h4><b>Navigation</b></h4>
 						<ul class="list-unstyled my-list-style">
 							<li><a href="/">{{ SITENAME }}</a></li>
@@ -55,7 +55,7 @@
 							<li><a href="{{ SITEURL }}/feeds/rss.xml"><i class="fa fa-rss "></i> rss</a></li>
 						</ul>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3  col-xs-6">
 						<h4><b>Categories</b></h4>
 						<ul class="list-unstyled my-list-style">
 							{% for cat, art in categories %}
@@ -65,7 +65,7 @@
 							{% endfor %}
 						</ul>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3  col-xs-6">
 						<h4><b>About</b></h4>
 						<ul class="list-unstyled my-list-style">
 						{% for name, link in ABOUT %}
@@ -75,7 +75,7 @@
 					</div>
 					
 				{% if LINKS %}
-					<div class="col-md-3">
+					<div class="col-md-3 col-xs-6">
 						<h4><b>Socials</b></h4>
 						<ul class="list-unstyled my-list-style">
 						{% for name, link in LINKS %}
