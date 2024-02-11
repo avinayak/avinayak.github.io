@@ -44,6 +44,8 @@
 						<h4><b>Navigation</b></h4>
 						<ul class="list-unstyled my-list-style">
 							<li><a href="/">{{ SITENAME }}</a></li>
+							<li><a href="/me">About Me</a></li>
+							<li><a href="/projects">Projects</a></li>
 							{% for icon, title, link in MENUITEMS %}
 							<li><a href="{{ SITEURL }}/{{ link }}"><i class="fa fa-{{ icon }} "></i> {{title}}</a></li>
 							{% endfor %}
@@ -66,7 +68,7 @@
 						</ul>
 					</div>
 					<div class="col-md-3  col-xs-6">
-						<h4><b>About</b></h4>
+						<h4><b>Links</b></h4>
 						<ul class="list-unstyled my-list-style">
 						{% for name, link in ABOUT %}
 							<li><a href="{{ link }}">{{ name }}</a></li>

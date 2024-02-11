@@ -24,16 +24,14 @@ LINKS = (
     ("Instagram", "https://www.instagram.com/avinayak__"),
     ("BlueSky", "https://bsky.app/profile/a.tulv.in"),
     ("Twitter", "https://twitter.com/atulvinayak"),
-    ("Ko-fi", "https://ko-fi.com/atulvinayak")
 )
 
 # Social widget
 ABOUT = (
-    ("Me", "/me"),
-    ("Projects", "/projects"),
     ("Resume", "https://goo.gl/D2GXJ9"),
     ("Photography", "https://unsplash.com/collections/519921/s'ok-pics"),
     ("Visual References", "https://v.tulv.in"),
+    ("Ko-fi", "https://ko-fi.com/atulvinayak"),
 )
 
 
@@ -42,7 +40,7 @@ DEFAULT_PAGINATION = 10
 STATIC_PATHS = ["images"]
 PLUGINS = ["pelican.plugins.render_math"]
 
-MATH_JAX = {'color':'blue','align':'left'}
+MATH_JAX = {"color": "blue", "align": "left"}
 
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True
