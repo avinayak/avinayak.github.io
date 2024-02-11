@@ -1,15 +1,19 @@
-name: Jekyll Deploy
+name: Deploy
 
-on: [push]
+on:
+  # Trigger the workflow on push on main branch,
+  push:
+    branches:
+      - main
 
-jobs: 
-  build_and_deploy:
+jobs:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Build & Deploy to GitHub Pages
-        env: 
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
-          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
-        uses: BryanSchuetz/jekyll-deploy-gh-pages@master
+    - uses: actions/checkout@v2
+      with: 
+        submodules: 'true'
+    - uses: rehanhaider/pelican-to-github-pages@v1.0.3
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GH_PAGES_CNAME: "a.tulv.in"
