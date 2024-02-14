@@ -62,7 +62,7 @@
 						<ul class="list-unstyled my-list-style">
 							{% for cat, art in categories %}
 							{% if cat != "me" %}
-							<li><a href="{{SITEURL}}/category/{{cat | replace(" ", "-") }}.html">{{cat}} ({{art | count}})</a></li>
+							<li><a href="{{SITEURL}}/category/{{cat | replace(" ", "-") | lower }}.html">{{cat}} ({{art | count}})</a></li>
 							{% endif %}
 							{% endfor %}
 						</ul>

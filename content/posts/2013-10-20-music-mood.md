@@ -18,10 +18,3 @@ The screenshot below is my webapp for training the algorithm. Kind of like a *cr
 
 Anyone can go to the page, and click the play button and play a song(randomly) and guess the song’s mood. The Webapp written in flask, saved all this information to an sqlite table in my laptop. I placed this in our college’s network for everyone to consume, and at the end of the day I had \~15% of my music collection of 4400 songs “moodated”. Hopefully, I’ll train the algorithm completely in a few weeks time.
 
-## Edit
-
-This project failed miserably :(
-
-I underestimated the kind of effort & feature extraction involved in music. Most songs won’t have a single mood throughout. The next step after getting the songs tagged with mood information is to extract \~ 60 parameters for individual tracks, such as pitch, frequency, timber etc. and train the SVM with this.
-
-Unfortunately, the model never converged well, and I got sidetracked by other projects.
