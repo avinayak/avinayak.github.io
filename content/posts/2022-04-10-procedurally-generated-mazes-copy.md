@@ -21,7 +21,7 @@ Recently, I came across this cool wasm based GameBoy emulator called [WasmBoy](h
 
 I started out by poking internals of WasmBoy. Right now, the GB image buffer is mapped to a js `Uint8ClampedArray` called `imageDataArray` and
 
-```js
+```javascript
 this.canvasImageData.data.set(this.imageDataArray);
 this.canvasContext.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 this.canvasContext.putImageData(this.canvasImageData, 0, 0);
