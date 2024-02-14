@@ -35,7 +35,7 @@ ABOUT = (
 )
 
 
-DEFAULT_PAGINATION = 10000
+DEFAULT_PAGINATION = 15
 
 STATIC_PATHS = ["media", "admin"]
 
