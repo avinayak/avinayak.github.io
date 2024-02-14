@@ -4,7 +4,7 @@ date: 2021-01-09T03:00:00.000+00:00
 category: Art
 tags: programming, algorithm, art, p5js
 ---
-![](/images/erporydxmaarwcd.png)
+![](/media/erporydxmaarwcd.png)
 <cap>Thank you Tyler Hobbs for the inspiration</cap>
 
 I recently found this piece of art (LINES 2A (2017)) created by [Tyler Hobbs](https://twitter.com/tylerxhobbs). This picture kinda looked very hand drawn, but it's completely generative. Something about this drawing and it's texture kind of resonated with me, so I wanted to try to study and replicate (or make something inspired by this work) using p5js.
@@ -25,7 +25,7 @@ I started out by plotting a bunch of random points within a circle like so.
       }
     }
 
-![](/images/download-25.png)
+![](/media/download-25.png)
 
 This is a painfully slow process to generate random points in a circle. I found a better way to do this later. What I wanted to do next was to generate flow fields, but restricted to the circular region.
 
@@ -52,7 +52,7 @@ We're going to plot flow fields inside the circle. Let's try this.
         }
     }
 
-![](/images/download-28.png)
+![](/media/download-28.png)
 
 OK, not very good. The noise at this level is pretty rough. we're going to zoom in to the noise function (by dividing the `x,y` inputs by some constant value) and probably use `circle(x ,y ,0.3)` to plot points instead if point function, because I feel it looks way smoother. Also, I'm adding a `random() > 0.01` condition in the loop so that we also get short lines that are not trimmed away by the edge of the circle.
 
@@ -66,13 +66,13 @@ OK, not very good. The noise at this level is pretty rough. we're going to zoom 
         }
     }
 
-![](/images/download-27.png)
+![](/media/download-27.png)
 
 Actually.. not bad. I think we manage almost replicate the original texture. The inverted version also looks pretty good.
 
-![](/images/download-19.png)
+![](/media/download-19.png)
 
-![](/images/ppanets.png)
+![](/media/ppanets.png)
 
 I went ahead and made a つぶやきProcessing version of this.
 
@@ -82,7 +82,7 @@ I went ahead and made a つぶやきProcessing version of this.
 
 The code we wrote right now technically is animated. The animation however is not very smooth.
 
-<video loop autoplay muted> <source src="/images/simplescreenrecorder-2021-01-10_03-52-31.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/media/simplescreenrecorder-2021-01-10_03-52-31.mp4" type="video/mp4" /> </video>
 
 To make smooth animations, we need to generate new points in the circle, keep track of these points outside the `draw()` function. I found this neat [technique](https://stackoverflow.com/a/50746409), to find random points in a circle where a random radius `r` and angle `theta` are chosen and the `x,y` points are obtained as `x = centerX + r * cos(theta)` and `y = centerY + r * sin(theta)`
 
@@ -111,7 +111,7 @@ Let's try that first.
       }
     }
 
-![](/images/screenshot-from-2021-01-10-04-51-20.png)
+![](/media/screenshot-from-2021-01-10-04-51-20.png)
 
 and now we apply flow fields and try to move these points.
 
@@ -145,7 +145,7 @@ and now we apply flow fields and try to move these points.
       }
     }
 
-<video loop autoplay muted> <source src="/images/simplescreenrecorder-2021-01-10_04-56-11.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/media/simplescreenrecorder-2021-01-10_04-56-11.mp4" type="video/mp4" /> </video>
 
 And a つぶやきProcessing version of course..
 
@@ -155,20 +155,20 @@ And a つぶやきProcessing version of course..
 
 There are many strategies to colorizing this sketch. One is by just giving each particle a random initial color.
 
-![](/images/download-21.png)
+![](/media/download-21.png)
 
 However, I found that maintaining the initial x or y position in the particle array and using that to derive the hue information gives us some nice Jupiter/gaseous planet vibes.
 
-<video loop autoplay muted> <source src="/images/simplescreenrecorder-2021-01-10_05-18-19.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/media/simplescreenrecorder-2021-01-10_05-18-19.mp4" type="video/mp4" /> </video>
 
 The fringing at the sides can be avoided by moving 50% of the points in the reverse direction.
 
-<video loop autoplay muted> <source src="/images/simplescreenrecorder-2021-01-10_05-28-03.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/media/simplescreenrecorder-2021-01-10_05-28-03.mp4" type="video/mp4" /> </video>
 
-<video loop autoplay muted> <source src="/images/simplescreenrecorder-2021-01-10_08-43-25.mp4" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/media/simplescreenrecorder-2021-01-10_08-43-25.mp4" type="video/mp4" /> </video>
 
 More color variations
 
-![](/images/untitled.png)
+![](/media/untitled.png)
 
 And that's it. Hope this was educational!

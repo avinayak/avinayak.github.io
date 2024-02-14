@@ -35,9 +35,9 @@ ABOUT = (
 )
 
 
-DEFAULT_PAGINATION = 10
+DEFAULT_PAGINATION = 10000
 
-STATIC_PATHS = ["images"]
+STATIC_PATHS = ["media"]
 PLUGINS = ["pelican.plugins.render_math"]
 
 MATH_JAX = {"color": "blue", "align": "left"}

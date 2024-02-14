@@ -5,7 +5,7 @@ category: Programming
 tags: programming, algorithm, research, art
 subtitle: with JAX
 ---
-<video loop autoplay muted> <source src="/images/lisa.webm" type="video/webm" /> </video>
+<video loop autoplay muted> <source src="/media/lisa.webm" type="video/webm" /> </video>
 
 <cap>This video might take a few seconds to load. Please squint for best results :).</cap>
 
@@ -67,7 +67,7 @@ Hill Climbing works by finding the closest neighboring state to a current state 
 
 After a few days of CPU time(!), I was able to obtain something that resembled Mona Lisa after running 4 generations of life.
 
-<video loop autoplay muted> <source src="/images/lisa_cpu.webm" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/media/lisa_cpu.webm" type="video/mp4" /> </video>
 
 It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable for larger images or fast.
 
@@ -75,7 +75,7 @@ It was reassuring that my algorithm did indeed work, but I realize I made a bunc
 
 Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia and converted to monochrome using PIL's `Image.open('target.png').convert('L')`
 
-![](/images/screenshot-from-2021-02-23-18-38-08-copy.png)
+![](/media/screenshot-from-2021-02-23-18-38-08-copy.png)
 
 <cap><a href="https://en.wikipedia.org/wiki/Mona_Lisa#/media/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg">Taken from wikipedia</a></cap>
 
@@ -83,7 +83,7 @@ When you're comparing against boolean variables, It's better that we the target 
 
 In this attempt, I simply rounded these grayscale values to 0s and 1s. This was a mistake as it washed away a lot of details.
 
-![](/images/screenshot-from-2021-02-23-18-39-11.png)
+![](/media/screenshot-from-2021-02-23-18-39-11.png)
 
 We could just not round at all and compare against the grayscale version, but there is a better way.
 
@@ -93,11 +93,11 @@ Not every random matrix of 0s and 1s are a valid Game of Life state. States that
 
 This is a portion of the 4th generation of the state we just prepared.
 
-![](/images/screenshot-from-2021-02-23-19-08-47.png)
+![](/media/screenshot-from-2021-02-23-19-08-47.png)
 
 Judging by the texture, the way life patterns evolve and from just experimenting with images, I found that comparing against a 1-bit dithered version the target should improve the quality of results.
 
-![](/images/screenshot-from-2021-02-23-19-04-26.png)
+![](/media/screenshot-from-2021-02-23-19-04-26.png)
 
 <cap>1-bit Dithering on Mona Lisa</cap>
 
@@ -105,7 +105,7 @@ Dithered image has a somewhat even distribution of 0 and 1 cells which is somewh
 
 We could do this using PIL (it's [Floyd–Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering)) using `Image.open('target.png').convert('1')`
 
-![](/images/screenshot-from-2021-02-23-18-54-34.png)
+![](/media/screenshot-from-2021-02-23-18-54-34.png)
 
 Also you can see from the last result, it's impossible to get a continuous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. The end result will be a higher contrast, but slightly darkened version of Mona Lisa. At higher resolutions, this effect is not as apparent.
 
@@ -115,7 +115,7 @@ The single core unvectorized version is extremely slow. I tried running this in 
 
 Fortunately, This problem is well suited for parallelization.
 
-![](https://raw.githubusercontent.com/google/jax/master/images/jax_logo_250px.png)
+![](https://raw.githubusercontent.com/google/jax/master/media/jax_logo_250px.png)
 
 JAX is a python library that lets you use a version of numpy and compile it to highly vectorized code that can be run on a GPU/TPU. We need to rework this algorithm for a GPU.
 
@@ -123,14 +123,14 @@ GPUs generally suited to high-throughput type computations that has good data-pa
 
 We extrude the `target`(Mona Lisa) and `canvas`(initial random state) to 3rd dimension with 3rd dimension being `batch_size` long tensor loafs.
 
-![](/images/untssitled-copy.png)
+![](/media/untssitled-copy.png)
 <cap>Initial canvas will be completely random(unlike the figure).</cap>
 
 We set `best_canvas` to the initial random canvas before our hill climbing loop.
 
 Also, for every loop iteration, we need to produce a random tensor called mutator(same shape as `target`) with this property: Each slice should have all zeros except a single one place at a random location.
 
-![](/images/untssitled-3rd-copy.png)
+![](/media/untssitled-3rd-copy.png)
 
 Something like
 
@@ -295,33 +295,33 @@ After a finite number of iterations, we'd obtain a Game of Life state that revea
 
 Running \~1000 iterations for a 483px wide Mona Lisa on the google colab GPU runtime only takes around 40 seconds!. Compared to the CPU version which takes several hours to do the same for a smaller image, I think we've achieved our goals.
 
-![](/images/lisa_still.png)
+![](/media/lisa_still.png)
 
 A life state with the highest similarity to the target is achieved after running for \~23000 iterations (10 minutes). After 23K, the gains start to diminish greatly and doesn't seem to   improve much, even if you run for 100K iterations.
 
 Also, Images targetted at lower generations tend to have better fit as expected.
 
-<video loop autoplay muted> <source src="/images/lisa.webm" type="video/webm" /> </video>
+<video loop autoplay muted> <source src="/media/lisa.webm" type="video/webm" /> </video>
 
 <cap>Mona Lisa, 10 generations</cap>
 
-<video loop autoplay muted> <source src="/images/check.webm" type="video/webm" /> </video>
+<video loop autoplay muted> <source src="/media/check.webm" type="video/webm" /> </video>
 
 <cap>Checkerboard Test Pattern, 7 generations</cap>
 
-<video loop autoplay muted> <source src="/images/test2.webm" type="video/webm" /> </video>
+<video loop autoplay muted> <source src="/media/test2.webm" type="video/webm" /> </video>
 
 <cap>Text Test Pattern, 5 generations</cap>
 
-<video loop autoplay muted> <source src="/images/david.webm" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/media/david.webm" type="video/mp4" /> </video>
 
 <cap>David by Michelangelo, 3 generations</cap>
 
-<video loop autoplay muted> <source src="/images/moon.webm" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/media/moon.webm" type="video/mp4" /> </video>
 
 <cap>Moon, 7 generations (https://unsplash.com/photos/pd4lo70LdbI)</cap>
 
-<video loop autoplay muted> <source src="/images/neil.webm" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/media/neil.webm" type="video/mp4" /> </video>
 
 <cap>Neil Armstrong, 7 generations</cap>
 
@@ -331,7 +331,7 @@ I was really looking for an excuse to dive into JAX that doesn't necessarily inv
 
 Thank you Kevin Galligan for the original idea and Bojan Nikolic for the Game of Life snippet.
 
-<video loop autoplay muted> <source src="/images/conway.webm" type="video/mp4" /> </video>
+<video loop autoplay muted> <source src="/media/conway.webm" type="video/mp4" /> </video>
 
 <cap>John Horton Conway FRS (26 December 1937 – 11 April 2020) RIP</cap>
 

@@ -12,7 +12,7 @@ Hi! I’m Atul Vinayak, a programmer based around Vancouver, Canada.
 I Started working as a programmer from 2015. Mostly a python programmer, but also knows Java, C, C#, JavaScript etc.
 Started learning on Scala and Elixir from 2019. First programming language was ActionScript! I wanted to be a flash game dev when I was really young. 
 
-![me](/images/me2.jpg)
+![me](/media/me2.jpg)
 
 I have a bachelor’s degree in Computer Science and Engineering from University of Kerala. 
 

@@ -1,0 +1,21 @@
+{
+  "name": "avinayak.github.io",
+  "version": "1.0.0",
+  "description": "Powered by pelican 🪽",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tinacms dev -c \"pelican -r -l\"",
+    "build": "tinacms build && pelican content -s publishconf.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tinacms": "^1.5.28"
+  },
+  "devDependencies": {
+    "@tinacms/cli": "^1.5.39",
+    "@types/node": "^20.11.17"
+  }
+}

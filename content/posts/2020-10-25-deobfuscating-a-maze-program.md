@@ -22,7 +22,7 @@ The interesting part is..
 * It can generate mazes of any height.
 * The word MAZE is spelled with white-spaces if you look carefully. Here's it highlighted
 
-  ![](/images/screenshot-from-2020-10-26-21-26-24.png)
+  ![](/media/screenshot-from-2020-10-26-21-26-24.png)
 
 Also, as the wiki points out, ANSI-compliant C compilers don't allow constant strings to be overwritten, which can be avoided by changing "*M" to "M\[3\]" and omitting "M=". I did this and tried to compile + run it, and sure enough,
 

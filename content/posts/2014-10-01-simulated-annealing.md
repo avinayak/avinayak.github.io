@@ -7,23 +7,23 @@ subtitle: What is the best way to draw a graph?
 ---
 Humans have an intuitive sense of symmetry and aesthetics. We try our best to make it easy to understand the concept we’re trying to explain.
 
-![](/images/unnamed-1.png)
+![](/media/unnamed-1.png)
 
 In textbooks, we see images like the one above, and not like this one..
 
-![-](/images/polbooks_fr.png)
+![-](/media/polbooks_fr.png)
 
 I’m having labs in college where I have to implement various algorithms on graphs. The first step, however, was to draw one. The Random approach was the easiest. Randomly plot N Nodes anywhere in the screen, and connect them. If you’re lucky, your graph might look good. Mostly they didn’t.
 
 There were people who tried this interesting approach: Given, N Nodes, arrange them in a Circle: with ‘360/N’ angular separation. Given the center, angle & radius can be easily converted to X, Y using basic trigonometry.
 
-![-](/images/circular.jpg)
+![-](/media/circular.jpg)
 
 This was good. But we could do better. I searched for the best way to do this, and ended up reading [this](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.20.5663) paper.
 
 Anyway, The paper promised to take graphs from (a) to (b) using a method called [Simulated Annealing](https://en.wikipedia.org/wiki/Simulated_annealing).
 
-![-](/images/sample.png)
+![-](/media/sample.png)
 
 The paper defines the characteristics of a good drawing such as Evenly distributed nodes, edges having approximately the same lengths, minimal edge crossing, and Symmetry. Oh, and fitting snugly inside the window you’re drawing.
 

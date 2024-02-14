@@ -38,7 +38,7 @@ But I knew it looks much more satisfying if I did something similar to this (I w
 
 Also, I(Me being the idiot that I am), didn’t know the existence of the HSV/HSL functions, which would’ve made my life much easier. Instead, I had to implement this.
 
-![My helpful screenshot](/images/hsv.png)
+![My helpful screenshot](/media/hsv.png)
 
 With HSV(), I smoothly mapped the X locations of blocks with an H value, keeping S and V fixed.
 
