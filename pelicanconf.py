@@ -38,6 +38,13 @@ ABOUT = (
 DEFAULT_PAGINATION = 10000
 
 STATIC_PATHS = ["media", "admin"]
+
+READERS = {'html': None}
+
+EXTRA_PATH_METADATA = {
+    "admin/index.html": {"path": "admin/index.html"},
+}
+
 PLUGINS = ["pelican.plugins.render_math"]
 
 MATH_JAX = {"color": "blue", "align": "left"}
