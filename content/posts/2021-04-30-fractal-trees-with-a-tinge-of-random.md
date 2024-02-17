@@ -6,9 +6,11 @@ category: Programming
 tags: fractals;p5js
 ---
 
-![](/media/atul-vinayak-aU2Xvdhh-mQ-unsplash\(1\).jpg)I was trying to generate [Pythagoras Tree fractal](https://en.wikipedia.org/wiki/Pythagoras_tree_\(fractal\)) in p5js, when I decide to see what would happen If I add `random()` in the branch angle code. It turns out that with high amount of branching, this can give some cool photorealsitic dandelionesque flower images.
+![](/media/atul-vinayak-aU2Xvdhh-mQ-unsplash\(1\).jpg)I was trying to generate [Pythagoras Tree fractal](https://en.wikipedia.org/wiki/Pythagoras_tree_\(fractal\)) in p5js, when I decide to see what would happen If I add `random()` in the branch angle code. It turns out that with high amount of branching. They look pretty close to a grayscale photograph of Baby’s Breath Flowers (yup thats what they are called).
 
-It started out really tame like this. These are really just circles with constant radii.
+![](/media/gypsophila-exlence-2-3722592189.jpg)
+
+It started out really simple like this. These are really just circles with constant radii.
 
 ![](/media/EysQW6KUUAA9Km_.png)
 

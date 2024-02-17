@@ -7,4 +7,10 @@ Template: me
 
 # Projects
 
-Minim!
+---
+
+## Minim
+
+A very minimal, elegant new-tab page for chromium browsers. [Get it here for chrome](https://chromewebstore.google.com/detail/minim/kpblgdhkligkbbnbpkigppblggflihgn). Coming soon to firefox.
+
+![](/media/minim.png)

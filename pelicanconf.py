@@ -28,7 +28,7 @@ LINKS = (
 
 # Social widget
 ABOUT = (
-    ("Resume", "https://goo.gl/D2GXJ9"),
+    ("My Resume", "https://goo.gl/D2GXJ9"),
     ("Photography", "https://unsplash.com/collections/519921/s'ok-pics"),
     ("Visual References", "https://v.tulv.in"),
     ("Ko-fi", "https://ko-fi.com/atulvinayak"),
