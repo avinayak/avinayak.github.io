@@ -5,10 +5,10 @@
 <table class="table no-top-table">
     <tbody>
     {% for article in articles_page.object_list %}        
-        {% if article.template == 'article' and not article.draft %}
+        {% if article.template == 'article' %}
         <tr>
         <td>{{ article.date.strftime("%d %b %Y") }}</td>
-        <td><a href='{{ SITEURL }}/{{ article.url }}'>{{ article.title }}</a></td>
+        <td><a href='{{ SITEURL }}/{{ article.url }}'>{{ article.title.strip("'") }}</a></td>
         </tr>
         {% endif %}
     {% endfor %}

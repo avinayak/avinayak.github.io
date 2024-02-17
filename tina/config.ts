@@ -42,6 +42,11 @@ export default defineConfig({
             required: true,
           },
           {
+            type: "string",
+            name: "subtitle",
+            label: "Subtitle",
+          },
+          {
             type: "datetime",
             name: "date",
             label: "Date",
@@ -58,6 +63,13 @@ export default defineConfig({
             name: "tags",
             label: "Tags",
             required: true,
+          },
+          {
+            type: "string",
+            name: "status",
+            label: "Status",
+            required: true,
+            options: ["published", "draft" , "hidden"],
           },
           {
             type: "rich-text",
