@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>a.tulv.in - me</title><link href="https://a.tulv.in/" rel="alternate"></link><link href="https://a.tulv.in/feeds/me.atom.xml" rel="self"></link><id>https://a.tulv.in/</id><updated>2013-12-20T00:00:00+00:00</updated><entry><title>About Me</title><link href="https://a.tulv.in/me" rel="alternate"></link><published>2013-12-20T00:00:00+00:00</published><updated>2013-12-20T00:00:00+00:00</updated><author><name>Atul Vinayak</name></author><id>tag:a.tulv.in,2013-12-20:/me</id><summary type="html">&lt;h1&gt;About Me&lt;/h1&gt;
+&lt;p&gt;Hi! I’m Atul Vinayak, a programmer based around Vancouver, Canada.&lt;/p&gt;
+&lt;p&gt;I Started working as a programmer from 2015. Mostly a python programmer, but also knows Java, C, C#, JavaScript etc.
+Started learning on Scala and Elixir from 2019. First programming language was ActionScript! I wanted to be …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;About Me&lt;/h1&gt;
+&lt;p&gt;Hi! I’m Atul Vinayak, a programmer based around Vancouver, Canada.&lt;/p&gt;
+&lt;p&gt;I Started working as a programmer from 2015. Mostly a python programmer, but also knows Java, C, C#, JavaScript etc.
+Started learning on Scala and Elixir from 2019. First programming language was ActionScript! I wanted to be a flash game dev when I was really young. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="me" src="/media/me2.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;I have a bachelor’s degree in Computer Science and Engineering from University of Kerala. &lt;/p&gt;
+&lt;p&gt;I worked in Japan during the COVID years, where I picked up a hobby of making tiny JS &lt;a href="https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing"&gt;programs that fit in a tweet&lt;/a&gt;. &lt;a href="https://twitter.com/atulvinayak/status/1305116417419653120"&gt;example&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;I moved to Vancouver in December 2022. Currently trying to learn Haskell. I have a lot of side project ideas that I’m trying to work on in the weekends. I’m also learning 3D modelling in Blender. &lt;/p&gt;
+&lt;p&gt;Outside of computers, I love going on hikes. I love &lt;a href="https://unsplash.com/collections/519921/s'ok-pics"&gt;photography&lt;/a&gt;. I take photos on an old analog camera.&lt;/p&gt;</content><category term="me"></category></entry><entry><title>Projects</title><link href="https://a.tulv.in/projects" rel="alternate"></link><published>2013-12-20T00:00:00+00:00</published><updated>2013-12-20T00:00:00+00:00</updated><author><name>Atul Vinayak</name></author><id>tag:a.tulv.in,2013-12-20:/projects</id><content type="html">&lt;h1&gt;Projects&lt;/h1&gt;
+&lt;hr&gt;
+&lt;h2&gt;Minim&lt;/h2&gt;
+&lt;p&gt;A very minimal, elegant new-tab page for chromium browsers. &lt;a href="https://chromewebstore.google.com/detail/minim/kpblgdhkligkbbnbpkigppblggflihgn"&gt;Get it here for chrome&lt;/a&gt;. Coming soon to firefox.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="/media/minim.png"&gt;&lt;/p&gt;</content><category term="me"></category></entry></feed>
