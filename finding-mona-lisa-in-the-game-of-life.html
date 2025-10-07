@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Finding Mona Lisa in the Game of Life — a.tulv.in</title>
+	<meta name="description" content="Title: Finding Mona Lisa in the Game of Life; Date: 2021-02-19; Author: Atul Vinayak">
+	<meta name="author" content="Atul Vinayak">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://a.tulv.in/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://a.tulv.in/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/local.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/pygments.css" rel="stylesheet">
+	<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://a.tulv.in/">a.tulv.in</a>	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+<script>
+  function setup() {
+    var canvas = createCanvas(20, 20);
+    canvas.parent("homePageArtCanvas");
+    noStroke();
+
+    // Random Spaceship Assembly
+    // By Atul Vinayak
+    npix = 5;
+    w = width / npix;
+    for (var y = 0; y < npix; y++) {
+      for (var x = 0; x < npix / 2; x++) {
+        if (random(1) < 0.5) {
+          fill(0);
+          rect(x * w, y * w, w, w);
+          rect((npix - x - 1) * w, y * w, w, w);
+        }
+      }
+    }
+  }
+</script>
+<span id="homePageArtCanvas"></span>			<br>	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="title-card">
+		<div class="category">
+			<a href="https://a.tulv.in/category/programming.html" rel="category">Programming</a>
+		</div>
+	
+		<div class="article-header">
+			<h1 itemprop="name headline" class="article-title">Finding Mona Lisa in the Game of Life</h1>
+		</div>
+		<div class="subtitle">
+			with JAX
+		</div>
+	</div>
+
+	<div class="article-tags">
+	<time datetime="2021-02-19T15:00:00+00:00" itemprop="datePublished">Fri 19 February 2021</time>
+ 
+	<div>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/programming.html" rel="tag">programming</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/algorithm.html" rel="tag">algorithm</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/research.html" rel="tag">research</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/art.html" rel="tag">art</a>
+		</span>
+	</div>
+	</div>
+
+	<div itemprop="articleBody" class="article-body"><video loop autoplay muted> <source src="/media/lisa.webm" type="video/webm" /> </video>
+
+<p><cap>This video might take a few seconds to load. Please squint for best results :).</cap></p>
+<p>The results of this experiment are not exactly close to my target as you can see, but I thought it was worth a blog post anyway. There was this rough idea I've been thinking about in <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a> for a really long time.</p>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">I wonder if it's possible to use some kind of stochastic algorithm that gives you an initial state which forms legible text after many cycles.</p>— yakinavault (@yakinavault) <a href="https://twitter.com/yakinavault/status/1291586306489761792?ref_src=twsrc%5Etfw">August 7, 2020</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>I came across <a href="https://kevingal.com/blog/mona-lisa-gol.html">an article</a> of the same title by Kevin Galligan recently and I thought I could do something similar using a different approach. What if instead of using SAT Solvers, I use some kind of heuristic algorithm that could somehow "program" a large world of Game of Life to display an image after a few generations?</p>
+<p>There are other ways of achieving this. One is by placing still life states at specific pixels as described in this <a href="https://codegolf.stackexchange.com/questions/38573/paint-a-still-life-or-a-moving-one-draw-an-image-in-the-game-of-life">codegolf question</a>.</p>
+<p>What I'm thinking of is to display Mona Lisa for a single frame/generation of 'non-still' Game of Life.</p>
+<h1>Algorithm</h1>
+<p>I began working on a proof of concept using the hill climbing algorithm. The idea was very simple. Iteratively modify a random 2D Game of Life state until it's Nth generation looks similar to Mona Lisa. Here's the full algorithm.</p>
+<div class="highlight"><pre><span></span><code>    best_score := infinity
+    target := mona lisa with dimensions m x n
+    canvas := random matrix of m x n
+    best_result := canvas
+    do
+        modified_canvas := Copy of canvas with a single random cell inverted
+        nth_modified_canvas := Run N generations of Game of Life modified_canvas
+        Compute a score of how close nth_modified_canvas is with target
+        if score &lt; best_score then
+            best_score := score
+            best_result := modified_canvas
+        canvas := best_result
+    while(max_iterations limit passed or best_score &lt; threshold)
+</code></pre></div>
+
+<p>I hacked up a single core prototype.</p>
+<div class="highlight"><pre><span></span><code><span class="n">def</span><span class="w"> </span><span class="k">modify</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span><span class="w"> </span><span class="n">shape</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">shape</span>
+<span class="w">    </span><span class="n">px</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span>
+<span class="w">    </span><span class="n">py</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span>
+<span class="w">    </span><span class="n">canvas</span><span class="o">[</span><span class="n">px</span><span class="o">][</span><span class="n">py</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">canvas</span><span class="o">[</span><span class="n">px</span><span class="o">][</span><span class="n">py</span><span class="o">]</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">canvas</span>
+
+<span class="n">def</span><span class="w"> </span><span class="n">rmse</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span><span class="n">targets</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">((</span><span class="n">predictions</span><span class="o">-</span><span class="n">targets</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="k">while</span><span class="w"> </span><span class="n">best_score</span><span class="o">&gt;</span><span class="k">limit</span><span class="err">:</span>
+<span class="w">    </span><span class="n">canvases</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">best_seed</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<span class="w">    </span><span class="n">rms_errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">canvas</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">canvases</span><span class="p">))</span><span class="err">:</span>
+<span class="w">        </span><span class="n">canvases</span><span class="o">[</span><span class="n">canvas</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">modify</span><span class="p">(</span><span class="n">states</span><span class="o">[</span><span class="n">state</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="w">        </span><span class="n">rmse_val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rmse</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">nth_generation</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">canvases</span><span class="o">[</span><span class="n">canvas</span><span class="o">]</span><span class="p">)))</span>
+<span class="w">        </span><span class="n">rms_errors</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">rmse_val</span><span class="p">)</span>
+<span class="w">    </span><span class="n">lowest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">min</span><span class="p">(</span><span class="n">rms_errors</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">lowest</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nl">best_score</span><span class="p">:</span>
+<span class="w">        </span><span class="n">best_score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lowest</span>
+<span class="w">        </span><span class="n">best_result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">canvases</span><span class="o">[</span><span class="n">rms_errors.index(lowest)</span><span class="o">]</span>
+</code></pre></div>
+
+<p>Hill Climbing works by finding the closest neighboring state to a current state with the least error from a 'target_state' (Mona Lisa). The way I find the closest neighbor in every step is to create a copy of the best solution we have so far and invert a random cell. This change is small enough that we don't risk stepping over any local minima. Also we use root mean square error metric to compare the best state and the target. Other error metrics can be experimented with, but for this problem, I found that RMSE was sufficient.</p>
+<p>After a few days of CPU time(!), I was able to obtain something that resembled Mona Lisa after running 4 generations of life.</p>
+<video loop autoplay muted> <source src="/media/lisa_cpu.webm" type="video/mp4" /> </video>
+
+<p>It was reassuring that my algorithm did indeed work, but I realize I made a bunch of mistakes and of course it's not really scalable for larger images or fast.</p>
+<h1>Preprocessing</h1>
+<p>Target Mona Lisa against which our random state was compared with was the medium resolution version taken from Wikipedia and converted to monochrome using PIL's <code>Image.open('target.png').convert('L')</code></p>
+<p><img alt="" src="/media/screenshot-from-2021-02-23-18-38-08-copy.png"></p>
+<p><cap><a href="https://en.wikipedia.org/wiki/Mona_Lisa#/media/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg">Taken from wikipedia</a></cap></p>
+<p>When you're comparing against boolean variables, It's better that we the target as a binary matrix rather than the whole grayscale range.</p>
+<p>In this attempt, I simply rounded these grayscale values to 0s and 1s. This was a mistake as it washed away a lot of details.</p>
+<p><img alt="" src="/media/screenshot-from-2021-02-23-18-39-11.png"></p>
+<p>We could just not round at all and compare against the grayscale version, but there is a better way.</p>
+<h1>Garden of Eden States</h1>
+<p>Not every random matrix of 0s and 1s are a valid Game of Life state. States that can never be an nth generation (n&gt;0) of any Cellular Automata are called Garden of Edens. It is almost impossible that our monochrome-rounded Mona Lisa is a valid Game of Life generation. We can only hope to have a solution that's approximately close to the target.</p>
+<p>This is a portion of the 4th generation of the state we just prepared.</p>
+<p><img alt="" src="/media/screenshot-from-2021-02-23-19-08-47.png"></p>
+<p>Judging by the texture, the way life patterns evolve and from just experimenting with images, I found that comparing against a 1-bit dithered version the target should improve the quality of results.</p>
+<p><img alt="" src="/media/screenshot-from-2021-02-23-19-04-26.png"></p>
+<p><cap>1-bit Dithering on Mona Lisa</cap></p>
+<p>Dithered image has a somewhat even distribution of 0 and 1 cells which is somewhat close to what a randomly initialized Game of Life state will look like after a few generations. This property is also maintained when you scale up the image, (which we'll optimize for soon).</p>
+<p>We could do this using PIL (it's <a href="https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering">Floyd–Steinberg dithering</a>) using <code>Image.open('target.png').convert('1')</code></p>
+<p><img alt="" src="/media/screenshot-from-2021-02-23-18-54-34.png"></p>
+<p>Also you can see from the last result, it's impossible to get a continuous array of white cells because they will be killed off by the overpopulation rule. Completely dark areas are stable in life. The end result will be a higher contrast, but slightly darkened version of Mona Lisa. At higher resolutions, this effect is not as apparent.</p>
+<h1>Vectorization with JAX</h1>
+<p>The single core unvectorized version is extremely slow. I tried running this in both my 8th gen Core i7 and the Google Colab CPU machines, but you need to wait for hours/days (depending on target resolution) to get something that resembles the original.</p>
+<p>Fortunately, This problem is well suited for parallelization.</p>
+<p><img alt="" src="https://raw.githubusercontent.com/google/jax/master/media/jax_logo_250px.png"></p>
+<p>JAX is a python library that lets you use a version of numpy and compile it to highly vectorized code that can be run on a GPU/TPU. We need to rework this algorithm for a GPU.</p>
+<p>GPUs generally suited to high-throughput type computations that has good data-parallelism. We need to exploit the SIMD (Single Instruction Multiple Data) architecture to gain faster execution speeds.</p>
+<p>We extrude the <code>target</code>(Mona Lisa) and <code>canvas</code>(initial random state) to 3rd dimension with 3rd dimension being <code>batch_size</code> long tensor loafs.</p>
+<p><img alt="" src="/media/untssitled-copy.png">
+<cap>Initial canvas will be completely random(unlike the figure).</cap></p>
+<p>We set <code>best_canvas</code> to the initial random canvas before our hill climbing loop.</p>
+<p>Also, for every loop iteration, we need to produce a random tensor called mutator(same shape as <code>target</code>) with this property: Each slice should have all zeros except a single one place at a random location.</p>
+<p><img alt="" src="/media/untssitled-3rd-copy.png"></p>
+<p>Something like</p>
+<div class="highlight"><pre><span></span><code>array([[[1, 0],
+        [0, 0],
+        [0, 0]],
+
+       [[1, 0],
+        [0, 0],
+        [0, 0]],
+
+       [[0, 0],
+        [0, 1],
+        [0, 0]],
+
+       [[0, 1],
+        [0, 0],
+        [0, 0]],
+
+       [[1, 0],
+        [0, 0],
+        [0, 0]]])
+</code></pre></div>
+
+<p><cap><br>Example mutator with shape 5, 3, 2. batch_size being 5</cap></p>
+<p>The idea is that in every loop, we use the mutator to calculate the nearest set of neighboring states from our best_canvas like this <code>canvas = (best_canvas + mutator)%2</code>.</p>
+<p>We compute N generations of game of life across every slice of this modified canvas. Then, we do a 3D RMSE(mean being calculated for the slice only) on the Nth generation canvas against Mona Lisa, and find the slice with the lowest error.
+This is slice is then extruded and set to best_canvas and the loop repeats till a finite number of iterations pass.</p>
+<h2>Code</h2>
+<p>The notebook for this project is <a href="https://github.com/avinayak/mona_lisa_gol_jax/blob/main/mona_lisa_overdrive.ipynb">available in github</a>. I'll explain what every block is doing in this section. If you want to see results, skip to the end of the article.</p>
+<p>The core of this project, the game of life function is actually taken from <a href="http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html">this post</a>. Thank you  Bojan Nikolic :). I followed his convention of importing <code>jax.numpy</code> as <code>N</code>, <code>jax.lax</code> as <code>L</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span> 
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="n">N</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">numpy</span>
+<span class="n">L</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">lax</span>
+<span class="kn">from</span> <span class="nn">jax.experimental</span> <span class="kn">import</span> <span class="n">loops</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">ops</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span> 
+<span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">files</span>
+</code></pre></div>
+
+<p>Next, <code>wget</code> Mona Lisa</p>
+<div class="highlight"><pre><span></span><code><span class="o">!</span><span class="n">wget</span><span class="w"> </span><span class="o">-</span><span class="n">O</span><span class="w"> </span><span class="n">target</span><span class="o">.</span><span class="n">png</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">upload</span><span class="o">.</span><span class="n">wikimedia</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">wikipedia</span><span class="o">/</span><span class="n">commons</span><span class="o">/</span><span class="n">thumb</span><span class="o">/</span><span class="n">e</span><span class="o">/</span><span class="n">ec</span><span class="o">/</span><span class="n">Mona_Lisa</span><span class="o">%</span><span class="mi">2</span><span class="n">C_by_Leonardo_da_Vinci</span><span class="o">%</span><span class="mi">2</span><span class="n">C_from_C2RMF_retouched</span><span class="o">.</span><span class="n">jpg</span><span class="o">/</span><span class="mi">483</span><span class="n">px</span><span class="o">-</span><span class="n">Mona_Lisa</span><span class="o">%</span><span class="mi">2</span><span class="n">C_by_Leonardo_da_Vinci</span><span class="o">%</span><span class="mi">2</span><span class="n">C_from_C2RMF_retouched</span><span class="o">.</span><span class="n">jpg</span><span class="err">?</span><span class="n">download</span>
+</code></pre></div>
+
+<p>This is not a crazy high res version.It's only 483px wide.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">batch_size</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span>
+<span class="nx">image_file</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">Image</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s">&quot;target.png&quot;</span><span class="p">)</span>
+<span class="nx">image_file</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">image_file</span><span class="p">.</span><span class="nx">convert</span><span class="p">(</span><span class="sc">&#39;1&#39;</span><span class="p">)</span>
+<span class="nx">lisa</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">N</span><span class="p">.</span><span class="nx">array</span><span class="p">(</span><span class="nx">image_file</span><span class="p">,</span><span class="w"> </span><span class="nx">dtype</span><span class="p">=</span><span class="nx">N</span><span class="p">.</span><span class="nx">int32</span><span class="p">)</span>
+<span class="nx">width</span><span class="p">,</span><span class="nx">height</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">lisa</span><span class="p">.</span><span class="nx">shape</span>
+<span class="nx">lisa_loaf</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">onp</span><span class="p">.</span><span class="nx">repeat</span><span class="p">(</span><span class="nx">lisa</span><span class="p">[</span><span class="nx">onp</span><span class="p">.</span><span class="nx">newaxis</span><span class="p">,</span><span class="w"> </span><span class="p">:,</span><span class="w"> </span><span class="p">:,],</span><span class="w"> </span><span class="nx">batch_size</span><span class="p">,</span><span class="w"> </span><span class="nx">axis</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This section dithers Mona Lisa using the and extrudes it to <code>batch_size</code> length.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">key</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">jax</span><span class="p">.</span><span class="nx">random</span><span class="p">.</span><span class="nx">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="nx">canvas_loaf</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">jax</span><span class="p">.</span><span class="nx">random</span><span class="p">.</span><span class="nx">randint</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">batch_size</span><span class="p">,</span><span class="w"> </span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nx">dtype</span><span class="p">=</span><span class="w"> </span><span class="nx">N</span><span class="p">.</span><span class="nx">int32</span><span class="p">)</span><span class="w"> </span><span class="err">#</span><span class="k">for</span><span class="w"> </span><span class="nx">tests</span><span class="p">,</span><span class="w"> </span><span class="nx">initialize</span><span class="w"> </span><span class="nx">random</span><span class="w"> </span><span class="nx">lisa</span>
+</code></pre></div>
+
+<p>Here, we're seeding JAX PRNG(will be explained soon). Also we're creating the initial random <code>canvas_loaf</code> with integers 0 and 1.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">@jax</span><span class="p">.</span><span class="n">jit</span>
+<span class="n">def</span><span class="w"> </span><span class="n">rgen</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">reduction</span><span class="w"> </span><span class="k">over</span><span class="o">-</span><span class="n">counts</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">neighbours</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">live</span><span class="w"> </span><span class="n">cells</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">includes</span><span class="w"> </span><span class="n">the</span>
+<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">central</span><span class="w"> </span><span class="n">cell</span><span class="w"> </span><span class="n">itself</span><span class="p">.</span><span class="w"> </span><span class="n">Subtract</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">array</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">correct</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">this</span><span class="p">.</span>
+<span class="w">    </span><span class="n">nghbrs</span><span class="o">=</span><span class="n">L</span><span class="p">.</span><span class="n">reduce_window</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="k">add</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="ss">&quot;SAME&quot;</span><span class="p">)</span><span class="o">-</span><span class="n">a</span>
+<span class="w">    </span><span class="n">birth</span><span class="o">=</span><span class="n">N</span><span class="p">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">nghbrs</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">    </span><span class="n">underpop</span><span class="o">=</span><span class="n">N</span><span class="p">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nghbrs</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">    </span><span class="n">overpop</span><span class="o">=</span><span class="n">N</span><span class="p">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nghbrs</span><span class="o">&gt;</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">    </span><span class="n">death</span><span class="o">=</span><span class="n">N</span><span class="p">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">underpop</span><span class="p">,</span><span class="w"> </span><span class="n">overpop</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">na</span><span class="o">=</span><span class="n">L</span><span class="p">.</span><span class="k">select</span><span class="p">(</span><span class="n">birth</span><span class="p">,</span>
+<span class="w">                </span><span class="n">N</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">.</span><span class="n">int32</span><span class="p">),</span>
+<span class="w">                </span><span class="n">a</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">na</span><span class="o">=</span><span class="n">L</span><span class="p">.</span><span class="k">select</span><span class="p">(</span><span class="n">death</span><span class="p">,</span>
+<span class="w">                </span><span class="n">N</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">.</span><span class="n">int32</span><span class="p">),</span>
+<span class="w">                </span><span class="n">na</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">na</span>
+
+<span class="n">vectorized_rgen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jax</span><span class="p">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">rgen</span><span class="p">)</span>
+
+<span class="nv">@jax</span><span class="p">.</span><span class="n">jit</span>
+<span class="n">def</span><span class="w"> </span><span class="n">nv_rgen</span><span class="p">(</span><span class="k">state</span><span class="p">)</span><span class="err">:</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="n">n_generations</span><span class="p">)</span><span class="err">:</span>
+<span class="w">      </span><span class="k">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vectorized_rgen</span><span class="p">(</span><span class="k">state</span><span class="p">)</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">state</span>
+</code></pre></div>
+
+<p>Please read <a href="http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html">B. Nikolc's post</a> for an explanation for <code>rgen</code> function, which runs a single generation of Game of Life.</p>
+<p><code>jax.vmap</code> lets us creates a function which maps an input function over argument axes (vectorize). This lets us run a generation of game of life across every slice in our canvas.</p>
+<p><code>nv_rgen</code>  runs N generations of life on our canvas.</p>
+<p>Also, <code>@jax.jit</code> python decorator just tells the compiler to jit compile this function. I'm not sure if we there was any improvement in this case as <code>nv_rgen</code> is simply composed of other jitted functions.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">def</span><span class="w"> </span><span class="nx">mutate_nj</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">h</span><span class="p">,</span><span class="w"> </span><span class="nx">subkey</span><span class="p">):</span>
+<span class="w">  </span><span class="nx">a</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">jax</span><span class="p">.</span><span class="nx">random</span><span class="p">.</span><span class="nx">normal</span><span class="p">(</span><span class="nx">subkey</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">h</span><span class="p">))</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">a</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">a</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">axis</span><span class="p">=(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))[:,</span><span class="nx">None</span><span class="p">,</span><span class="nx">None</span><span class="p">]).</span><span class="nx">astype</span><span class="p">(</span><span class="nx">int</span><span class="p">)</span>
+
+<span class="nx">mutate</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">jax</span><span class="p">.</span><span class="nx">jit</span><span class="p">(</span><span class="nx">mutate_nj</span><span class="p">,</span><span class="w"> </span><span class="nx">static_argnums</span><span class="p">=(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+
+<p><code>mutate_nj</code>(nj = non jitted) generates the mutator tensor we talked about before. It generates this using <code>jax.random.normal</code> and sets max of every slice to <code>1</code> and rest to <code>0</code>. I'll explain the <code>subkey</code> argument soon.</p>
+<p>We jit this function as <code>mutate</code>. Additionally, we need to mark <code>b,w,h</code> arguments as static so that the compiler knows they're constant throughout the execution.</p>
+<div class="highlight"><pre><span></span><code>def rmse_nj(original, canvas, b, w, h):
+  return N.sqrt(N.mean(L.reshape((original-canvas)**2,(b,w*h)) , axis=1))
+
+rmse = jax.jit(rmse_nj, static_argnums=(2,3,4))
+</code></pre></div>
+
+<p><code>rmse</code> is pretty self explanatory. The only major change from the CPU version is that we compute mean across 1st axis (loaf's long axis).</p>
+<div class="highlight"><pre><span></span><code>def hill_climb(original, canvas, prng_key, iterations):
+  with loops.Scope() as s:
+    s.best_score = N.inf
+    s.best_canvas = canvas
+    s.canvas = canvas
+    s.prng_key = prng_key
+    for run in s.range(iterations):
+      s.prng_key, subkey = jax.random.split(s.prng_key)
+      s.canvas+=modify(batch_size, width, height, subkey)
+      s.canvas%=2
+      rmse_vals = rmse(original, nv_rgen( s.canvas ), batch_size, width, height)
+      curr_min = N.min(rmse_vals)
+      for _ in s.cond_range(curr_min &lt; s.best_score):
+        s.best_score = curr_min
+        s.best_canvas = N.repeat((s.canvas[N.argmin(rmse_vals)])[N.newaxis, :, :,], batch_size, axis = 0)
+      s.canvas = s.best_canvas
+    return s.canvas
+</code></pre></div>
+
+<p><code>hill_climb</code> is the main function in the program. It is one big JAX loop construct. We could use standard python loops here, but we need to take full advantage of using JAX.</p>
+<p>JAX loops (<code>jax.experimental.loops</code> for now) is a syntactic sugar functions like <code>lax.fori_loop_</code> and <code>lax.cond</code>. lax loops(actual XLA loops) that have more than a few statements and nesting gets very complicated. JAX (Experimental) loops however bring it somehwat close to standard python loops. The only caveat is that the loop state, ie. anything that mutates across interations have to be stored as a scope member. For us, this includes the <code>best_score</code>, <code>best_canvas</code>, temporary canvas where we run life and the PRNG <code>key</code>.</p>
+<h3>JAX PRNGS</h3>
+<p>Numpy uses a managed PRNG for all of it's functions having random. ie, seeding it and managing it's state are entirely managed by numpy.  As I understand, in parallel executions(like in a GPU) and in situation that need a large number of randoms, this method has flaws. It is difficult to ensure that we have enough entropy for producing large enough quantity randoms.</p>
+<p>Unlike numpy, JAX random generation is "unmanaged". Every <code>jax.random</code> function needs the current state of the PRNG as it's first argument, and every time we execute one of these functions, the PRNG state has to be updated using <code>jax.random.split</code>.</p>
+<p>Not updating the PRNG state will quickly result in the same set of randoms over and over again. I did'nt  quite understand this part the first time I wrote the loop, and it resulted in the algorithm ceasing to find new variations of canvas states. This happened becasue we're generating the same mutator tensor over and over again.</p>
+<p>Splitting PRNG state is also the way to ensure that every parallel component of the algorithm generate distinct randoms. Find more details of JAX PRNG Design <a href="https://github.com/google/jax/blob/master/design_notes/prng.md">here</a></p>
+<h3>cond_range</h3>
+<p>Why are conditionals also loops in JAX? er.. I'm not quite sure about this. It should be possible for cond_range to output a regular boolean instead of a 0/1-long iterator. But for some reason, it's build like that.</p>
+<p>If we found a better canvas slice, we extrude that and set it as our <code>best_canvas</code> and it's score as the <code>best_score</code>.</p>
+<p>After a finite number of iterations, we'd obtain a Game of Life state that reveals a Mona Lisa after N generations.</p>
+<h1>Results</h1>
+<p>Running \~1000 iterations for a 483px wide Mona Lisa on the google colab GPU runtime only takes around 40 seconds!. Compared to the CPU version which takes several hours to do the same for a smaller image, I think we've achieved our goals.</p>
+<p><img alt="" src="/media/lisa_still.png"></p>
+<p>A life state with the highest similarity to the target is achieved after running for \~23000 iterations (10 minutes). After 23K, the gains start to diminish greatly and doesn't seem to   improve much, even if you run for 100K iterations.</p>
+<p>Also, Images targetted at lower generations tend to have better fit as expected.</p>
+<video loop autoplay muted> <source src="/media/lisa.webm" type="video/webm" /> </video>
+
+<p><cap>Mona Lisa, 10 generations</cap></p>
+<video loop autoplay muted> <source src="/media/check.webm" type="video/webm" /> </video>
+
+<p><cap>Checkerboard Test Pattern, 7 generations</cap></p>
+<video loop autoplay muted> <source src="/media/test2.webm" type="video/webm" /> </video>
+
+<p><cap>Text Test Pattern, 5 generations</cap></p>
+<video loop autoplay muted> <source src="/media/david.webm" type="video/mp4" /> </video>
+
+<p><cap>David by Michelangelo, 3 generations</cap></p>
+<video loop autoplay muted> <source src="/media/moon.webm" type="video/mp4" /> </video>
+
+<p><cap>Moon, 7 generations (https://unsplash.com/photos/pd4lo70LdbI)</cap></p>
+<video loop autoplay muted> <source src="/media/neil.webm" type="video/mp4" /> </video>
+
+<p><cap>Neil Armstrong, 7 generations</cap></p>
+<h1>Conclusion</h1>
+<p>I was really looking for an excuse to dive into JAX that doesn't necessarily involve it's automatic differentiation capabilities. JAX can be used to any general computing problem that works on tensors. I'm sure I made many mistakes here, but this was very much a learning experience for me.</p>
+<p>Thank you Kevin Galligan for the original idea and Bojan Nikolic for the Game of Life snippet.</p>
+<video loop autoplay muted> <source src="/media/conway.webm" type="video/mp4" /> </video>
+
+<p><cap>John Horton Conway FRS (26 December 1937 – 11 April 2020) RIP</cap></p>
+<p><a href="https://news.ycombinator.com/item?id=26384403">HN Thread </a></p></div>
+	<!-- <h2>Comments</h2>
+ -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-transparent">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-12">
+				<hr/>
+				<div class="row">
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Navigation</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/">a.tulv.in</a></li>
+							<li><a href="/me">About Me</a></li>
+							<li><a href="/projects">Projects</a></li>
+							<li><a href="https://a.tulv.in/feeds/rss.xml"><i class="fa fa-rss "></i> rss</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Categories</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Links</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://goo.gl/D2GXJ9">My Resume</a></li>
+							<li><a href="https://unsplash.com/collections/519921/s'ok-pics">Photography</a></li>
+							<li><a href="https://v.tulv.in">Visual References</a></li>
+							<li><a href="https://ko-fi.com/atulvinayak">Ko-fi</a></li>
+						</ul>
+					</div>
+					
+					<div class="col-md-3 col-xs-6">
+						<h4><b>Socials</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/avinayak" target="_blank">GitHub</a>
+							</li>
+							<li><a href="https://www.linkedin.com/in/atulvinayak" target="_blank">LinkedIn</a>
+							</li>
+							<li><a href="https://www.instagram.com/avinayak__" target="_blank">Instagram</a>
+							</li>
+							<li><a href="https://bsky.app/profile/a.tulv.in" target="_blank">BlueSky</a>
+							</li>
+							<li><a href="https://twitter.com/atulvinayak" target="_blank">Twitter</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Atul Vinayak</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+ 
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>O(n log(n)) — a.tulv.in</title>
+	<meta name="description" content="Title: O(n log(n)); Date: 2013-04-11; Author: Atul Vinayak">
+	<meta name="author" content="Atul Vinayak">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://a.tulv.in/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://a.tulv.in/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/local.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/pygments.css" rel="stylesheet">
+	<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://a.tulv.in/">a.tulv.in</a>	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+<script>
+  function setup() {
+    var canvas = createCanvas(20, 20);
+    canvas.parent("homePageArtCanvas");
+    noStroke();
+
+    // Random Spaceship Assembly
+    // By Atul Vinayak
+    npix = 5;
+    w = width / npix;
+    for (var y = 0; y < npix; y++) {
+      for (var x = 0; x < npix / 2; x++) {
+        if (random(1) < 0.5) {
+          fill(0);
+          rect(x * w, y * w, w, w);
+          rect((npix - x - 1) * w, y * w, w, w);
+        }
+      }
+    }
+  }
+</script>
+<span id="homePageArtCanvas"></span>			<br>	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="title-card">
+		<div class="category">
+			<a href="https://a.tulv.in/category/programming.html" rel="category">Programming</a>
+		</div>
+	
+		<div class="article-header">
+			<h1 itemprop="name headline" class="article-title">O(n log(n))</h1>
+		</div>
+	</div>
+
+	<div class="article-tags">
+	<time datetime="2013-04-11T00:00:00+00:00" itemprop="datePublished">Thu 11 April 2013</time>
+ 
+	<div>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/programming.html" rel="tag">programming</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/algorithm.html" rel="tag">algorithm</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/c.html" rel="tag">C</a>
+		</span>
+	</div>
+	</div>
+
+	<div itemprop="articleBody" class="article-body"><p>Just quicksort, mergesort and heapsort in a single image. I was obsessed with shrinking my code to fit in a single image :)</p>
+<p><img alt="My helpful screenshot" src="/media/sorts1.png"></p>
+<p>For Reference, The best, average and worst complexities</p>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Best</th>
+<th>Average</th>
+<th>Worst</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quicksort</td>
+<td><span class="math">\(\Omega(n\log{}n)\)</span></td>
+<td><span class="math">\(\Theta(n\log{}n)\)</span></td>
+<td><span class="math">\(O(n^2)\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td>Mergesort</td>
+<td><span class="math">\(\Omega(n\log{}n)\)</span></td>
+<td><span class="math">\(\Theta(n\log{}n)\)</span></td>
+<td><span class="math">\(O(n\log{}n)\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td>Heapsort</td>
+<td><span class="math">\(\Omega(n\log{}n)\)</span></td>
+<td><span class="math">\(\Theta(n\log{}n)\)</span></td>
+<td><span class="math">\(O(n\log{}n)\)</span></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>I went on to make this video right about that time in <a href="https://processing.org/">Processing</a> which used the 3 $O(n^2)algorithms (selection,bubble,insertion) to sort 
+randomly shuffled colours. Take a look!</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EDcp2t1qDGk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "left",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+	<!-- <h2>Comments</h2>
+ -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-transparent">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-12">
+				<hr/>
+				<div class="row">
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Navigation</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/">a.tulv.in</a></li>
+							<li><a href="/me">About Me</a></li>
+							<li><a href="/projects">Projects</a></li>
+							<li><a href="https://a.tulv.in/feeds/rss.xml"><i class="fa fa-rss "></i> rss</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Categories</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Links</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://goo.gl/D2GXJ9">My Resume</a></li>
+							<li><a href="https://unsplash.com/collections/519921/s'ok-pics">Photography</a></li>
+							<li><a href="https://v.tulv.in">Visual References</a></li>
+							<li><a href="https://ko-fi.com/atulvinayak">Ko-fi</a></li>
+						</ul>
+					</div>
+					
+					<div class="col-md-3 col-xs-6">
+						<h4><b>Socials</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/avinayak" target="_blank">GitHub</a>
+							</li>
+							<li><a href="https://www.linkedin.com/in/atulvinayak" target="_blank">LinkedIn</a>
+							</li>
+							<li><a href="https://www.instagram.com/avinayak__" target="_blank">Instagram</a>
+							</li>
+							<li><a href="https://bsky.app/profile/a.tulv.in" target="_blank">BlueSky</a>
+							</li>
+							<li><a href="https://twitter.com/atulvinayak" target="_blank">Twitter</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Atul Vinayak</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+ 
+</body>
+</html>

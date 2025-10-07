@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>numpy — a.tulv.in</title>
+	<meta name="description" content="All posts which refer to tag numpy">
+	<meta name="author" content="Atul Vinayak">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://a.tulv.in/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://a.tulv.in/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/local.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/pygments.css" rel="stylesheet">
+	<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://a.tulv.in/">a.tulv.in</a>	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+<script>
+  function setup() {
+    var canvas = createCanvas(20, 20);
+    canvas.parent("homePageArtCanvas");
+    noStroke();
+
+    // Random Spaceship Assembly
+    // By Atul Vinayak
+    npix = 5;
+    w = width / npix;
+    for (var y = 0; y < npix; y++) {
+      for (var x = 0; x < npix / 2; x++) {
+        if (random(1) < 0.5) {
+          fill(0);
+          rect(x * w, y * w, w, w);
+          rect((npix - x - 1) * w, y * w, w, w);
+        }
+      }
+    }
+  }
+</script>
+<span id="homePageArtCanvas"></span>			<br>	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+<h1>Tag&nbsp;<small>numpy</small></h1>
+<br>
+<table class="table">
+    <tbody>
+        <tr>
+        <td>01 Apr 2022</td>
+        <td><a href='https://a.tulv.in/solving-knights-tour-using-a-neural-network.html'>Solving Knights Tour using a Neural Network</a></td>
+        </tr>
+    </tbody>
+</table>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-transparent">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-12">
+				<hr/>
+				<div class="row">
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Navigation</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/">a.tulv.in</a></li>
+							<li><a href="/me">About Me</a></li>
+							<li><a href="/projects">Projects</a></li>
+							<li><a href="https://a.tulv.in/feeds/rss.xml"><i class="fa fa-rss "></i> rss</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Categories</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Links</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://goo.gl/D2GXJ9">My Resume</a></li>
+							<li><a href="https://unsplash.com/collections/519921/s'ok-pics">Photography</a></li>
+							<li><a href="https://v.tulv.in">Visual References</a></li>
+							<li><a href="https://ko-fi.com/atulvinayak">Ko-fi</a></li>
+						</ul>
+					</div>
+					
+					<div class="col-md-3 col-xs-6">
+						<h4><b>Socials</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/avinayak" target="_blank">GitHub</a>
+							</li>
+							<li><a href="https://www.linkedin.com/in/atulvinayak" target="_blank">LinkedIn</a>
+							</li>
+							<li><a href="https://www.instagram.com/avinayak__" target="_blank">Instagram</a>
+							</li>
+							<li><a href="https://bsky.app/profile/a.tulv.in" target="_blank">BlueSky</a>
+							</li>
+							<li><a href="https://twitter.com/atulvinayak" target="_blank">Twitter</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Atul Vinayak</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+ 
+</body>
+</html>

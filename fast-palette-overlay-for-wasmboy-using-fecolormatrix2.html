@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Fast Palette overlay for WasmBoy using feColorMatrix2 — a.tulv.in</title>
+	<meta name="description" content="Title: Fast Palette overlay for WasmBoy using feColorMatrix2; Date: 2022-04-10; Author: Atul Vinayak">
+	<meta name="author" content="Atul Vinayak">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://a.tulv.in/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://a.tulv.in/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/local.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/pygments.css" rel="stylesheet">
+	<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://a.tulv.in/">a.tulv.in</a>	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+<script>
+  function setup() {
+    var canvas = createCanvas(20, 20);
+    canvas.parent("homePageArtCanvas");
+    noStroke();
+
+    // Random Spaceship Assembly
+    // By Atul Vinayak
+    npix = 5;
+    w = width / npix;
+    for (var y = 0; y < npix; y++) {
+      for (var x = 0; x < npix / 2; x++) {
+        if (random(1) < 0.5) {
+          fill(0);
+          rect(x * w, y * w, w, w);
+          rect((npix - x - 1) * w, y * w, w, w);
+        }
+      }
+    }
+  }
+</script>
+<span id="homePageArtCanvas"></span>			<br>	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="title-card">
+		<div class="category">
+			<a href="https://a.tulv.in/category/programming.html" rel="category">Programming</a>
+		</div>
+	
+		<div class="article-header">
+			<h1 itemprop="name headline" class="article-title">Fast Palette overlay for WasmBoy using feColorMatrix2</h1>
+		</div>
+	</div>
+
+	<div class="article-tags">
+	<time datetime="2022-04-10T00:00:00+00:00" itemprop="datePublished">Sun 10 April 2022</time>
+ 
+	<div>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/games.html" rel="tag">games</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/programming.html" rel="tag">programming</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/algorithm.html" rel="tag">algorithm</a>
+		</span>
+	</div>
+	</div>
+
+	<div itemprop="articleBody" class="article-body"><h2>The problem</h2>
+<p>Most GameBoy(classic) emulators tend to use the boring grayscale palette with no possibility of even having the option to choose a different set of colors. ie. They all look like this.</p>
+<video loop="" autoplay="" muted=""> <source src="https://video.twimg.com/ext_tw_video/1297925940022931457/pu/vid/800x720/WrOfp_Ri6QvMC4jP.mp4" type="video/webm"> </video>
+
+<p>when they could look like..</p>
+<video loop="" autoplay="" muted=""> <source src="https://video.twimg.com/ext_tw_video/1298047067340673024/pu/vid/800x720/TzN9E11-NUJsJqpW.mp4" type="video/webm"> </video>
+
+<p>Recently, I came across this cool wasm based GameBoy emulator called <a href="https://github.com/torch2424/wasmboy">WasmBoy</a>. It's actually possible to use WasmBoy as a library and create your own emulator front-end (like <a href="https://vaporboy.net/" title="https://vaporboy.net/">https://vaporboy.net/</a>). I wanted to make a cool minimal electron/web based GameBoy emulator frontend, but with the additional feature of being able to select a palette.</p>
+<h2>How</h2>
+<p>I started out by poking internals of WasmBoy. Right now, the GB image buffer is mapped to a js <code>Uint8ClampedArray</code> called <code>imageDataArray</code> and</p>
+<div class="highlight"><pre><span></span><code><span class="k">this</span><span class="p">.</span><span class="nx">canvasImageData</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">imageDataArray</span><span class="p">);</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">canvasContext</span><span class="p">.</span><span class="nx">clearRect</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">canvasElement</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">canvasElement</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">canvasContext</span><span class="p">.</span><span class="nx">putImageData</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">canvasImageData</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Width and height are same as that of number of pixels in a gameboy (160 x 144). For an rgba image therefore, we need to loop through an array of 160 * 144 * 4 = 92160 ints and replace each of the 4 grayscale levels with out custom palette colors. This might be possible, but I have a feeling this could result in very low framerates.</p>
+<h2>CSS Shaders?</h2>
+<p>I knew that you could apply pixel level transformations using css <code>filters</code>. For example <code>filter: hue-rotate(90deg);</code>. You could apply this filter to almost anything, even a  I knew for a fact that this is internally just a simple fragment shader. Can you add your own custom shaders? Googling around gave be this: [<a href="https://developer.chrome.com/blog/introduction-to-custom-filters-aka-css-shaders/">https://developer.chrome.com/blog/introduction-to-custom-filters-aka-css-shaders/</a>]. I got excited only to be let down few minutes later..</p>
+<p><img alt="" src="/media/screenshot-from-2022-05-03-21-38-14.png"></p>
+<p>Bummer :/</p>
+<h2>SVG Filters</h2>
+<p>I started to research more on libraries like [<a href="https://github.com/PixelsCommander/HTML-GL">https://github.com/PixelsCommander/HTML-GL</a>], to apply a shader to any given DOM element. I saw svg filters on the way, but discarded them thinking they could never be applied to canvas elements, or that they would have any other filters than the ones css offered. I was wrong. SVG filters were more powerful tools and they could be referenced from css like</p>
+<div class="highlight"><pre><span></span><code><span class="nt">filter</span><span class="o">:</span><span class="w"> </span><span class="nt">url</span><span class="o">(</span><span class="s2">&quot;../../media/examples/shadow.svg#element-id&quot;</span><span class="o">);</span>
+</code></pre></div>
+
+<p>Quick experimentation showed game me this..</p>
+<p><img alt="" src="/media/screenshot-from-2022-05-01-00-45-23.png"></p>
+<p>While it may look terrible, this is the result of applying a random feColorMatrix on the grayscale canvas from WasmBoy. The question now is, how do I map each of the grayscale levels to a specific color in a palette? Is this even mathematically possible with the filters we have in SVG?</p></div>
+	<!-- <h2>Comments</h2>
+ -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-transparent">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-12">
+				<hr/>
+				<div class="row">
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Navigation</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/">a.tulv.in</a></li>
+							<li><a href="/me">About Me</a></li>
+							<li><a href="/projects">Projects</a></li>
+							<li><a href="https://a.tulv.in/feeds/rss.xml"><i class="fa fa-rss "></i> rss</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Categories</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Links</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://goo.gl/D2GXJ9">My Resume</a></li>
+							<li><a href="https://unsplash.com/collections/519921/s'ok-pics">Photography</a></li>
+							<li><a href="https://v.tulv.in">Visual References</a></li>
+							<li><a href="https://ko-fi.com/atulvinayak">Ko-fi</a></li>
+						</ul>
+					</div>
+					
+					<div class="col-md-3 col-xs-6">
+						<h4><b>Socials</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/avinayak" target="_blank">GitHub</a>
+							</li>
+							<li><a href="https://www.linkedin.com/in/atulvinayak" target="_blank">LinkedIn</a>
+							</li>
+							<li><a href="https://www.instagram.com/avinayak__" target="_blank">Instagram</a>
+							</li>
+							<li><a href="https://bsky.app/profile/a.tulv.in" target="_blank">BlueSky</a>
+							</li>
+							<li><a href="https://twitter.com/atulvinayak" target="_blank">Twitter</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Atul Vinayak</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+ 
+</body>
+</html>

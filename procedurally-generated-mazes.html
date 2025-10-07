@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Procedurally Generated Mazes — a.tulv.in</title>
+	<meta name="description" content="Title: Procedurally Generated Mazes; Date: 2013-04-11; Author: Atul Vinayak">
+	<meta name="author" content="Atul Vinayak">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://a.tulv.in/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://a.tulv.in/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/local.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/pygments.css" rel="stylesheet">
+	<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://a.tulv.in/">a.tulv.in</a>	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+<script>
+  function setup() {
+    var canvas = createCanvas(20, 20);
+    canvas.parent("homePageArtCanvas");
+    noStroke();
+
+    // Random Spaceship Assembly
+    // By Atul Vinayak
+    npix = 5;
+    w = width / npix;
+    for (var y = 0; y < npix; y++) {
+      for (var x = 0; x < npix / 2; x++) {
+        if (random(1) < 0.5) {
+          fill(0);
+          rect(x * w, y * w, w, w);
+          rect((npix - x - 1) * w, y * w, w, w);
+        }
+      }
+    }
+  }
+</script>
+<span id="homePageArtCanvas"></span>			<br>	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="title-card">
+		<div class="category">
+			<a href="https://a.tulv.in/category/programming.html" rel="category">Programming</a>
+		</div>
+	
+		<div class="article-header">
+			<h1 itemprop="name headline" class="article-title">Procedurally Generated Mazes</h1>
+		</div>
+	</div>
+
+	<div class="article-tags">
+	<time datetime="2013-04-11T00:00:00+00:00" itemprop="datePublished">Thu 11 April 2013</time>
+ 
+	<div>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/programming.html" rel="tag">programming</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/algorithm.html" rel="tag">algorithm</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/c.html" rel="tag">C</a>
+		</span>
+	</div>
+	</div>
+
+	<div itemprop="articleBody" class="article-body"><p>Maze Generation started out as an experiment.</p>
+<p>I was fascinated by maze generation algorithms. I used a randomized version of <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_Kruskal's_algorithm">Kruskal’s algorithm</a>. </p>
+<div class="highlight"><pre><span></span><code><span class="nv">Create</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">list</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">walls</span>,<span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">create</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">set</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">each</span><span class="w"> </span><span class="nv">cell</span>,<span class="w"> </span>
+<span class="nv">each</span><span class="w"> </span><span class="nv">containing</span><span class="w"> </span><span class="nv">just</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">one</span><span class="w"> </span><span class="nv">cell</span>.
+
+<span class="k">For</span><span class="w"> </span><span class="nv">each</span><span class="w"> </span><span class="nv">wall</span>,<span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">some</span><span class="w"> </span><span class="k">random</span><span class="w"> </span><span class="nv">order</span>:
+<span class="w">    </span><span class="k">If</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">cells</span><span class="w"> </span><span class="nv">divided</span><span class="w"> </span><span class="nv">by</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">wall</span><span class="w"> </span><span class="nv">belong</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">distinct</span><span class="w"> </span><span class="nv">sets</span>:
+<span class="w">        </span><span class="nv">Remove</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">current</span><span class="w"> </span><span class="nv">wall</span>.
+<span class="w">        </span><span class="nv">Join</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">sets</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">formerly</span><span class="w"> </span><span class="nv">divided</span><span class="w"> </span><span class="nv">cells</span>.
+</code></pre></div>
+
+<p>I tried to do it in python in the begining, and later in C (for practice). The algorithm scaled really well, and I used it to generate huuge mazes of ~5GB with a single path between points.</p>
+<p>The project took about a week to complete. Later on, the algorithm was used to design a real physical maze game in college.</p>
+<p><img alt="My helpful screenshot" src="/media/maze1.png"></p>
+<p>The UI was witten in C using the excellent GTK Libraries, and Clutter for Vector graphics.</p>
+<p>A few days later, I explored the Dead end filling algorithm to solve any randomly generated maze.</p>
+<p><img alt="My helpful screenshot" src="/media/maze2.png"></p>
+<p>Now, at this point, I thought it’d be cool if i could turn it into a game :). so…</p>
+<p><img alt="My helpful screenshot" src="/media/maze3.png"></p>
+<p>The human player is blue and a Computer player is red. The aim of the game is to get to the other diagonal end first. I had to adjust the velocity of the computer player so that it’s nearly impossible to beat the machine, unless you time your keystrokes accurately and not make <strong>any</strong> mistakes.</p>
+<p>Here is a youtube video (mute to avoid the horrible background music) of the path the Machine takes to solve. <em>This is not how dead end filling works</em> . The maze is already solved. I’m just animating the solution path.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AkNWvK6vhzk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+	<!-- <h2>Comments</h2>
+ -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-transparent">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-12">
+				<hr/>
+				<div class="row">
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Navigation</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/">a.tulv.in</a></li>
+							<li><a href="/me">About Me</a></li>
+							<li><a href="/projects">Projects</a></li>
+							<li><a href="https://a.tulv.in/feeds/rss.xml"><i class="fa fa-rss "></i> rss</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Categories</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Links</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://goo.gl/D2GXJ9">My Resume</a></li>
+							<li><a href="https://unsplash.com/collections/519921/s'ok-pics">Photography</a></li>
+							<li><a href="https://v.tulv.in">Visual References</a></li>
+							<li><a href="https://ko-fi.com/atulvinayak">Ko-fi</a></li>
+						</ul>
+					</div>
+					
+					<div class="col-md-3 col-xs-6">
+						<h4><b>Socials</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/avinayak" target="_blank">GitHub</a>
+							</li>
+							<li><a href="https://www.linkedin.com/in/atulvinayak" target="_blank">LinkedIn</a>
+							</li>
+							<li><a href="https://www.instagram.com/avinayak__" target="_blank">Instagram</a>
+							</li>
+							<li><a href="https://bsky.app/profile/a.tulv.in" target="_blank">BlueSky</a>
+							</li>
+							<li><a href="https://twitter.com/atulvinayak" target="_blank">Twitter</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Atul Vinayak</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+ 
+</body>
+</html>
