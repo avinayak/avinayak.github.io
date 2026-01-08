@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Genetic Art — a.tulv.in</title>
+	<meta name="description" content="Title: Genetic Art; Date: 2016-10-01; Author: Atul Vinayak">
+	<meta name="author" content="Atul Vinayak">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://a.tulv.in/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://a.tulv.in/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/local.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/pygments.css" rel="stylesheet">
+	<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://a.tulv.in/">a.tulv.in</a>	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+<script>
+  function setup() {
+    var canvas = createCanvas(20, 20);
+    canvas.parent("homePageArtCanvas");
+    noStroke();
+
+    // Random Spaceship Assembly
+    // By Atul Vinayak
+    npix = 5;
+    w = width / npix;
+    for (var y = 0; y < npix; y++) {
+      for (var x = 0; x < npix / 2; x++) {
+        if (random(1) < 0.5) {
+          fill(0);
+          rect(x * w, y * w, w, w);
+          rect((npix - x - 1) * w, y * w, w, w);
+        }
+      }
+    }
+  }
+</script>
+<span id="homePageArtCanvas"></span>			<br>	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="title-card">
+		<div class="category">
+			<a href="https://a.tulv.in/category/programming.html" rel="category">Programming</a>
+		</div>
+	
+		<div class="article-header">
+			<h1 itemprop="name headline" class="article-title">Genetic Art</h1>
+		</div>
+	</div>
+
+	<div class="article-tags">
+	<time datetime="2016-10-01T00:00:00+00:00" itemprop="datePublished">Sat 01 October 2016</time>
+ 
+	<div>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/programming.html" rel="tag">programming</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/algorithm.html" rel="tag">algorithm</a>
+		</span>
+	</div>
+	</div>
+
+	<div itemprop="articleBody" class="article-body"><p>I was experimenting with a lot of Genetic/Hill Climbing algorithms to generate Art. I started out by trying to approximate a Grayscale image with just lines of varying width and color intensity.</p>
+<p>The genetic algorithm is roughly like this:</p>
+<div class="highlight"><pre><span></span><code><span class="n">Algorithm</span><span class="o">:</span><span class="w"> </span><span class="n">GA</span><span class="o">(</span><span class="n">n</span><span class="o">,</span><span class="w"> </span><span class="err">χ</span><span class="o">,</span><span class="w"> </span><span class="err">µ</span><span class="o">)</span>
+<span class="w">    </span><span class="c1">// Initialise generation 0:</span>
+<span class="w">    </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">;</span>
+<span class="w">    </span><span class="n">Pk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">population</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">randomly</span><span class="o">-</span><span class="n">generated</span><span class="w"> </span><span class="n">individuals</span><span class="o">;</span>
+<span class="w">    </span><span class="c1">// Evaluate Pk:</span>
+<span class="w">    </span><span class="n">Compute</span><span class="w"> </span><span class="n">fitness</span><span class="o">(</span><span class="n">i</span><span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="err">∈</span><span class="w"> </span><span class="n">Pk</span><span class="o">;</span>
+<span class="w">    </span><span class="k">do</span>
+<span class="w">        </span><span class="o">{</span><span class="w"> </span>
+<span class="w">        </span><span class="c1">// Create generation k + 1:</span>
+<span class="w">        </span><span class="c1">// 1. Copy:</span>
+<span class="w">        </span><span class="n">Select</span><span class="w"> </span><span class="o">(</span><span class="mi">1</span><span class="w"> </span><span class="err">−</span><span class="w"> </span><span class="err">χ</span><span class="o">)</span><span class="w"> </span><span class="err">×</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">Pk</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">insert</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">Pk</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+<span class="w">        </span><span class="c1">// 2. Crossover:</span>
+<span class="w">        </span><span class="n">Select</span><span class="w"> </span><span class="err">χ</span><span class="w"> </span><span class="err">×</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">Pk</span><span class="o">;</span><span class="w"> </span><span class="n">pair</span><span class="w"> </span><span class="n">them</span><span class="w"> </span><span class="n">up</span><span class="o">;</span><span class="w"> </span><span class="n">produce</span><span class="w"> </span><span class="n">offspring</span><span class="o">;</span><span class="w"> </span>
+<span class="w">        </span><span class="n">insert</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">offspring</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">Pk</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+<span class="w">        </span><span class="c1">// 3. Mutate:</span>
+<span class="w">        </span><span class="n">Select</span><span class="w"> </span><span class="err">µ</span><span class="w"> </span><span class="err">×</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">Pk</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span><span class="w"> </span><span class="n">invert</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">randomly</span><span class="o">-</span><span class="n">selected</span><span class="w"> </span><span class="n">bit</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">each</span><span class="o">;</span>
+<span class="w">        </span><span class="c1">// Evaluate Pk+1:</span>
+<span class="w">        </span><span class="n">Compute</span><span class="w"> </span><span class="n">fitness</span><span class="o">(</span><span class="n">i</span><span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="err">∈</span><span class="w"> </span><span class="n">Pk</span><span class="o">;</span>
+<span class="w">        </span><span class="c1">// Increment:</span>
+<span class="w">        </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">;</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">fitness</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">fittest</span><span class="w"> </span><span class="n">individual</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">Pk</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="n">enough</span><span class="o">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">fittest</span><span class="w"> </span><span class="n">individual</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Pk</span><span class="o">;</span>
+</code></pre></div>
+
+<p>The first image after several geneartions..</p>
+<p><img alt="ga" src="/media/GA1.png"></p>
+<p>I lost the original image I was trying to approximate.. but doesn’t that look like a deer? 🙄 I modified the algorithm several times to approximate my face. This is the original image..</p>
+<p>FYI this is what I look like</p>
+<p><img alt="ga" src="/media/face.jpg"></p>
+<p><strong>First Attempt</strong>: Program too slow. Had to stop after 10 Hours.</p>
+<p><img alt="ga" src="/media/GA.png"></p>
+<p><strong>Second Attempt</strong>: Rewrote the program to use Numpy arrays and Bezier Curves instead on just Lines. Also now in Technicolor!</p>
+<p><img alt="ga" src="/media/error1.png"></p>
+<p><strong>Bugfixes &amp; Third Attempt</strong>: Atleast it’s converging to something</p>
+<p><img alt="ga" src="/media/out.png"></p>
+<p>But I didn’t look like this at all :/ . The problem here was that the fitness function was</p>
+<p><span class="math">\(\sum_{pixel=1}^{NPIXELS} abs(original[pixel] - Generated[pixel])\)</span></p>
+<p>I tried squaring. squaring increases error distance. So fitter drawings would have a higher chance of being selected.</p>
+<p><span class="math">\(\sum_{pixel=1}^{NPIXELS} (original[pixel] - Generated[pixel])^2\)</span></p>
+<p>and it worked (sort of. from an artistic point of view)!</p>
+<p><img alt="ga" src="/media/me.jpg"></p>
+<p>I used this code to generate a lot of images, of different shapes.</p>
+<p><img alt="ga" src="/media/star.jpg"></p>
+<p>My eventual plans were to create a bot which tweets these images. I even wrote a small program that gets a random Picassa image and bezierifies it. Unfortunately, <a href="https://twitter.com/primitivepic">someone else</a> has already done it. And it’s much better than mine. But I learned a lot doing this project.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "left",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+	<!-- <h2>Comments</h2>
+ -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-transparent">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-12">
+				<hr/>
+				<div class="row">
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Navigation</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/">a.tulv.in</a></li>
+							<li><a href="/me">About Me</a></li>
+							<li><a href="/projects">Projects</a></li>
+							<li><a href="https://a.tulv.in/feeds/rss.xml"><i class="fa fa-rss "></i> rss</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Categories</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Links</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://goo.gl/D2GXJ9">My Resume</a></li>
+							<li><a href="https://unsplash.com/collections/519921/s'ok-pics">Photography</a></li>
+							<li><a href="https://v.tulv.in">Visual References</a></li>
+							<li><a href="https://ko-fi.com/atulvinayak">Ko-fi</a></li>
+						</ul>
+					</div>
+					
+					<div class="col-md-3 col-xs-6">
+						<h4><b>Socials</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/avinayak" target="_blank">GitHub</a>
+							</li>
+							<li><a href="https://www.linkedin.com/in/atulvinayak" target="_blank">LinkedIn</a>
+							</li>
+							<li><a href="https://www.instagram.com/avinayak__" target="_blank">Instagram</a>
+							</li>
+							<li><a href="https://bsky.app/profile/a.tulv.in" target="_blank">BlueSky</a>
+							</li>
+							<li><a href="https://twitter.com/atulvinayak" target="_blank">Twitter</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Atul Vinayak</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+ 
+</body>
+</html>

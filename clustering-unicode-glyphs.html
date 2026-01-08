@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Clustering Unicode Glyphs — a.tulv.in</title>
+	<meta name="description" content="Title: Clustering Unicode Glyphs; Date: 2019-12-21; Author: Atul Vinayak">
+	<meta name="author" content="Atul Vinayak">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://a.tulv.in/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://a.tulv.in/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/local.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/pygments.css" rel="stylesheet">
+	<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://a.tulv.in/">a.tulv.in</a>	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+<script>
+  function setup() {
+    var canvas = createCanvas(20, 20);
+    canvas.parent("homePageArtCanvas");
+    noStroke();
+
+    // Random Spaceship Assembly
+    // By Atul Vinayak
+    npix = 5;
+    w = width / npix;
+    for (var y = 0; y < npix; y++) {
+      for (var x = 0; x < npix / 2; x++) {
+        if (random(1) < 0.5) {
+          fill(0);
+          rect(x * w, y * w, w, w);
+          rect((npix - x - 1) * w, y * w, w, w);
+        }
+      }
+    }
+  }
+</script>
+<span id="homePageArtCanvas"></span>			<br>	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="title-card">
+		<div class="category">
+			<a href="https://a.tulv.in/category/programming.html" rel="category">Programming</a>
+		</div>
+	
+		<div class="article-header">
+			<h1 itemprop="name headline" class="article-title">Clustering Unicode Glyphs</h1>
+		</div>
+	</div>
+
+	<div class="article-tags">
+	<time datetime="2019-12-21T15:00:00+00:00" itemprop="datePublished">Sat 21 December 2019</time>
+ 
+	<div>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/programming.html" rel="tag">programming</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/algorithm.html" rel="tag">algorithm</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/research.html" rel="tag">research</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/languages.html" rel="tag">languages</a>
+		</span>
+	</div>
+	</div>
+
+	<div itemprop="articleBody" class="article-body"><p>I saw this image of Language families across the globe today, and decided I wanted to do something related.</p>
+<p><img alt="" src="/media/language_families_map.png"></p>
+<p>What would happen if I apply a clustering algorithm to all the Unicode characters? I wanted to this done really quickly, So no reinventing the wheel. The plans is to get the SoTA clustering algorithm and swap the dataset with the Unicode character data. Ideally, I wanted to do this with the Noto font, but I had a feeling it might get complicated (ie. Noto requires you to swap in .ttf files depending on what codepoints your glyphs are in). In the name of quick and easy Sunday afternoon project, I decided to go with <a href="https://unifoundry.com/unifont/" title="unifont">unifont</a>.</p>
+<h2>Creating Dataset</h2>
+<p>I found this official <a href="https://blog.keras.io/building-autoencoders-in-keras.html">VAE MLP Clustering tutorial</a> on MNIST dataset for the keras library. Perfect. I hacked up a python script that generates Unifont glyphs in the 28x28x65536 pixel numpy array using Pillow Image processing lib. This has the same cross sectional shape of MNIST, so it should just work.</p>
+<p>The problem though was missing glyphs.</p>
+<p><img alt="" src="/media/screenshot-from-2021-12-30-20-42-18.png"></p>
+<p>I found that a huge portion of unifont was tofu (Black squares with hexadecimal codepoint in this case). We have to de-tofu this dataset.</p>
+<p>I could've done some cool pattern matching filtering or manually figuring out the tofu from unifont documentation, but I I decided to export each 28x28 pixel glyph image to files and delete the tofu manually.</p>
+<p><img alt="" src="/media/wwwture.PNG"></p>
+<p>Now, I regenerated the dataset with the missing file indices removed. Also, we're only going to work with Plane0 of Unicode, so only characters from 0-65535.</p>
+<h2>Clustering</h2>
+<p>Adapting the clustering algorithm to use my dateset was easy. I did have issues trying to run this on a GPU though. CPU took only around 5 minutes. I added code to plot the values to an image file with the unifont text using PIL with coordinates from the latent space and I obtained this super high res image.</p>
+<p><img alt="" src="/media/chart3.png"></p>
+<p>This is beautiful. As expected, The biggest cluster is CJK + Hangul characters. I decided to build a better visualizer to highlight different Unicode ranges using d3js.</p>
+<h2>Visualizing</h2>
+<p>I tried creating a visualizer based with d3-zoom, but it was struggling to keep up with the almost 50K points rendered using DOM. I looked elsewhere and found this WebGL based cluster visualization <a href="https://colineberhardt.github.io/d3fc-webgl-hathi-explorer/" title="https://colineberhardt.github.io/d3fc-webgl-hathi-explorer/">https://colineberhardt.github.io/d3fc-webgl-hathi-explorer/</a> . This works great. It streams the point file using Web workers and uses quad-trees for rendering, so it could easily load all the points. The only problem though was it could not render the font yet (I may work on this later). I hacked up this visualization: <a href="https://avinayak.github.io/unicode-cluster-viz/" title="https://avinayak.github.io/unicode-cluster-viz/">unicode-cluster-viz</a>.</p>
+<iframe src="https://avinayak.github.io/unicode-cluster-viz/" style="height: 800px;width: 100%;" frameBorder="0" ></iframe>
+
+<p>Mainly, we get 3 large clusters Hangul (Green patches), CJK (Yellow) and everything else (Reddish). This corresponds really well with the historical origins of all human languages. Sino-Tibetan languages evolved independently to all other human languages becasue of geographics. Hangul was developed from Sino-Korean in mid fifteenth century, but has it's distinct style. </p>
+<p>Here are some interesting clusters..</p>
+<p><img alt="" src="/media/screenshot-from-2021-12-30-20-27-34.png"></p>
+<p>CJK</p>
+<p><img alt="" src="/media/screenshot-from-2021-12-30-20-24-41.png"></p>
+<p>Hangul..</p>
+<p><img alt="" src="/media/screenshot-from-2021-12-30-20-14-12.png"></p>
+<p>Most of the plus shaped box drawing characters (╅ ╆ ╇) are clustered and the rest of the corner pieces are below.</p>
+<p><img alt="" src="/media/screenshot-from-2021-12-30-20-20-07.png"></p>
+<p>Braille Patterns (⠻ ⠼ ⠽ ⠾ ⠿) are nice and clustered as they look very very similar.</p>
+<p>Anyway. Learned lots. I might get back to this project with better clustering and visualization.</p></div>
+	<!-- <h2>Comments</h2>
+ -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-transparent">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-12">
+				<hr/>
+				<div class="row">
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Navigation</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/">a.tulv.in</a></li>
+							<li><a href="/me">About Me</a></li>
+							<li><a href="/projects">Projects</a></li>
+							<li><a href="https://a.tulv.in/feeds/rss.xml"><i class="fa fa-rss "></i> rss</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Categories</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Links</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://goo.gl/D2GXJ9">My Resume</a></li>
+							<li><a href="https://unsplash.com/collections/519921/s'ok-pics">Photography</a></li>
+							<li><a href="https://v.tulv.in">Visual References</a></li>
+							<li><a href="https://ko-fi.com/atulvinayak">Ko-fi</a></li>
+						</ul>
+					</div>
+					
+					<div class="col-md-3 col-xs-6">
+						<h4><b>Socials</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/avinayak" target="_blank">GitHub</a>
+							</li>
+							<li><a href="https://www.linkedin.com/in/atulvinayak" target="_blank">LinkedIn</a>
+							</li>
+							<li><a href="https://www.instagram.com/avinayak__" target="_blank">Instagram</a>
+							</li>
+							<li><a href="https://bsky.app/profile/a.tulv.in" target="_blank">BlueSky</a>
+							</li>
+							<li><a href="https://twitter.com/atulvinayak" target="_blank">Twitter</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Atul Vinayak</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+ 
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Simulated Annealing for Beautiful Graphs — a.tulv.in</title>
+	<meta name="description" content="Title: Simulated Annealing for Beautiful Graphs; Date: 2014-10-01; Author: Atul Vinayak">
+	<meta name="author" content="Atul Vinayak">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://a.tulv.in/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://a.tulv.in/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/local.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/pygments.css" rel="stylesheet">
+	<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://a.tulv.in/">a.tulv.in</a>	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+<script>
+  function setup() {
+    var canvas = createCanvas(20, 20);
+    canvas.parent("homePageArtCanvas");
+    noStroke();
+
+    // Random Spaceship Assembly
+    // By Atul Vinayak
+    npix = 5;
+    w = width / npix;
+    for (var y = 0; y < npix; y++) {
+      for (var x = 0; x < npix / 2; x++) {
+        if (random(1) < 0.5) {
+          fill(0);
+          rect(x * w, y * w, w, w);
+          rect((npix - x - 1) * w, y * w, w, w);
+        }
+      }
+    }
+  }
+</script>
+<span id="homePageArtCanvas"></span>			<br>	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="title-card">
+		<div class="category">
+			<a href="https://a.tulv.in/category/programming.html" rel="category">Programming</a>
+		</div>
+	
+		<div class="article-header">
+			<h1 itemprop="name headline" class="article-title">Simulated Annealing for Beautiful Graphs</h1>
+		</div>
+		<div class="subtitle">
+			What is the best way to draw a graph?
+		</div>
+	</div>
+
+	<div class="article-tags">
+	<time datetime="2014-10-01T00:00:00+00:00" itemprop="datePublished">Wed 01 October 2014</time>
+ 
+	<div>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/programming.html" rel="tag">programming</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/algorithm.html" rel="tag">algorithm</a>
+		</span>
+	</div>
+	</div>
+
+	<div itemprop="articleBody" class="article-body"><p>Humans have an intuitive sense of symmetry and aesthetics. We try our best to make it easy to understand the concept we’re trying to explain.</p>
+<p><img alt="" src="/media/unnamed-1.png"></p>
+<p>In textbooks, we see images like the one above, and not like this one..</p>
+<p><img alt="-" src="/media/polbooks_fr.png"></p>
+<p>I’m having labs in college where I have to implement various algorithms on graphs. The first step, however, was to draw one. The Random approach was the easiest. Randomly plot N Nodes anywhere in the screen, and connect them. If you’re lucky, your graph might look good. Mostly they didn’t.</p>
+<p>There were people who tried this interesting approach: Given, N Nodes, arrange them in a Circle: with ‘360/N’ angular separation. Given the center, angle &amp; radius can be easily converted to X, Y using basic trigonometry.</p>
+<p><img alt="-" src="/media/circular.jpg"></p>
+<p>This was good. But we could do better. I searched for the best way to do this, and ended up reading <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.20.5663">this</a> paper.</p>
+<p>Anyway, The paper promised to take graphs from (a) to (b) using a method called <a href="https://en.wikipedia.org/wiki/Simulated_annealing">Simulated Annealing</a>.</p>
+<p><img alt="-" src="/media/sample.png"></p>
+<p>The paper defines the characteristics of a good drawing such as Evenly distributed nodes, edges having approximately the same lengths, minimal edge crossing, and Symmetry. Oh, and fitting snugly inside the window you’re drawing.</p>
+<p>SA is derived from a Metallurgical process called Annealing, used to turn liquids to their crystalline form. Probability with which a system changes from one energy state to the next is</p>
+<p><span class="math">\(\\e^{-\frac{E_2 - E_1}{kT}}\)</span></p>
+<p>This rule implied that whenever the energy E_2 of the candidate state is smaller than the current energy E_1 $, the system will take the move, else the state change is probabilistic.</p>
+<p>A rough algorithm for SA is as follows:</p>
+<p>Choose an initial configuration <span class="math">\(\sigma\)</span> and an initial temperature <span class="math">\(T\)</span></p>
+<p>Repeat the following (usually some fixed number of times):</p>
+<ol>
+<li>Choose an initial configuration <span class="math">\(\sigma\)</span> and an initial temperature <span class="math">\(T\)</span></li>
+<li>
+<dl>
+<dt>Repeat the following (usually some fixed number of times):</dt>
+<dd>2.1 Choose new configuration <span class="math">\(\sigma’\)</span> from the neighborhood of <span class="math">\(\sigma\)</span></dd>
+<dd>2.2 Let <span class="math">\(E\)</span> and <span class="math">\(E’\)</span> be the value of the cost function at <span class="math">\(\sigma\)</span> and <span class="math">\(\sigma’\)</span> respectively</dd>
+<dd>2.3 If <span class="math">\(E’\)</span> &lt; <span class="math">\(E\)</span> or <span class="math">\(random(0,1) &lt; e^{(E - E’)/T)}\)</span> the set <span class="math">\(\sigma\)</span> to <span class="math">\(\sigma’\)</span>.</dd>
+<dd>2.4 Decrease Temperature <span class="math">\(T\)</span></dd>
+</dl>
+</li>
+<li>If Termination rule is satisfied, stop. else go back to step 2</li>
+</ol>
+<p>The algorithm takes in an adjacency list representation of our graph, and should hopefully return coordinates of our graph nodes that look good. We chose an initial set of random coordinates for every node. Our energy function should be designed in such a way that a ‘nicer’ configuration should have a lower energy state. We talked about the characteristics of a good graph, but here are them again in detail.</p>
+<h2>Node distribution</h2>
+<p>Our nodes should be evenly spread across the window. Two components of the energy function
+take care of this. One to prevent nodes from getting too close. Second deals with window borders.</p>
+<p>We add <span class="math">\(a_{ij}\)</span> Energy function. if <span class="math">\(d_{ij}\)</span> is the distance of node <span class="math">\(i\)</span> to <span class="math">\(j\)</span>.</p>
+<p><span class="math">\(a_{ij} = \frac{\lambda_1}{d_{ij}^2}\)</span></p>
+<p>This looks similar to the Electric Potential function. Lambda is a normalizing factor to define the importance of this particular criteria.</p>
+<h2>Window Edges</h2>
+<p>The energy function for Window Edges bases itself of the distance between node and Window Edges</p>
+<p><span class="math">\(m_i = \lambda_2 ( \frac{1}{r^2_i} + \frac{1}{l^2_i} + \frac{1}{t^2_i} + \frac{1}{b^2_i})\)</span></p>
+<p>Where <span class="math">\(r_i\)</span>,<span class="math">\(l_i\)</span>,$t_i&amp; $b_iare the distances of node i to right, left, top and bottom window edges.
+This ensures that nodes are prevented from getting too close to window border.</p>
+<h2>Edge lengths</h2>
+<p>we try to shorten edge lengths but not make the graph too crowded. For each edge k we add the term</p>
+<p><span class="math">\(c_k = \lambda_3d_{k}^2\)</span></p>
+<p>These 3 criteria are enough for most graphs, but they won’t look good on all graphs.
+So we’ll take a look at edge crossings and node to edge distances</p>
+<h2>Edge crossing</h2>
+<p>We prevent edge crossing simply by adding an extra <span class="math">\(\lambda_4\)</span> for every edge that crosses</p>
+<h2>Node to edge sides</h2>
+<p>Edges may get too close to a node. Mostly this is taken care by rest of the function, but adding this extra energy covers more cases</p>
+<p><span class="math">\(h_{kl} = \frac{\lambda_5}{g_{kl}^2}\)</span></p>
+<p>There is an additional minimum distance rule in the paper, which I ignored for my code as it
+was working neatly without it. After every step of energy change, The temperature should be reduced. We follow this rule:</p>
+<p><span class="math">\(T' = \lambda T\)</span></p>
+<p>with <span class="math">\(\lambda\)</span> between 0.6 and 0.95.</p>
+<p>Here is an 8x speedup video of my implementation on Turbo C++.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BHHFM5IoAT4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>I did this mostly in a small laptop which didn’t belong to me at the time, and I hence lost most of the code.
+I’m looking forward to re implementing it here in Javascript so that anyone can play around with it :)</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "left",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+	<!-- <h2>Comments</h2>
+ -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-transparent">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-12">
+				<hr/>
+				<div class="row">
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Navigation</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/">a.tulv.in</a></li>
+							<li><a href="/me">About Me</a></li>
+							<li><a href="/projects">Projects</a></li>
+							<li><a href="https://a.tulv.in/feeds/rss.xml"><i class="fa fa-rss "></i> rss</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Categories</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Links</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://goo.gl/D2GXJ9">My Resume</a></li>
+							<li><a href="https://unsplash.com/collections/519921/s'ok-pics">Photography</a></li>
+							<li><a href="https://v.tulv.in">Visual References</a></li>
+							<li><a href="https://ko-fi.com/atulvinayak">Ko-fi</a></li>
+						</ul>
+					</div>
+					
+					<div class="col-md-3 col-xs-6">
+						<h4><b>Socials</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/avinayak" target="_blank">GitHub</a>
+							</li>
+							<li><a href="https://www.linkedin.com/in/atulvinayak" target="_blank">LinkedIn</a>
+							</li>
+							<li><a href="https://www.instagram.com/avinayak__" target="_blank">Instagram</a>
+							</li>
+							<li><a href="https://bsky.app/profile/a.tulv.in" target="_blank">BlueSky</a>
+							</li>
+							<li><a href="https://twitter.com/atulvinayak" target="_blank">Twitter</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Atul Vinayak</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+ 
+</body>
+</html>

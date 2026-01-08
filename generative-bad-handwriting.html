@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Generative Bad Handwriting — a.tulv.in</title>
+	<meta name="description" content="Title: Generative Bad Handwriting; Date: 2020-09-18; Author: Atul Vinayak">
+	<meta name="author" content="Atul Vinayak">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://a.tulv.in/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://a.tulv.in/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/local.css" rel="stylesheet">
+	<link href="https://a.tulv.in/theme/css/pygments.css" rel="stylesheet">
+	<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://a.tulv.in/">a.tulv.in</a>	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+<script>
+  function setup() {
+    var canvas = createCanvas(20, 20);
+    canvas.parent("homePageArtCanvas");
+    noStroke();
+
+    // Random Spaceship Assembly
+    // By Atul Vinayak
+    npix = 5;
+    w = width / npix;
+    for (var y = 0; y < npix; y++) {
+      for (var x = 0; x < npix / 2; x++) {
+        if (random(1) < 0.5) {
+          fill(0);
+          rect(x * w, y * w, w, w);
+          rect((npix - x - 1) * w, y * w, w, w);
+        }
+      }
+    }
+  }
+</script>
+<span id="homePageArtCanvas"></span>			<br>	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="title-card">
+		<div class="category">
+			<a href="https://a.tulv.in/category/art.html" rel="category">Art</a>
+		</div>
+	
+		<div class="article-header">
+			<h1 itemprop="name headline" class="article-title">Generative Bad Handwriting</h1>
+		</div>
+		<div class="subtitle">
+			Show this tweet to a doctor
+		</div>
+	</div>
+
+	<div class="article-tags">
+	<time datetime="2020-09-18T15:00:00+00:00" itemprop="datePublished">Fri 18 September 2020</time>
+ 
+	<div>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/programming.html" rel="tag">programming</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/algorithm.html" rel="tag">algorithm</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="https://a.tulv.in/tag/research.html" rel="tag">research</a>
+		</span>
+	</div>
+	</div>
+
+	<div itemprop="articleBody" class="article-body"><p>So.. I made a popular tweet last week in the <a href="https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hashtag_click">#つぶやきProcessing</a> circles.</p>
+<blockquote class="twitter-tweet"><p lang="cy" dir="ltr">j=24,m=0,draw=(a=>{for(v=(i=>w/3*(n=noise)(i)-k),createCanvas(w=1e3,w),noFill(),background('<a href="https://twitter.com/hashtag/fd7?src=hash&ref_src=twsrc%5Etfw">#fd7</a>'),translate(0,m--),i=0,y=0;y<w-m;y+=j)for(x=k=90;x<w-k;x+=9)if(y+k>-m?curve(v(i++)+x,v(i++)+y,x,j+y,x+9,j+y,v(i++)+x,v(i++)+y):i+=4,x+=v(i++)%9,n(x*y)<.13)y+=j});//<a href="https://twitter.com/hashtag/%E3%81%A4%E3%81%B6%E3%82%84%E3%81%8DProcessing?src=hash&ref_src=twsrc%5Etfw">#つぶやきProcessing</a> <a href="https://t.co/WNIwAAAXjQ">pic.twitter.com/WNIwAAAXjQ</a></p>— atulvinayak (@atulvinayak) <a href="https://twitter.com/atulvinayak/status/1305116417419653120?ref_src=twsrc%5Etfw">September 13, 2020</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>I'll try to explain how this script worked and how I was able to fit the whole thing into 280 characters. If you're new to p5.js, just try pasting the tweet text to <a href="https://editor.p5js.org/" title="https://editor.p5js.org/">https://editor.p5js.org/</a> to get a similar output.</p>
+<h1>Story and Previous works</h1>
+<p>All of this started when last week when I was experimenting with the p5js <code>curve()</code> function. Internally this is an implementation of the <a href="https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline" title="Centripetal Catmull–Rom spline">Centripetal Catmull–Rom spline</a>. I tried generating a bunch of 8 legged water spiders for fun :)</p>
+<video controls="" muted="" src="https://video.twimg.com/ext_tw_video/1303620577589039104/pu/vid/720x720/8iYWjReFxe-9kWVl.mp4?tag=10">
+</video>
+
+<p>I admit this looks pretty stupid. The aim was to generate an animation a whole bunch of water spiders with the camera panning around. But then, for me to understand how exactly the Catmull-Rom spline worked, I decided to randomly plot a bunch of curves on a 2D canvas and it somehow resembled handwriting from my native language (<a href="https://en.wikipedia.org/wiki/Malayalam">Malayalam</a>).</p>
+<p><img alt="" src="/media/download-12.png"></p>
+<p>Actual Malayalam handwriting sample.<br>
+<img alt="" src="/media/4f31bc2ce9a02537444fc6eeea276dc5.jpg"></p>
+<p>Reducing character spacing.. Do you see the similarity now?<br>
+<img alt="" src="/media/download-10.png"></p>
+<p>Also, at this time I was playing the PC remaster of <a href="https://en.wikipedia.org/wiki/Journey_(2012_video_game)">Journey (2012)</a>. Journey has a very beautiful blocky scriptures all over the temples in the game.</p>
+<p><img alt="" src="/media/eayhyxhueaagmqu.jpg"></p>
+<p>I guessed this is pretty easy generate. I made a few attempts to reproduce the approximate style using p5.js</p>
+<p><img alt="" src="/media/download-8.png"></p>
+<p>and even an infinite scrolling version</p>
+<video controls="" muted="" src="https://video.twimg.com/ext_tw_video/1304311867284664323/pu/vid/720x720/zNWZ-LQrIl0KrnCU.mp4?tag=10">
+</video>
+
+<p>This script had some serious performance issues(you can see it slowing down towards the end). Later I learned that this style of meaningless writing is a thing in the art community known as Generative <a href="https://en.wikipedia.org/wiki/Asemic_writing">Asemic Writing</a>. According to Wikipedia:</p>
+<blockquote>
+<p><strong>Asemic writing</strong> is a wordless open semantic form of writing. The word asemic means "having no specific semantic content". With the nonspecificity of asemic writing there comes a vacuum of meaning which is left for the reader to fill in and interpret.</p>
+</blockquote>
+<p>I decided to combine the two and make an infinite generator of malayalam-esque asemic writing. I've seen curve generated asemic <a href="https://www.reddit.com/r/asemic/comments/dw5ze3/generative_script/?ref=share&amp;ref_source=link">before</a>. So, What I did is not something new.. however, maybe the way I made it infinite scrolling was something new(?). I'll try to explain how the code works.</p>
+<h1>Code</h1>
+<p>I lost the original script in the minifying process, but I managed to unminify the tweet somehow.</p>
+<div class="highlight"><pre><span></span><code><span class="k">var</span><span class="w"> </span><span class="n">yOffset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">24</span><span class="p">;</span>
+<span class="k">var</span><span class="w"> </span><span class="n">scrollPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">var</span><span class="w"> </span><span class="n">canvasWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">800</span><span class="p">;</span>
+<span class="k">var</span><span class="w"> </span><span class="n">margin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">90</span>
+
+<span class="n">function</span><span class="w"> </span><span class="n">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">createCanvas</span><span class="p">(</span><span class="n">canvasWidth</span><span class="p">,</span><span class="w"> </span><span class="n">canvasWidth</span><span class="p">)</span>
+<span class="w">    </span><span class="n">noFill</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">function</span><span class="w"> </span><span class="n">deterministicRandom</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">noise</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">90</span>
+<span class="p">}</span>
+
+<span class="n">function</span><span class="w"> </span><span class="n">draw</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">background</span><span class="p">(</span><span class="s1">&#39;#fd7&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">translate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">scrollPosition</span><span class="o">--</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">canvasWidth</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">scrollPosition</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">yOffset</span><span class="p">)</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">90</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">canvasWidth</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">margin</span><span class="p">;)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">margin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">-</span><span class="n">scrollPosition</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">curve</span><span class="p">(</span>
+<span class="w">                  </span><span class="n">deterministicRandom</span><span class="p">(</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">deterministicRandom</span><span class="p">(</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">x</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">yOffset</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">yOffset</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">deterministicRandom</span><span class="p">(</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">deterministicRandom</span><span class="p">(</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span>
+<span class="w">                </span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">4</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">deterministicRandom</span><span class="p">(</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">9</span><span class="p">)</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">noise</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">.</span><span class="mi">13</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">              </span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">yOffset</span>
+<span class="w">              </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">margin</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The most important part of the code is the function <code>deterministicRandom()</code> which is used a lot of times in the sketch. It's basically <code>noise()</code> but mapped to range <code>[243, -90]</code>. p5 js <code>curve()</code> takes in 2 control point and 2 physical point coordinate to determine the location and shape of the curve. Each character is is thus a set of 4 deterministically random numbers for control points + 4 constants for physical points. All of these points are offset by a base <code>&lt;x,y&gt;</code> coordinate to place the curve in a line. <em>Because it's deterministically random, the shapes and location of the curves are preserved in every frame</em>.. making the infinite scroll effect work.</p>
+<p>The 2 loops iterate over x and y, at a constant rate. x by 9 pixels and y by 24 pixels. But, inside the loop, based on deterministic random, x is randomly incremented by up to 9 pixels to simulate the randomness in spaces between characters. Also, if for a random condition with somewhat low probability (<code>noise(x * y) &lt; .13</code>), a line-break is added. Which means, y is incremented thrice in that loop and x is reset to a margin value (90).</p>
+<iframe style="height: 800px;width: 100%;" frameBorder="0" src="https://editor.p5js.org/solarsailer_/embed/mIVv0GCYu"></iframe>
+
+<h1>Camera motion and line by line rendering</h1>
+<p>The infinite scroll effect is basically done using <code>translate(0, scrollPosition--)</code>. The loop termination clause is adjusted such that only lines within the frame are rendered (between <code>y = scrollPosition to scrollPosition+canvasHeight</code>). The condition <code>y + margin &gt; -scrollPosition</code> directly inside the loop checks for this. This also offsets the random number index to the one needed by the lines being rendered in the else case. Here's a version of the script that shows lines being rendered as the script runs:</p>
+<iframe style="height: 800px;width: 100%;" frameBorder="0"  src="https://editor.p5js.org/solarsailer_/embed/Krn5nJ1hY"></iframe>
+
+<p>And that's basically it. The initial version I designed rendered every line from the first scroll position to the last in every frame, even if those lines were not visible. This is terrible for performance and the if condition inside the loop fixed this.</p>
+<h1>Minifying</h1>
+<p>Step one of minifying was converting all the functions to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">arrow functions</a>. This took up way less space. Then I moved all the <code>setup()</code> stuff to <code>draw()</code>. p5 does not re-execute <code>createCanvas</code> even if you place it in <code>draw()</code>. Then I had to cut down number of variables as much as I can. 2 of them were reused: <code>canvasWidth(w)</code> and <code>margin(k)</code> were also used as a coefficient in <code>deterministicRandom()</code>. Finally spaces were removed and long names were truncated to single characters.</p>
+<h1>Conclusion</h1>
+<p>This script was written in about 2-3 hours. Looking back, I can see a lot of places where I'd try to reduce repeated code and make it smoother. I never thought this would go so popular, so I never really cared to optimize so much. But there you go.. a simple way to generate bad handwriting :)</p></div>
+	<!-- <h2>Comments</h2>
+ -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-transparent">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-12">
+				<hr/>
+				<div class="row">
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Navigation</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="/">a.tulv.in</a></li>
+							<li><a href="/me">About Me</a></li>
+							<li><a href="/projects">Projects</a></li>
+							<li><a href="https://a.tulv.in/feeds/rss.xml"><i class="fa fa-rss "></i> rss</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Categories</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3  col-xs-6">
+						<h4><b>Links</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://goo.gl/D2GXJ9">My Resume</a></li>
+							<li><a href="https://unsplash.com/collections/519921/s'ok-pics">Photography</a></li>
+							<li><a href="https://v.tulv.in">Visual References</a></li>
+							<li><a href="https://ko-fi.com/atulvinayak">Ko-fi</a></li>
+						</ul>
+					</div>
+					
+					<div class="col-md-3 col-xs-6">
+						<h4><b>Socials</b></h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/avinayak" target="_blank">GitHub</a>
+							</li>
+							<li><a href="https://www.linkedin.com/in/atulvinayak" target="_blank">LinkedIn</a>
+							</li>
+							<li><a href="https://www.instagram.com/avinayak__" target="_blank">Instagram</a>
+							</li>
+							<li><a href="https://bsky.app/profile/a.tulv.in" target="_blank">BlueSky</a>
+							</li>
+							<li><a href="https://twitter.com/atulvinayak" target="_blank">Twitter</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Atul Vinayak</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+ 
+</body>
+</html>
