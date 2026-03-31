@@ -37,12 +37,13 @@ ABOUT = (
 
 DEFAULT_PAGINATION = 15
 
-STATIC_PATHS = ["media", "admin"]
+STATIC_PATHS = ["media", "admin", "pages/404.html"]
 
 READERS = {'html': None}
 
 EXTRA_PATH_METADATA = {
     "admin/index.html": {"path": "admin/index.html"},
+    "pages/404.html": {"path": "404.html"},
 }
 
 PLUGINS = ["pelican.plugins.render_math"]
