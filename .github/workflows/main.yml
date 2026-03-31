@@ -1,7 +1,6 @@
 name: Deploy
 
 on:
-  # Trigger the workflow on push on main branch,
   push:
     branches:
       - master
@@ -10,11 +9,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with: 
-        submodules: 'true'
-    - uses: rehanhaider/pelican-to-github-pages@v1.0.3
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        GH_PAGES_CNAME: "a.tulv.in"
-        PELICAN_CONTENT_FOLDER: "content"
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Build site
+      run: pelican content -o output -s publishconf.py
+
+    - name: Add CNAME
+      run: echo "a.tulv.in" > output/CNAME
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./output
