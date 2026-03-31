@@ -198,16 +198,16 @@ This is slice is then extruded and set to best_canvas and the loop repeats till 
 <p>The notebook for this project is <a href="https://github.com/avinayak/mona_lisa_gol_jax/blob/main/mona_lisa_overdrive.ipynb">available in github</a>. I'll explain what every block is doing in this section. If you want to see results, skip to the end of the article.</p>
 <p>The core of this project, the game of life function is actually taken from <a href="http://www.bnikolic.co.uk/blog/python/jax/2020/04/19/game-of-life-jax.html">this post</a>. Thank you  Bojan Nikolic :). I followed his convention of importing <code>jax.numpy</code> as <code>N</code>, <code>jax.lax</code> as <code>L</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span> 
-<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
 <span class="n">N</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">numpy</span>
 <span class="n">L</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">lax</span>
-<span class="kn">from</span> <span class="nn">jax.experimental</span> <span class="kn">import</span> <span class="n">loops</span>
-<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">ops</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span> 
-<span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">files</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax.experimental</span><span class="w"> </span><span class="kn">import</span> <span class="n">loops</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">ops</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">onp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">files</span>
 </code></pre></div>
 
 <p>Next, <code>wget</code> Mona Lisa</p>
@@ -362,7 +362,7 @@ rmse = jax.jit(rmse_nj, static_argnums=(2,3,4))
 						<h4><b>Categories</b></h4>
 						<ul class="list-unstyled my-list-style">
 							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
-							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (16)</a></li>
 						</ul>
 					</div>
 					<div class="col-md-3  col-xs-6">

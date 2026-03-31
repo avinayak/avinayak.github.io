@@ -84,27 +84,9 @@ I found out that Blender does a much better job in Physics simulation, and it ha
 <p>As you can see, the particles are not really particles here. They’re more like blocks. This is actually a 3D simulation.
 The camera faces the Z-axis orthogonally in isometric view. In the beginning, there were no colors and the blocks were arranged into a huge rectangle. 
 But I knew it looks much more satisfying if I did something similar to this (I was waiting for a real life application for this Programing 101 snippet) 😉</p>
-<div class="highlight"><pre><span></span><code>for(int i=0;i&lt;5;i++){
-    for(int j=0;j&lt;i;j++){
-        printf(&quot;* &quot;);
-    }
-    printf(&quot;\n&quot;);
-}
-
-/* Outputs
-
-<span class="gs">* </span>
-<span class="gs">*</span> * 
-<span class="gs">* *</span> * 
-<span class="gs">* *</span> * <span class="gs">*</span>
-
-<span class="gs">*</span>/
-</code></pre></div>
-
-<p>Also, I(Me being the idiot that I am), didn’t know the existence of the HSV/HSL functions, which would’ve made my life much easier. Instead, I had to implement this.</p>
-<p><img alt="My helpful screenshot" src="/media/hsv.png"></p>
-<p>With HSV(), I smoothly mapped the X locations of blocks with an H value, keeping S and V fixed.</p>
-<p>In the end, I wanted to reduce the block size so that they’re more like particles, but my potato computer took ~ 30 Hrs to render this 😕.</p></div>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="ss">(</span><span class="nv">int</span><span class="w"> </span><span class="nv">i</span><span class="o">=</span><span class="mi">0</span><span class="c1">;i&lt;5;i++){</span>
+<span class="w">    </span><span class="k">for</span><span class="ss">(</span><span class="nv">int</span><span class="w"> </span><span class="nv">j</span><span class="o">=</span><span class="mi">0</span><span class="c1">;j</span>
+</code></pre></div></div>
 	<!-- <h2>Comments</h2>
  -->
 </div>
@@ -130,7 +112,7 @@ But I knew it looks much more satisfying if I did something similar to this (I w
 						<h4><b>Categories</b></h4>
 						<ul class="list-unstyled my-list-style">
 							<li><a href="https://a.tulv.in/category/art.html">Art (5)</a></li>
-							<li><a href="https://a.tulv.in/category/programming.html">Programming (15)</a></li>
+							<li><a href="https://a.tulv.in/category/programming.html">Programming (16)</a></li>
 						</ul>
 					</div>
 					<div class="col-md-3  col-xs-6">
