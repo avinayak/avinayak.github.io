@@ -18,6 +18,8 @@
 	<script type="text/javascript" async
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
+	{% include "spaceship.html" %}
+	{% include "favicon.html" %}
 	{% block head %}{% endblock %}
 </head>
 <body>
@@ -46,6 +48,7 @@
 							<li><a href="/">{{ SITENAME }}</a></li>
 							<li><a href="/me">About Me</a></li>
 							<li><a href="/projects">Projects</a></li>
+							<li><a href="/games">Games</a></li>
 							{% for icon, title, link in MENUITEMS %}
 							<li><a href="{{ SITEURL }}/{{ link }}"><i class="fa fa-{{ icon }} "></i> {{title}}</a></li>
 							{% endfor %}

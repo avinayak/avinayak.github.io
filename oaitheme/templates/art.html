@@ -7,14 +7,15 @@
 
     // Random Spaceship Assembly
     // By Atul Vinayak
-    npix = 5;
-    w = width / npix;
-    for (var y = 0; y < npix; y++) {
-      for (var x = 0; x < npix / 2; x++) {
-        if (random(1) < 0.5) {
+    // Pattern comes from spaceship.html so the favicon matches
+    var ship = window.spaceship;
+    var w = width / ship.npix;
+    for (var y = 0; y < ship.npix; y++) {
+      for (var x = 0; x < ship.half[y].length; x++) {
+        if (ship.half[y][x]) {
           fill(0);
           rect(x * w, y * w, w, w);
-          rect((npix - x - 1) * w, y * w, w, w);
+          rect((ship.npix - x - 1) * w, y * w, w, w);
         }
       }
     }

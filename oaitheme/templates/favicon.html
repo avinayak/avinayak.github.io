@@ -1,0 +1,33 @@
+<script>
+  // Draws the shared spaceship pattern as the browser tab icon
+  (function () {
+    var ship = window.spaceship;
+    var cell = 6; // whole pixels, so the squares stay crisp
+    var pad = 3; // breathing room around the ship
+    var size = cell * ship.npix + pad * 2;
+
+    var canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#000";
+
+    for (var y = 0; y < ship.npix; y++) {
+      for (var x = 0; x < ship.half[y].length; x++) {
+        if (ship.half[y][x]) {
+          ctx.fillRect(pad + x * cell, pad + y * cell, cell, cell);
+          ctx.fillRect(pad + (ship.npix - x - 1) * cell, pad + y * cell, cell, cell);
+        }
+      }
+    }
+
+    var link = document.querySelector("link[rel='icon']");
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "icon";
+      document.head.appendChild(link);
+    }
+    link.type = "image/png";
+    link.href = canvas.toDataURL("image/png");
+  })();
+</script>
